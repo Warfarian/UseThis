@@ -244,6 +244,7 @@ export const AddListingPage: React.FC = () => {
                     value={formData.category}
                     onChange={(e) => handleInputChange('category', e.target.value)}
                     className="input-brutal w-full"
+                    style={{ cursor: 'pointer', pointerEvents: 'auto' }}
                   >
                     <option value="">SELECT CATEGORY</option>
                     {categories.map((category) => (
@@ -270,6 +271,7 @@ export const AddListingPage: React.FC = () => {
                   placeholder="DESCRIBE YOUR ITEM IN DETAIL..."
                   rows={4}
                   className="input-brutal w-full resize-none"
+                  style={{ cursor: 'text', pointerEvents: 'auto' }}
                 />
                 {errors.description && (
                   <p className="text-sm text-crimson font-bold uppercase tracking-wide mt-2">
@@ -385,6 +387,7 @@ export const AddListingPage: React.FC = () => {
                         ? 'bg-primary text-pure-white'
                         : 'text-pure-white hover:text-primary'
                     }`}
+                    style={{ cursor: 'pointer', pointerEvents: 'auto' }}
                   >
                     <Upload size={16} />
                     <span>UPLOAD FILE</span>
@@ -401,6 +404,7 @@ export const AddListingPage: React.FC = () => {
                         ? 'bg-primary text-pure-white'
                         : 'text-pure-white hover:text-primary'
                     }`}
+                    style={{ cursor: 'pointer', pointerEvents: 'auto' }}
                   >
                     <Link size={16} />
                     <span>IMAGE URL</span>
@@ -414,18 +418,16 @@ export const AddListingPage: React.FC = () => {
                   <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display mb-2">
                     UPLOAD IMAGE FILE
                   </label>
-                  <div className="border-2 border-dashed border-steel hover:border-primary transition-colors p-8 text-center">
+                  <div className="border-2 border-dashed border-steel hover:border-primary transition-colors p-8 text-center relative">
                     <input
                       type="file"
                       accept="image/*"
                       onChange={handleImageFileChange}
-                      className="hidden"
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
+                      style={{ cursor: 'pointer !important', pointerEvents: 'auto !important' }}
                       id="image-upload"
                     />
-                    <label
-                      htmlFor="image-upload"
-                      className="cursor-pointer flex flex-col items-center space-y-4"
-                    >
+                    <div className="flex flex-col items-center space-y-4 pointer-events-none">
                       <div className="w-16 h-16 border-2 border-steel flex items-center justify-center hover:border-primary transition-colors">
                         <Upload size={24} className="text-steel" />
                       </div>
@@ -437,7 +439,7 @@ export const AddListingPage: React.FC = () => {
                           JPG, PNG, GIF up to 5MB
                         </p>
                       </div>
-                    </label>
+                    </div>
                   </div>
                   {imageFile && (
                     <p className="text-primary font-display font-bold text-sm mt-2">
@@ -499,6 +501,7 @@ export const AddListingPage: React.FC = () => {
                 variant="ghost"
                 onClick={() => navigate('/home')}
                 className="sm:w-auto"
+                style={{ cursor: 'pointer', pointerEvents: 'auto' }}
               >
                 CANCEL
               </Button>
@@ -506,6 +509,7 @@ export const AddListingPage: React.FC = () => {
                 type="submit"
                 disabled={loading || uploadingImage}
                 className="sm:w-auto"
+                style={{ cursor: 'pointer', pointerEvents: 'auto' }}
               >
                 {uploadingImage ? 'UPLOADING IMAGE...' : loading ? 'CREATING LISTING...' : 'CREATE LISTING'}
               </Button>
