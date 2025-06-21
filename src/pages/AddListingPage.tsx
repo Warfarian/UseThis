@@ -103,7 +103,7 @@ export const AddListingPage: React.FC = () => {
   const today = new Date().toISOString().split('T')[0]
 
   return (
-    <div className="min-h-screen bg-pure-black noise py-8 px-6">
+    <div className="min-h-screen bg-pure-black noise py-8 px-6 pt-28">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">

@@ -4,6 +4,7 @@ import { supabase, Item, Booking, Review } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuth'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
+import { InquiryModal } from '../components/InquiryModal'
 import { formatPrice, formatDate, calculateDays } from '../lib/utils'
 import { ArrowLeft, MapPin, Calendar, Star, User, Shield, Clock, MessageSquare } from 'lucide-react'
 
@@ -18,6 +19,7 @@ export const ItemDetailsPage: React.FC = () => {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [totalPrice, setTotalPrice] = useState(0)
+  const [showInquiryModal, setShowInquiryModal] = useState(false)
 
   useEffect(() => {
     if (id) {
@@ -102,6 +104,54 @@ export const ItemDetailsPage: React.FC = () => {
       alert('Failed to create booking. Please try again.')
     } finally {
       setBookingLoading(false)
+    }
+  }
+
+  const startConversation = async () => {
+    if (!user || !item) return
+
+    try {
+      // Check if conversation already exists
+      const { data: existingConv } = await supabase
+        .from('conversations')
+        .select('id')
+        .or(`and(participant_1_id.eq.${user.id},participant_2_id.eq.${item.owner_id}),and(participant_1_id.eq.${item.owner_id},participant_2_id.eq.${user.id})`)
+        .eq('item_id', item.id)
+        .single()
+
+      let conversationId = existingConv?.id
+
+      if (!conversationId) {
+        // Create new conversation
+        const { data: newConv, error: convError } = await supabase
+          .from('conversations')
+          .insert({
+            participant_1_id: user.id,
+            participant_2_id: item.owner_id,
+            item_id: item.id
+          })
+          .select('id')
+          .single()
+
+        if (convError) throw convError
+        conversationId = newConv.id
+
+        // Send initial message
+        await supabase
+          .from('messages')
+          .insert({
+            conversation_id: conversationId,
+            sender_id: user.id,
+            content: `Hi! I'm interested in your item "${item.title}". Can we chat about it?`,
+            message_type: 'inquiry'
+          })
+      }
+
+      // Redirect to messages
+      navigate('/messages')
+    } catch (error) {
+      console.error('Error starting conversation:', error)
+      alert('Failed to start conversation. Please try again.')
     }
   }
 
@@ -392,6 +442,28 @@ export const ItemDetailsPage: React.FC = () => {
                     {bookingLoading ? 'BOOKING...' : 'REQUEST BOOKING'}
                   </Button>
 
+                  <div className="divider-brutal" />
+
+                  {/* Communication Options */}
+                  <div className="space-y-3">
+                    <Button
+                      variant="outline"
+                      onClick={startConversation}
+                      className="w-full flex items-center justify-center space-x-2"
+                    >
+                      <MessageSquare size={16} />
+                      <span>START CHAT</span>
+                    </Button>
+
+                    <Button
+                      variant="ghost"
+                      onClick={() => setShowInquiryModal(true)}
+                      className="w-full"
+                    >
+                      ASK A QUESTION
+                    </Button>
+                  </div>
+
                   <div className="text-center">
                     <p className="text-steel font-display font-bold uppercase tracking-wide text-xs">
                       BOOKING REQUESTS ARE SUBJECT TO OWNER APPROVAL
@@ -402,6 +474,14 @@ export const ItemDetailsPage: React.FC = () => {
             </Card>
           </div>
         </div>
+
+        {/* Inquiry Modal */}
+        {showInquiryModal && (
+          <InquiryModal
+            item={item}
+            onClose={() => setShowInquiryModal(false)}
+          />
+        )}
       </div>
     </div>
   )

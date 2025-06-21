@@ -71,3 +71,43 @@ export interface Category {
   icon: string
   created_at: string
 }
+
+export interface Conversation {
+  id: string
+  participant_1_id: string
+  participant_2_id: string
+  item_id?: string
+  last_message_at: string
+  created_at: string
+  participant_1?: User
+  participant_2?: User
+  item?: Item
+  last_message?: Message
+  unread_count?: number
+}
+
+export interface Message {
+  id: string
+  conversation_id: string
+  sender_id: string
+  content: string
+  message_type: 'text' | 'inquiry' | 'booking_request'
+  is_read: boolean
+  created_at: string
+  sender?: User
+}
+
+export interface Inquiry {
+  id: string
+  item_id: string
+  inquirer_id: string
+  owner_id: string
+  subject: string
+  message: string
+  status: 'open' | 'responded' | 'closed'
+  created_at: string
+  updated_at: string
+  item?: Item
+  inquirer?: User
+  owner?: User
+}

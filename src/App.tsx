@@ -11,6 +11,8 @@ import { AddListingPage } from './pages/AddListingPage'
 import { BookingsPage } from './pages/BookingsPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { ReviewsPage } from './pages/ReviewsPage'
+import { MessagesPage } from './pages/MessagesPage'
+import { InquiriesPage } from './pages/InquiriesPage'
 
 function App() {
   const { user, loading } = useAuth()
@@ -42,6 +44,8 @@ function App() {
             <Route path="bookings" element={<BookingsPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="reviews" element={<ReviewsPage />} />
+            <Route path="messages" element={<MessagesPage />} />
+            <Route path="inquiries" element={<InquiriesPage />} />
           </Route>
         ) : (
           <Route path="*" element={<Navigate to="/" />} />

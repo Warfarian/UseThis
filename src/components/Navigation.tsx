@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { Button } from './ui/Button'
-import { Home, Search, Plus, Calendar, User, LogOut } from 'lucide-react'
+import { Home, Search, Plus, Calendar, User, LogOut, MessageSquare, HelpCircle } from 'lucide-react'
 import { cn } from '../lib/utils'
 
 export const Navigation: React.FC = () => {
@@ -14,6 +14,8 @@ export const Navigation: React.FC = () => {
     { path: '/browse', icon: Search, label: 'BROWSE' },
     { path: '/add-listing', icon: Plus, label: 'LIST' },
     { path: '/bookings', icon: Calendar, label: 'BOOKINGS' },
+    { path: '/messages', icon: MessageSquare, label: 'MESSAGES' },
+    { path: '/inquiries', icon: HelpCircle, label: 'INQUIRIES' },
     { path: '/profile', icon: User, label: 'PROFILE' },
   ]
 
@@ -43,7 +45,7 @@ export const Navigation: React.FC = () => {
 
           {/* Navigation Items */}
           {user && (
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6">
               {navItems.map(({ path, icon: Icon, label }) => (
                 <Link
                   key={path}
@@ -86,14 +88,14 @@ export const Navigation: React.FC = () => {
       {/* Mobile Navigation */}
       {user && (
         <div className="md:hidden border-t-2 border-steel bg-charcoal">
-          <div className="flex justify-around py-3">
-            {navItems.slice(0, 4).map(({ path, icon: Icon, label }) => (
+          <div className="flex justify-around py-3 overflow-x-auto">
+            {navItems.slice(0, 5).map(({ path, icon: Icon, label }) => (
               <Link
                 key={path}
                 to={path}
                 data-cursor-interactive="true"
                 className={cn(
-                  'flex flex-col items-center py-2 px-3 transition-colors font-display text-xs',
+                  'flex flex-col items-center py-2 px-3 transition-colors font-display text-xs min-w-0 flex-shrink-0',
                   location.pathname === path
                     ? 'text-primary'
                     : 'text-steel hover:text-primary'

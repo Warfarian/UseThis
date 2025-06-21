@@ -120,7 +120,7 @@ export const ProfilePage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-pure-black noise py-8 px-6">
+      <div className="min-h-screen bg-pure-black noise py-8 px-6 pt-28">
         <div className="max-w-6xl mx-auto">
           <Card className="loading-brutal h-96" />
         </div>
@@ -129,7 +129,7 @@ export const ProfilePage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-pure-black noise py-8 px-6">
+    <div className="min-h-screen bg-pure-black noise py-8 px-6 pt-28">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-12">
