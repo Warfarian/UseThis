@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './hooks/useAuth'
 import { Layout } from './components/Layout'
+import { LandingPage } from './pages/LandingPage'
 import { LoginPage } from './pages/LoginPage'
 import { HomePage } from './pages/HomePage'
 import { BrowsePage } from './pages/BrowsePage'
@@ -29,11 +30,12 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/" />} />
+        <Route path="/" element={!user ? <LandingPage /> : <Navigate to="/home" />} />
+        <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/home" />} />
         
         {user ? (
           <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
+            <Route path="home" element={<HomePage />} />
             <Route path="browse" element={<BrowsePage />} />
             <Route path="item/:id" element={<ItemDetailsPage />} />
             <Route path="add-listing" element={<AddListingPage />} />
@@ -42,7 +44,7 @@ function App() {
             <Route path="reviews" element={<ReviewsPage />} />
           </Route>
         ) : (
-          <Route path="*" element={<Navigate to="/login" />} />
+          <Route path="*" element={<Navigate to="/" />} />
         )}
       </Routes>
     </Router>
