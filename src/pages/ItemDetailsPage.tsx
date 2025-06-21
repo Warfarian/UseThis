@@ -4,9 +4,8 @@ import { supabase, Item, Booking, Review } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuth'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
-import { InquiryModal } from '../components/InquiryModal'
 import { formatPrice, formatDate, calculateDays } from '../lib/utils'
-import { ArrowLeft, MapPin, Calendar, Star, User, Shield, Clock, MessageSquare } from 'lucide-react'
+import { ArrowLeft, MapPin, Calendar, Star, User, Shield, Clock, MessageSquare, CreditCard, Check } from 'lucide-react'
 
 export const ItemDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -19,7 +18,8 @@ export const ItemDetailsPage: React.FC = () => {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [totalPrice, setTotalPrice] = useState(0)
-  const [showInquiryModal, setShowInquiryModal] = useState(false)
+  const [showCheckout, setShowCheckout] = useState(false)
+  const [checkoutStep, setCheckoutStep] = useState<'details' | 'payment' | 'confirmation'>('details')
 
   useEffect(() => {
     if (id) {
@@ -97,8 +97,7 @@ export const ItemDetailsPage: React.FC = () => {
 
       if (error) throw error
 
-      alert('Booking request sent successfully!')
-      navigate('/bookings')
+      setCheckoutStep('confirmation')
     } catch (error) {
       console.error('Error creating booking:', error)
       alert('Failed to create booking. Please try again.')
@@ -181,6 +180,17 @@ export const ItemDetailsPage: React.FC = () => {
     ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length 
     : (item?.owner?.rating || 5.0)
 
+  // Get today's date and max date (1 year from now)
+  const today = new Date().toISOString().split('T')[0]
+  const maxDate = new Date()
+  maxDate.setFullYear(maxDate.getFullYear() + 1)
+  const maxDateString = maxDate.toISOString().split('T')[0]
+
+  // Calculate booking details
+  const bookingDays = startDate && endDate ? calculateDays(startDate, endDate) : 0
+  const serviceFee = totalPrice * 0.1 // 10% service fee
+  const finalTotal = totalPrice + serviceFee
+
   if (loading) {
     return (
       <div className="min-h-screen bg-pure-black noise py-8 px-6 pt-28">
@@ -207,7 +217,6 @@ export const ItemDetailsPage: React.FC = () => {
   }
 
   const isOwner = user?.id === item.owner_id
-  const today = new Date().toISOString().split('T')[0]
 
   return (
     <div className="min-h-screen bg-pure-black noise py-8 px-6 pt-28">
@@ -372,128 +381,343 @@ export const ItemDetailsPage: React.FC = () => {
           {/* Right Column - Booking */}
           <div>
             <Card className="sticky top-32">
-              <h2 className="text-xl sm:text-2xl font-black text-pure-white mb-6 font-display uppercase">
-                {isOwner ? 'YOUR LISTING' : 'BOOK THIS ITEM'}
-              </h2>
+              {!showCheckout ? (
+                <>
+                  <h2 className="text-xl sm:text-2xl font-black text-pure-white mb-6 font-display uppercase">
+                    {isOwner ? 'YOUR LISTING' : 'BOOK THIS ITEM'}
+                  </h2>
 
-              {isOwner ? (
-                <div className="text-center py-8">
-                  <User size={48} className="mx-auto mb-4 text-primary" />
-                  <p className="text-steel font-display font-bold uppercase tracking-wide mb-6">
-                    THIS IS YOUR LISTING
-                  </p>
-                  <Button onClick={() => navigate('/profile')} className="w-full">
-                    MANAGE LISTING
-                  </Button>
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display mb-2">
-                      START DATE
-                    </label>
-                    <input
-                      type="date"
-                      value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
-                      min={today}
-                      max={item.availability_end_date}
-                      className="input-brutal w-full"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display mb-2">
-                      END DATE
-                    </label>
-                    <input
-                      type="date"
-                      value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
-                      min={startDate || today}
-                      max={item.availability_end_date}
-                      className="input-brutal w-full"
-                    />
-                  </div>
-
-                  {startDate && endDate && (
-                    <div className="bg-charcoal border-2 border-primary p-4">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-steel font-display font-bold uppercase tracking-wide text-sm">
-                          DURATION
-                        </span>
-                        <span className="text-pure-white font-mono font-bold">
-                          {calculateDays(startDate, endDate)} DAYS
-                        </span>
+                  {isOwner ? (
+                    <div className="text-center py-8">
+                      <User size={48} className="mx-auto mb-4 text-primary" />
+                      <p className="text-steel font-display font-bold uppercase tracking-wide mb-6">
+                        THIS IS YOUR LISTING
+                      </p>
+                      <Button onClick={() => navigate('/profile')} className="w-full">
+                        MANAGE LISTING
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="space-y-6">
+                      <div>
+                        <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display mb-2">
+                          START DATE
+                        </label>
+                        <input
+                          type="date"
+                          value={startDate}
+                          onChange={(e) => setStartDate(e.target.value)}
+                          min={today}
+                          max={item.availability_end_date < maxDateString ? item.availability_end_date : maxDateString}
+                          className="input-brutal w-full"
+                        />
                       </div>
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-steel font-display font-bold uppercase tracking-wide text-sm">
-                          DAILY RATE
-                        </span>
-                        <span className="text-pure-white font-mono font-bold">
-                          {formatPrice(item.price_per_day)}
-                        </span>
+
+                      <div>
+                        <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display mb-2">
+                          END DATE
+                        </label>
+                        <input
+                          type="date"
+                          value={endDate}
+                          onChange={(e) => setEndDate(e.target.value)}
+                          min={startDate || today}
+                          max={item.availability_end_date < maxDateString ? item.availability_end_date : maxDateString}
+                          className="input-brutal w-full"
+                        />
                       </div>
-                      <div className="divider-brutal my-3" />
-                      <div className="flex justify-between items-center">
-                        <span className="text-primary font-display font-bold uppercase tracking-wide">
-                          TOTAL
-                        </span>
-                        <span className="text-primary font-mono font-black text-xl">
-                          {formatPrice(totalPrice)}
-                        </span>
+
+                      {startDate && endDate && (
+                        <div className="bg-charcoal border-2 border-primary p-4">
+                          <div className="flex justify-between items-center mb-2">
+                            <span className="text-steel font-display font-bold uppercase tracking-wide text-sm">
+                              DURATION
+                            </span>
+                            <span className="text-pure-white font-mono font-bold">
+                              {bookingDays} {bookingDays === 1 ? 'DAY' : 'DAYS'}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center mb-2">
+                            <span className="text-steel font-display font-bold uppercase tracking-wide text-sm">
+                              DAILY RATE
+                            </span>
+                            <span className="text-pure-white font-mono font-bold">
+                              {formatPrice(item.price_per_day)}
+                            </span>
+                          </div>
+                          <div className="divider-brutal my-3" />
+                          <div className="flex justify-between items-center">
+                            <span className="text-primary font-display font-bold uppercase tracking-wide">
+                              SUBTOTAL
+                            </span>
+                            <span className="text-primary font-mono font-black text-xl">
+                              {formatPrice(totalPrice)}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+
+                      <Button
+                        onClick={() => setShowCheckout(true)}
+                        disabled={!startDate || !endDate}
+                        className="w-full flex items-center justify-center space-x-2"
+                      >
+                        <CreditCard size={16} />
+                        <span>PROCEED TO CHECKOUT</span>
+                      </Button>
+
+                      <div className="divider-brutal" />
+
+                      {/* Single Communication Option */}
+                      <Button
+                        variant="outline"
+                        onClick={startConversation}
+                        className="w-full flex items-center justify-center space-x-2"
+                      >
+                        <MessageSquare size={16} />
+                        <span>MESSAGE OWNER</span>
+                      </Button>
+
+                      <div className="text-center">
+                        <p className="text-steel font-display font-bold uppercase tracking-wide text-xs">
+                          BOOKING REQUESTS ARE SUBJECT TO OWNER APPROVAL
+                        </p>
                       </div>
                     </div>
                   )}
+                </>
+              ) : (
+                /* Checkout Flow */
+                <div>
+                  {checkoutStep === 'details' && (
+                    <>
+                      <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-xl font-black text-pure-white font-display uppercase">
+                          CHECKOUT
+                        </h2>
+                        <button
+                          onClick={() => setShowCheckout(false)}
+                          className="text-steel hover:text-primary transition-colors"
+                        >
+                          <ArrowLeft size={20} />
+                        </button>
+                      </div>
 
-                  <Button
-                    onClick={handleBooking}
-                    disabled={!startDate || !endDate || bookingLoading}
-                    className="w-full"
-                  >
-                    {bookingLoading ? 'BOOKING...' : 'REQUEST BOOKING'}
-                  </Button>
+                      {/* Booking Summary */}
+                      <div className="bg-charcoal border-2 border-steel p-4 mb-6">
+                        <h3 className="text-lg font-black text-pure-white mb-4 font-display uppercase">
+                          BOOKING SUMMARY
+                        </h3>
+                        
+                        <div className="space-y-3 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-steel font-display font-bold uppercase">ITEM</span>
+                            <span className="text-pure-white font-display font-medium">{item.title}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-steel font-display font-bold uppercase">DATES</span>
+                            <span className="text-pure-white font-display font-medium">
+                              {formatDate(startDate)} - {formatDate(endDate)}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-steel font-display font-bold uppercase">DURATION</span>
+                            <span className="text-pure-white font-display font-medium">
+                              {bookingDays} {bookingDays === 1 ? 'day' : 'days'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
 
-                  <div className="divider-brutal" />
+                      {/* Price Breakdown */}
+                      <div className="bg-charcoal border-2 border-primary p-4 mb-6">
+                        <h3 className="text-lg font-black text-pure-white mb-4 font-display uppercase">
+                          PRICE BREAKDOWN
+                        </h3>
+                        
+                        <div className="space-y-3 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-steel font-display font-bold uppercase">
+                              {formatPrice(item.price_per_day)} × {bookingDays} {bookingDays === 1 ? 'day' : 'days'}
+                            </span>
+                            <span className="text-pure-white font-mono font-bold">{formatPrice(totalPrice)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-steel font-display font-bold uppercase">SERVICE FEE</span>
+                            <span className="text-pure-white font-mono font-bold">{formatPrice(serviceFee)}</span>
+                          </div>
+                          <div className="divider-brutal my-3" />
+                          <div className="flex justify-between">
+                            <span className="text-primary font-display font-bold uppercase text-base">TOTAL</span>
+                            <span className="text-primary font-mono font-black text-xl">{formatPrice(finalTotal)}</span>
+                          </div>
+                        </div>
+                      </div>
 
-                  {/* Communication Options */}
-                  <div className="space-y-3">
-                    <Button
-                      variant="outline"
-                      onClick={startConversation}
-                      className="w-full flex items-center justify-center space-x-2"
-                    >
-                      <MessageSquare size={16} />
-                      <span>START CHAT</span>
-                    </Button>
+                      <Button
+                        onClick={() => setCheckoutStep('payment')}
+                        className="w-full"
+                      >
+                        CONTINUE TO PAYMENT
+                      </Button>
+                    </>
+                  )}
 
-                    <Button
-                      variant="ghost"
-                      onClick={() => setShowInquiryModal(true)}
-                      className="w-full"
-                    >
-                      ASK A QUESTION
-                    </Button>
-                  </div>
+                  {checkoutStep === 'payment' && (
+                    <>
+                      <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-xl font-black text-pure-white font-display uppercase">
+                          PAYMENT
+                        </h2>
+                        <button
+                          onClick={() => setCheckoutStep('details')}
+                          className="text-steel hover:text-primary transition-colors"
+                        >
+                          <ArrowLeft size={20} />
+                        </button>
+                      </div>
 
-                  <div className="text-center">
-                    <p className="text-steel font-display font-bold uppercase tracking-wide text-xs">
-                      BOOKING REQUESTS ARE SUBJECT TO OWNER APPROVAL
-                    </p>
-                  </div>
+                      {/* Demo Payment Form */}
+                      <div className="space-y-4 mb-6">
+                        <div>
+                          <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display mb-2">
+                            CARD NUMBER
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="1234 5678 9012 3456"
+                            className="input-brutal w-full"
+                            defaultValue="4242 4242 4242 4242"
+                            readOnly
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display mb-2">
+                              EXPIRY
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="MM/YY"
+                              className="input-brutal w-full"
+                              defaultValue="12/28"
+                              readOnly
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display mb-2">
+                              CVC
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="123"
+                              className="input-brutal w-full"
+                              defaultValue="123"
+                              readOnly
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display mb-2">
+                            CARDHOLDER NAME
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="JOHN DOE"
+                            className="input-brutal w-full"
+                            defaultValue={user?.email?.split('@')[0].toUpperCase() || 'DEMO USER'}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      {/* Total Display */}
+                      <div className="bg-charcoal border-2 border-primary p-4 mb-6">
+                        <div className="flex justify-between items-center">
+                          <span className="text-primary font-display font-bold uppercase">
+                            TOTAL TO PAY
+                          </span>
+                          <span className="text-primary font-mono font-black text-2xl">
+                            {formatPrice(finalTotal)}
+                          </span>
+                        </div>
+                      </div>
+
+                      <Button
+                        onClick={handleBooking}
+                        disabled={bookingLoading}
+                        className="w-full"
+                      >
+                        {bookingLoading ? 'PROCESSING...' : 'COMPLETE BOOKING'}
+                      </Button>
+
+                      <div className="text-center mt-4">
+                        <p className="text-steel font-display font-bold uppercase tracking-wide text-xs">
+                          🔒 DEMO MODE - NO ACTUAL PAYMENT WILL BE CHARGED
+                        </p>
+                      </div>
+                    </>
+                  )}
+
+                  {checkoutStep === 'confirmation' && (
+                    <>
+                      <div className="text-center py-8">
+                        <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                          <Check size={32} className="text-pure-white" />
+                        </div>
+                        
+                        <h2 className="text-2xl font-black text-pure-white mb-4 font-display uppercase">
+                          BOOKING CONFIRMED!
+                        </h2>
+                        
+                        <p className="text-steel font-display font-bold uppercase tracking-wide mb-6">
+                          YOUR BOOKING REQUEST HAS BEEN SENT TO THE OWNER
+                        </p>
+
+                        <div className="bg-charcoal border-2 border-primary p-4 mb-6 text-left">
+                          <h3 className="text-lg font-black text-pure-white mb-3 font-display uppercase">
+                            BOOKING DETAILS
+                          </h3>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex justify-between">
+                              <span className="text-steel font-display font-bold uppercase">ITEM</span>
+                              <span className="text-pure-white font-display font-medium">{item.title}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-steel font-display font-bold uppercase">DATES</span>
+                              <span className="text-pure-white font-display font-medium">
+                                {formatDate(startDate)} - {formatDate(endDate)}
+                              </span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-steel font-display font-bold uppercase">TOTAL</span>
+                              <span className="text-primary font-mono font-bold">{formatPrice(finalTotal)}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-3">
+                          <Button onClick={() => navigate('/bookings')} className="w-full">
+                            VIEW MY BOOKINGS
+                          </Button>
+                          <Button 
+                            variant="outline" 
+                            onClick={() => navigate('/browse')} 
+                            className="w-full"
+                          >
+                            CONTINUE BROWSING
+                          </Button>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
             </Card>
           </div>
         </div>
-
-        {/* Inquiry Modal */}
-        {showInquiryModal && (
-          <InquiryModal
-            item={item}
-            onClose={() => setShowInquiryModal(false)}
-          />
-        )}
       </div>
     </div>
   )
