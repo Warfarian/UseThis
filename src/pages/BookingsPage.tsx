@@ -61,7 +61,15 @@ export const BookingsPage: React.FC = () => {
       if (error) throw error
       
       fetchBookings()
-      alert(`Booking ${status} successfully!`)
+      
+      // Show appropriate message based on action
+      if (status === 'confirmed') {
+        alert('Booking approved! The renter has been notified.')
+      } else if (status === 'cancelled') {
+        alert('Booking declined. The renter has been notified.')
+      } else {
+        alert(`Booking ${status} successfully!`)
+      }
     } catch (error) {
       console.error('Error updating booking:', error)
       alert('Failed to update booking. Please try again.')
@@ -111,6 +119,8 @@ export const BookingsPage: React.FC = () => {
         return <Clock size={20} className="text-accent" />
       case 'returned':
         return <CheckCircle size={20} className="text-secondary" />
+      case 'pending':
+        return <AlertCircle size={20} className="text-accent" />
       default:
         return <AlertCircle size={20} className="text-steel" />
     }
@@ -126,8 +136,27 @@ export const BookingsPage: React.FC = () => {
         return 'text-accent'
       case 'returned':
         return 'text-secondary'
+      case 'pending':
+        return 'text-accent'
       default:
         return 'text-steel'
+    }
+  }
+
+  const getStatusText = (status: string, isOwner: boolean) => {
+    switch (status) {
+      case 'pending':
+        return isOwner ? 'AWAITING YOUR APPROVAL' : 'PENDING APPROVAL'
+      case 'confirmed':
+        return 'APPROVED'
+      case 'cancelled':
+        return 'DECLINED'
+      case 'active':
+        return 'ACTIVE RENTAL'
+      case 'returned':
+        return 'COMPLETED'
+      default:
+        return status.toUpperCase()
     }
   }
 
@@ -286,7 +315,7 @@ export const BookingsPage: React.FC = () => {
                         <div className="flex items-center">
                           {getStatusIcon(booking.status)}
                           <span className={`ml-2 font-display font-bold uppercase tracking-wide text-sm ${getStatusColor(booking.status)}`}>
-                            {booking.status}
+                            {getStatusText(booking.status, activeTab === 'owner')}
                           </span>
                         </div>
                         
@@ -294,6 +323,18 @@ export const BookingsPage: React.FC = () => {
                           {formatPrice(booking.total_price)} TOTAL
                         </div>
                       </div>
+
+                      {/* Status-specific messages */}
+                      {booking.status === 'pending' && (
+                        <div className="mt-3 p-3 bg-accent/20 border-l-4 border-accent">
+                          <p className="text-accent font-display font-bold uppercase tracking-wide text-xs">
+                            {activeTab === 'renter' 
+                              ? '⏳ WAITING FOR OWNER TO APPROVE YOUR REQUEST'
+                              : '👆 PLEASE REVIEW AND APPROVE/DECLINE THIS REQUEST'
+                            }
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -304,17 +345,19 @@ export const BookingsPage: React.FC = () => {
                         <Button
                           size="sm"
                           onClick={() => updateBookingStatus(booking.id, 'confirmed')}
-                          className="w-full"
+                          className="w-full flex items-center justify-center space-x-2"
                         >
-                          APPROVE
+                          <CheckCircle size={14} />
+                          <span>APPROVE</span>
                         </Button>
                         <Button
                           size="sm"
                           variant="ghost"
                           onClick={() => updateBookingStatus(booking.id, 'cancelled')}
-                          className="w-full"
+                          className="w-full flex items-center justify-center space-x-2"
                         >
-                          DECLINE
+                          <XCircle size={14} />
+                          <span>DECLINE</span>
                         </Button>
                       </>
                     )}
@@ -355,7 +398,7 @@ export const BookingsPage: React.FC = () => {
 
                     <div className="text-center">
                       <p className="text-steel font-display font-bold uppercase tracking-wide text-xs">
-                        BOOKED {formatDate(booking.created_at)}
+                        REQUESTED {formatDate(booking.created_at)}
                       </p>
                     </div>
                   </div>

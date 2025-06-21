@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/useAuth'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { formatPrice, formatDate, calculateDays } from '../lib/utils'
-import { ArrowLeft, MapPin, Calendar, Star, User, Shield, Clock, MessageSquare, CreditCard, Check } from 'lucide-react'
+import { ArrowLeft, MapPin, Calendar, Star, User, Shield, Clock, MessageSquare, CreditCard, Check, AlertCircle } from 'lucide-react'
 
 export const ItemDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -92,7 +92,7 @@ export const ItemDetailsPage: React.FC = () => {
           start_date: startDate,
           end_date: endDate,
           total_price: total,
-          status: 'pending'
+          status: 'pending' // Always starts as pending for owner approval
         })
 
       if (error) throw error
@@ -463,7 +463,7 @@ export const ItemDetailsPage: React.FC = () => {
                         className="w-full flex items-center justify-center space-x-2"
                       >
                         <CreditCard size={16} />
-                        <span>PROCEED TO CHECKOUT</span>
+                        <span>REQUEST BOOKING</span>
                       </Button>
 
                       <div className="divider-brutal" />
@@ -480,7 +480,7 @@ export const ItemDetailsPage: React.FC = () => {
 
                       <div className="text-center">
                         <p className="text-steel font-display font-bold uppercase tracking-wide text-xs">
-                          BOOKING REQUESTS ARE SUBJECT TO OWNER APPROVAL
+                          BOOKING REQUESTS REQUIRE OWNER APPROVAL
                         </p>
                       </div>
                     </div>
@@ -493,7 +493,7 @@ export const ItemDetailsPage: React.FC = () => {
                     <>
                       <div className="flex items-center justify-between mb-6">
                         <h2 className="text-xl font-black text-pure-white font-display uppercase">
-                          CHECKOUT
+                          BOOKING REQUEST
                         </h2>
                         <button
                           onClick={() => setShowCheckout(false)}
@@ -567,7 +567,7 @@ export const ItemDetailsPage: React.FC = () => {
                     <>
                       <div className="flex items-center justify-between mb-6">
                         <h2 className="text-xl font-black text-pure-white font-display uppercase">
-                          PAYMENT
+                          PAYMENT INFO
                         </h2>
                         <button
                           onClick={() => setCheckoutStep('details')}
@@ -575,6 +575,21 @@ export const ItemDetailsPage: React.FC = () => {
                         >
                           <ArrowLeft size={20} />
                         </button>
+                      </div>
+
+                      {/* Important Notice */}
+                      <div className="bg-accent/20 border-2 border-accent p-4 mb-6">
+                        <div className="flex items-start space-x-3">
+                          <AlertCircle size={20} className="text-accent flex-shrink-0 mt-1" />
+                          <div>
+                            <h4 className="text-accent font-display font-bold uppercase text-sm mb-2">
+                              PAYMENT AUTHORIZATION
+                            </h4>
+                            <p className="text-concrete font-display font-medium text-sm leading-relaxed">
+                              Your payment method will be authorized but <strong>not charged</strong> until the owner approves your booking request.
+                            </p>
+                          </div>
+                        </div>
                       </div>
 
                       {/* Demo Payment Form */}
@@ -637,7 +652,7 @@ export const ItemDetailsPage: React.FC = () => {
                       <div className="bg-charcoal border-2 border-primary p-4 mb-6">
                         <div className="flex justify-between items-center">
                           <span className="text-primary font-display font-bold uppercase">
-                            TOTAL TO PAY
+                            AUTHORIZATION AMOUNT
                           </span>
                           <span className="text-primary font-mono font-black text-2xl">
                             {formatPrice(finalTotal)}
@@ -650,7 +665,7 @@ export const ItemDetailsPage: React.FC = () => {
                         disabled={bookingLoading}
                         className="w-full"
                       >
-                        {bookingLoading ? 'PROCESSING...' : 'COMPLETE BOOKING'}
+                        {bookingLoading ? 'PROCESSING...' : 'SUBMIT BOOKING REQUEST'}
                       </Button>
 
                       <div className="text-center mt-4">
@@ -664,21 +679,21 @@ export const ItemDetailsPage: React.FC = () => {
                   {checkoutStep === 'confirmation' && (
                     <>
                       <div className="text-center py-8">
-                        <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
-                          <Check size={32} className="text-pure-white" />
+                        <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-6">
+                          <Clock size={32} className="text-pure-white" />
                         </div>
                         
                         <h2 className="text-2xl font-black text-pure-white mb-4 font-display uppercase">
-                          BOOKING CONFIRMED!
+                          REQUEST SUBMITTED!
                         </h2>
                         
                         <p className="text-steel font-display font-bold uppercase tracking-wide mb-6">
-                          YOUR BOOKING REQUEST HAS BEEN SENT TO THE OWNER
+                          YOUR BOOKING REQUEST IS PENDING OWNER APPROVAL
                         </p>
 
-                        <div className="bg-charcoal border-2 border-primary p-4 mb-6 text-left">
+                        <div className="bg-charcoal border-2 border-accent p-4 mb-6 text-left">
                           <h3 className="text-lg font-black text-pure-white mb-3 font-display uppercase">
-                            BOOKING DETAILS
+                            REQUEST DETAILS
                           </h3>
                           <div className="space-y-2 text-sm">
                             <div className="flex justify-between">
@@ -694,6 +709,27 @@ export const ItemDetailsPage: React.FC = () => {
                             <div className="flex justify-between">
                               <span className="text-steel font-display font-bold uppercase">TOTAL</span>
                               <span className="text-primary font-mono font-bold">{formatPrice(finalTotal)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-steel font-display font-bold uppercase">STATUS</span>
+                              <span className="text-accent font-display font-bold uppercase">PENDING APPROVAL</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="bg-accent/20 border-2 border-accent p-4 mb-6">
+                          <div className="flex items-start space-x-3">
+                            <AlertCircle size={16} className="text-accent flex-shrink-0 mt-1" />
+                            <div className="text-left">
+                              <h4 className="text-accent font-display font-bold uppercase text-sm mb-2">
+                                WHAT HAPPENS NEXT?
+                              </h4>
+                              <ul className="text-concrete font-display font-medium text-sm space-y-1">
+                                <li>• The owner will review your request</li>
+                                <li>• You'll be notified of their decision</li>
+                                <li>• Payment will only be charged if approved</li>
+                                <li>• You can track status in "My Bookings"</li>
+                              </ul>
                             </div>
                           </div>
                         </div>
