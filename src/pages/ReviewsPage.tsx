@@ -198,4 +198,4 @@ export const ReviewsPage: React.FC = () => {
         )}
       </div>
     </div>
-  )
+  )}
