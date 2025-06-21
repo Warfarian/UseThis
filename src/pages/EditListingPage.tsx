@@ -52,7 +52,11 @@ export const EditListingPage: React.FC = () => {
   }
 
   const fetchItem = async () => {
-    if (!id || !user) return
+    if (!id || !user) {
+      setFetchingItem(false)
+      navigate('/profile')
+      return
+    }
 
     try {
       const { data, error } = await supabase
