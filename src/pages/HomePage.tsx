@@ -50,30 +50,35 @@ export const HomePage: React.FC = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-pure-black noise pt-20">
-      {/* Hero Section */}
-      <section className="relative py-16 sm:py-32 px-6 overflow-hidden" ref={heroRef}>
+    <div className="min-h-screen bg-pure-black noise pt-16 sm:pt-20">
+      {/* Hero Section - Responsive */}
+      <section className="relative py-12 sm:py-16 lg:py-32 px-4 sm:px-6 overflow-hidden" ref={heroRef}>
         <div className="max-w-7xl mx-auto text-center">
-          <div className={`mb-12 ${heroInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
-            <h1 className="text-giant font-black text-pure-white mb-8 font-display leading-none">
+          <div className={`mb-8 sm:mb-12 ${heroInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
+            <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-giant font-black text-pure-white mb-6 sm:mb-8 font-display leading-none">
               <span className="text-primary">SHARE.</span>{' '}
               <span className="text-accent">BORROW.</span>{' '}
               <br />
               <span className="text-secondary">THRIVE.</span>
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-concrete max-w-4xl mx-auto leading-tight font-display font-bold uppercase tracking-wide">
-              THE PEER-TO-PEER RENTAL PLATFORM BUILT FOR COLLEGE STUDENTS. 
-              TURN YOUR UNUSED ITEMS INTO INCOME, OR FIND EXACTLY WHAT YOU NEED.
+            
+            <div className="divider-brutal mb-8 sm:mb-12" />
+            
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-concrete max-w-4xl mx-auto leading-tight font-display font-bold uppercase tracking-wide mb-12 sm:mb-16">
+              THE PEER-TO-PEER PLATFORM BUILT FOR STUDENTS. 
+              <span className="text-primary"> SHARE RESOURCES</span>, 
+              <span className="text-accent"> MAKE MONEY</span>, 
+              <span className="text-secondary"> BUILD COMMUNITY</span>.
             </p>
           </div>
 
-          {/* Mode Toggle */}
-          <div className={`mb-16 ${heroInView ? 'animate-bounce-hard delay-200' : 'opacity-0'}`}>
-            <div className="inline-flex glass-brutal p-2 border-2 border-steel">
+          {/* Mode Toggle - Responsive */}
+          <div className={`mb-12 sm:mb-16 ${heroInView ? 'animate-bounce-hard delay-200' : 'opacity-0'}`}>
+            <div className="inline-flex glass-brutal p-1 sm:p-2 border-2 border-steel">
               <button
                 onClick={() => setMode('need')}
                 data-cursor-interactive="true"
-                className={`px-4 sm:px-8 py-3 sm:py-4 font-bold font-display text-xs sm:text-sm uppercase tracking-wide transition-all duration-100 ${
+                className={`px-3 sm:px-4 md:px-8 py-2 sm:py-3 md:py-4 font-bold font-display text-xs sm:text-sm uppercase tracking-wide transition-all duration-100 ${
                   mode === 'need'
                     ? 'bg-primary text-pure-white'
                     : 'text-pure-white hover:text-primary'
@@ -84,7 +89,7 @@ export const HomePage: React.FC = () => {
               <button
                 onClick={() => setMode('have')}
                 data-cursor-interactive="true"
-                className={`px-4 sm:px-8 py-3 sm:py-4 font-bold font-display text-xs sm:text-sm uppercase tracking-wide transition-all duration-100 ${
+                className={`px-3 sm:px-4 md:px-8 py-2 sm:py-3 md:py-4 font-bold font-display text-xs sm:text-sm uppercase tracking-wide transition-all duration-100 ${
                   mode === 'have'
                     ? 'bg-primary text-pure-white'
                     : 'text-pure-white hover:text-primary'
@@ -95,34 +100,34 @@ export const HomePage: React.FC = () => {
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center mb-20 ${heroInView ? 'animate-bounce-hard delay-400' : 'opacity-0'}`}>
+          {/* Action Buttons - Responsive */}
+          <div className={`flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-16 sm:mb-20 ${heroInView ? 'animate-bounce-hard delay-400' : 'opacity-0'}`}>
             {mode === 'need' ? (
               <>
-                <Link to="/browse" data-cursor-interactive="true">
-                  <Button size="lg" className="flex items-center space-x-3 w-full sm:w-auto">
-                    <Search size={20} />
+                <Link to="/browse" data-cursor-interactive="true" className="w-full sm:w-auto">
+                  <Button size="lg" className="flex items-center justify-center space-x-3 w-full text-sm sm:text-base px-8 sm:px-12 lg:px-16">
+                    <Search size={18} sm:size={20} />
                     <span>BROWSE ITEMS</span>
-                    <ArrowRight size={16} />
+                    <ArrowRight size={14} sm:size={16} />
                   </Button>
                 </Link>
-                <Link to="/login" data-cursor-interactive="true">
-                  <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                <Link to="/login" data-cursor-interactive="true" className="w-full sm:w-auto">
+                  <Button variant="outline" size="lg" className="w-full text-sm sm:text-base px-8 sm:px-12 lg:px-16">
                     JOIN THE COMMUNITY
                   </Button>
                 </Link>
               </>
             ) : (
               <>
-                <Link to="/add-listing" data-cursor-interactive="true">
-                  <Button size="lg" className="flex items-center space-x-3 w-full sm:w-auto">
-                    <Plus size={20} />
+                <Link to="/add-listing" data-cursor-interactive="true" className="w-full sm:w-auto">
+                  <Button size="lg" className="flex items-center justify-center space-x-3 w-full text-sm sm:text-base px-8 sm:px-12 lg:px-16">
+                    <Plus size={18} sm:size={20} />
                     <span>LIST YOUR ITEM</span>
-                    <ArrowRight size={16} />
+                    <ArrowRight size={14} sm:size={16} />
                   </Button>
                 </Link>
-                <Link to="/profile" data-cursor-interactive="true">
-                  <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                <Link to="/profile" data-cursor-interactive="true" className="w-full sm:w-auto">
+                  <Button variant="outline" size="lg" className="w-full text-sm sm:text-base px-8 sm:px-12 lg:px-16">
                     MANAGE LISTINGS
                   </Button>
                 </Link>
@@ -131,33 +136,33 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Abstract Background Elements */}
-        <div className="absolute top-1/4 left-10 w-32 h-32 bg-primary opacity-10 blur-3xl" />
-        <div className="absolute bottom-1/4 right-10 w-48 h-48 bg-accent opacity-10 blur-3xl" />
-        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-secondary opacity-10 blur-2xl" />
+        {/* Abstract Background Elements - Responsive */}
+        <div className="absolute top-1/4 left-4 sm:left-10 w-16 h-16 sm:w-32 sm:h-32 bg-primary opacity-10 blur-3xl" />
+        <div className="absolute bottom-1/4 right-4 sm:right-10 w-24 h-24 sm:w-48 sm:h-48 bg-accent opacity-10 blur-3xl" />
+        <div className="absolute top-1/2 left-1/3 w-12 h-12 sm:w-24 sm:h-24 bg-secondary opacity-10 blur-2xl" />
       </section>
 
-      {/* Popular Categories */}
-      <section className="py-16 sm:py-24 px-6 bg-charcoal" ref={categoriesRef}>
+      {/* Popular Categories - Responsive */}
+      <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6 bg-charcoal" ref={categoriesRef}>
         <div className="max-w-7xl mx-auto">
-          <div className={`text-center mb-16 ${categoriesInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
-            <h2 className="text-huge font-black text-pure-white mb-6 font-display">
+          <div className={`text-center mb-12 sm:mb-16 ${categoriesInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
+            <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-huge font-black text-pure-white mb-4 sm:mb-6 font-display">
               POPULAR CATEGORIES
             </h2>
-            <p className="text-lg sm:text-xl text-concrete font-display font-bold uppercase tracking-wide">
+            <p className="text-base sm:text-lg lg:text-xl text-concrete font-display font-bold uppercase tracking-wide">
               WHAT STUDENTS ARE SHARING MOST
             </p>
           </div>
 
-          <div className="grid-brutal">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {categories.map(({ name, icon: Icon, color }, index) => (
               <Link key={name} to={`/browse?category=${encodeURIComponent(name)}`}>
-                <Card className={`text-center group ${categoriesInView ? `animate-bounce-hard delay-${(index + 1) * 100}` : 'opacity-0'}`}>
-                  <div className="w-20 h-20 mx-auto mb-6 glass-brutal flex items-center justify-center border-2 border-steel group-hover:border-primary transition-all duration-100">
-                    <Icon size={36} className="text-steel group-hover:text-primary transition-colors duration-100" />
+                <Card className={`text-center group p-6 sm:p-8 ${categoriesInView ? `animate-bounce-hard delay-${(index + 1) * 100}` : 'opacity-0'}`}>
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 glass-brutal flex items-center justify-center border-2 border-steel group-hover:border-primary transition-all duration-100">
+                    <Icon size={28} sm:size={36} className="text-steel group-hover:text-primary transition-colors duration-100" />
                   </div>
-                  <h3 className="text-big font-black text-pure-white mb-3 font-display group-hover:text-primary transition-colors duration-100">{name}</h3>
-                  <p className="text-steel font-display font-bold uppercase tracking-wide text-sm">DISCOVER AVAILABLE ITEMS</p>
+                  <h3 className="text-xl sm:text-2xl lg:text-big font-black text-pure-white mb-2 sm:mb-3 font-display group-hover:text-primary transition-colors duration-100">{name}</h3>
+                  <p className="text-steel font-display font-bold uppercase tracking-wide text-xs sm:text-sm">DISCOVER AVAILABLE ITEMS</p>
                 </Card>
               </Link>
             ))}
@@ -165,21 +170,21 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Items */}
-      <section className="py-16 sm:py-24 px-6" ref={featuredRef}>
+      {/* Featured Items - Responsive */}
+      <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6" ref={featuredRef}>
         <div className="max-w-7xl mx-auto">
-          <div className={`flex flex-col sm:flex-row sm:items-center sm:justify-between mb-16 ${featuredInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
-            <div className="mb-6 sm:mb-0">
-              <h2 className="text-huge font-black text-pure-white mb-6 font-display flex flex-col sm:flex-row sm:items-center">
-                <TrendingUp className="mb-4 sm:mb-0 sm:mr-6 text-primary" size={48} />
+          <div className={`flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 sm:mb-16 ${featuredInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
+            <div className="mb-6 lg:mb-0">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-huge font-black text-pure-white mb-4 sm:mb-6 font-display flex flex-col lg:flex-row lg:items-center">
+                <TrendingUp className="mb-2 lg:mb-0 lg:mr-6 text-primary" size={32} sm:size={48} />
                 TRENDING NOW
               </h2>
-              <p className="text-lg sm:text-xl text-concrete font-display font-bold uppercase tracking-wide">
+              <p className="text-base sm:text-lg lg:text-xl text-concrete font-display font-bold uppercase tracking-wide">
                 ITEMS THAT ARE IN HIGH DEMAND
               </p>
             </div>
             <Link to="/browse" data-cursor-interactive="true">
-              <Button variant="outline" className="flex items-center space-x-2 w-full sm:w-auto">
+              <Button variant="outline" className="flex items-center space-x-2 w-full lg:w-auto">
                 <span>VIEW ALL</span>
                 <ArrowRight size={16} />
               </Button>
@@ -187,17 +192,17 @@ export const HomePage: React.FC = () => {
           </div>
 
           {loading ? (
-            <div className="grid-brutal">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {[...Array(6)].map((_, i) => (
-                <Card key={i} className="loading-brutal h-80" />
+                <Card key={i} className="loading-brutal h-64 sm:h-80" />
               ))}
             </div>
           ) : (
-            <div className="grid-brutal">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {featuredItems.map((item, index) => (
                 <Link key={item.id} to={`/item/${item.id}`}>
-                  <Card className={`group ${featuredInView ? `animate-bounce-hard delay-${(index % 3 + 1) * 100}` : 'opacity-0'}`}>
-                    <div className="aspect-video bg-steel/20 mb-6 overflow-hidden">
+                  <Card className={`group p-4 sm:p-6 ${featuredInView ? `animate-bounce-hard delay-${(index % 3 + 1) * 100}` : 'opacity-0'}`}>
+                    <div className="aspect-video bg-steel/20 mb-4 sm:mb-6 overflow-hidden">
                       {item.image_url ? (
                         <img
                           src={item.image_url}
@@ -206,21 +211,21 @@ export const HomePage: React.FC = () => {
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <span className="text-steel font-display font-bold uppercase tracking-wide text-sm">NO IMAGE</span>
+                          <span className="text-steel font-display font-bold uppercase tracking-wide text-xs sm:text-sm">NO IMAGE</span>
                         </div>
                       )}
                     </div>
-                    <h3 className="text-xl font-black text-pure-white mb-3 font-display group-hover:text-primary transition-colors duration-100 uppercase">
+                    <h3 className="text-lg sm:text-xl font-black text-pure-white mb-2 sm:mb-3 font-display group-hover:text-primary transition-colors duration-100 uppercase">
                       {item.title}
                     </h3>
-                    <p className="text-steel text-sm mb-4 line-clamp-2 font-display font-bold uppercase tracking-wide">
+                    <p className="text-steel text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 font-display font-bold uppercase tracking-wide">
                       {item.description}
                     </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-primary font-black text-lg font-mono">
+                      <span className="text-primary font-black text-base sm:text-lg font-mono">
                         {formatPrice(item.price_per_day)}/DAY
                       </span>
-                      <span className="text-steel text-sm font-display font-bold uppercase tracking-wide">
+                      <span className="text-steel text-xs sm:text-sm font-display font-bold uppercase tracking-wide">
                         {item.location}
                       </span>
                     </div>
@@ -232,26 +237,26 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 sm:py-32 px-6 bg-charcoal" ref={ctaRef}>
+      {/* CTA Section - Responsive */}
+      <section className="py-12 sm:py-16 lg:py-32 px-4 sm:px-6 bg-charcoal" ref={ctaRef}>
         <div className="max-w-5xl mx-auto text-center">
           <div className={`${ctaInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
-            <h2 className="text-giant font-black text-pure-white mb-8 font-display leading-none">
+            <h2 className="text-4xl sm:text-6xl md:text-8xl lg:text-giant font-black text-pure-white mb-6 sm:mb-8 font-display leading-none">
               READY TO{' '}
               <span className="text-primary glitch" data-text="USETHIS">USETHIS</span>?
             </h2>
-            <p className="text-lg sm:text-xl text-concrete mb-12 max-w-3xl mx-auto font-display font-bold uppercase tracking-wide leading-tight">
+            <p className="text-base sm:text-lg lg:text-xl text-concrete mb-8 sm:mb-12 max-w-3xl mx-auto font-display font-bold uppercase tracking-wide leading-tight">
               JOIN THOUSANDS OF STUDENTS ALREADY SHARING, SAVING, AND BUILDING COMMUNITY THROUGH PEER-TO-PEER RENTALS.
             </p>
-            <div className={`flex flex-col sm:flex-row gap-6 justify-center ${ctaInView ? 'animate-bounce-hard delay-200' : 'opacity-0'}`}>
-              <Link to="/login" data-cursor-interactive="true">
-                <Button size="lg" className="flex items-center space-x-3 w-full sm:w-auto">
+            <div className={`flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center ${ctaInView ? 'animate-bounce-hard delay-200' : 'opacity-0'}`}>
+              <Link to="/login" data-cursor-interactive="true" className="w-full sm:w-auto">
+                <Button size="lg" className="flex items-center justify-center space-x-3 w-full text-sm sm:text-base px-8 sm:px-12 lg:px-16">
                   <span>GET STARTED</span>
-                  <ArrowRight size={20} />
+                  <ArrowRight size={18} sm:size={20} />
                 </Button>
               </Link>
-              <Link to="/browse" data-cursor-interactive="true">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto">
+              <Link to="/browse" data-cursor-interactive="true" className="w-full sm:w-auto">
+                <Button variant="outline" size="lg" className="w-full text-sm sm:text-base px-8 sm:px-12 lg:px-16">
                   EXPLORE ITEMS
                 </Button>
               </Link>

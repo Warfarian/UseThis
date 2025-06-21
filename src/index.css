@@ -124,9 +124,9 @@ html, body {
   background: var(--accent);
 }
 
-/* Typography System */
+/* Responsive Typography System */
 .text-mega {
-  font-size: clamp(6rem, 15vw, 20rem);
+  font-size: clamp(4rem, 12vw, 20rem);
   font-weight: 900;
   line-height: 0.8;
   letter-spacing: -0.05em;
@@ -134,7 +134,7 @@ html, body {
 }
 
 .text-giant {
-  font-size: clamp(4rem, 10vw, 12rem);
+  font-size: clamp(3rem, 8vw, 12rem);
   font-weight: 800;
   line-height: 0.85;
   letter-spacing: -0.03em;
@@ -142,7 +142,7 @@ html, body {
 }
 
 .text-huge {
-  font-size: clamp(3rem, 8vw, 8rem);
+  font-size: clamp(2.5rem, 6vw, 8rem);
   font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.02em;
@@ -150,13 +150,13 @@ html, body {
 }
 
 .text-big {
-  font-size: clamp(2rem, 5vw, 5rem);
+  font-size: clamp(1.5rem, 4vw, 5rem);
   font-weight: 600;
   line-height: 1;
   text-transform: uppercase;
 }
 
-/* Brutal Button System */
+/* Responsive Brutal Button System */
 .btn-primary {
   background: var(--primary);
   color: var(--pure-white);
@@ -167,9 +167,15 @@ html, body {
   transition: all 0.1s ease;
   position: relative;
   overflow: hidden;
-  box-shadow: 4px 4px 0 var(--charcoal);
+  box-shadow: 2px 2px 0 var(--charcoal);
   cursor: pointer !important;
   pointer-events: auto !important;
+}
+
+@media (min-width: 640px) {
+  .btn-primary {
+    box-shadow: 4px 4px 0 var(--charcoal);
+  }
 }
 
 .btn-primary::before {
@@ -188,39 +194,76 @@ html, body {
 }
 
 .btn-primary:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--charcoal);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--charcoal);
   background: var(--accent);
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+@media (min-width: 640px) {
+  .btn-primary:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--charcoal);
+  }
 }
 
 .btn-primary:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 var(--charcoal);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--charcoal);
+}
+
+@media (min-width: 640px) {
+  .btn-primary:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--charcoal);
+  }
 }
 
 .btn-outline {
   background: transparent;
   color: var(--primary);
-  border: 3px solid var(--primary);
+  border: 2px solid var(--primary);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   transition: all 0.1s ease;
-  box-shadow: 4px 4px 0 var(--primary);
+  box-shadow: 2px 2px 0 var(--primary);
   cursor: pointer !important;
   pointer-events: auto !important;
+}
+
+@media (min-width: 640px) {
+  .btn-outline {
+    border: 3px solid var(--primary);
+    box-shadow: 4px 4px 0 var(--primary);
+  }
 }
 
 .btn-outline:hover {
   background: var(--primary);
   color: var(--pure-white);
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--primary);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--primary);
+}
+
+@media (min-width: 640px) {
+  .btn-outline:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--primary);
+  }
 }
 
 .btn-outline:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 var(--primary);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--primary);
+}
+
+@media (min-width: 640px) {
+  .btn-outline:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--primary);
+  }
 }
 
 .btn-ghost {
@@ -240,13 +283,20 @@ html, body {
   color: var(--primary);
 }
 
-/* Brutal Cards */
+/* Responsive Brutal Cards */
 .card-brutal {
   background: var(--charcoal);
-  border: 3px solid var(--steel);
-  padding: 2rem;
+  border: 2px solid var(--steel);
+  padding: 1rem;
   transition: all 0.2s ease;
   position: relative;
+}
+
+@media (min-width: 640px) {
+  .card-brutal {
+    border: 3px solid var(--steel);
+    padding: 2rem;
+  }
 }
 
 .card-brutal::before {
@@ -267,8 +317,15 @@ html, body {
 
 .card-brutal:hover {
   border-color: var(--primary);
-  transform: translate(-4px, -4px);
-  box-shadow: 8px 8px 0 var(--primary);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--primary);
+}
+
+@media (min-width: 640px) {
+  .card-brutal:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 8px 8px 0 var(--primary);
+  }
 }
 
 /* Glitch Effects */
@@ -429,30 +486,57 @@ html, body {
 .delay-400 { animation-delay: 0.4s; }
 .delay-500 { animation-delay: 0.5s; }
 
-/* Brutal Grid System */
+/* Responsive Brutal Grid System */
 .grid-brutal {
   display: grid;
-  gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+@media (min-width: 640px) {
+  .grid-brutal {
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
 }
 
 /* Hover states */
 .hover-brutal:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--primary);
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 var(--primary);
+}
+
+@media (min-width: 640px) {
+  .hover-brutal:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--primary);
+  }
 }
 
 /* Focus states */
 .focus-brutal:focus {
   outline: none;
-  box-shadow: 0 0 0 3px var(--primary);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+@media (min-width: 640px) {
+  .focus-brutal:focus {
+    box-shadow: 0 0 0 3px var(--primary);
+  }
 }
 
 /* Brutal Dividers */
 .divider-brutal {
-  height: 4px;
+  height: 3px;
   background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
-  margin: 2rem 0;
+  margin: 1rem 0;
+}
+
+@media (min-width: 640px) {
+  .divider-brutal {
+    height: 4px;
+    margin: 2rem 0;
+  }
 }
 
 /* Loading states */
@@ -467,12 +551,12 @@ html, body {
   100% { background-position: -200% 0; }
 }
 
-/* Brutal Input System - ENHANCED FOR CLICKABILITY */
+/* Responsive Brutal Input System */
 .input-brutal {
   background: var(--charcoal);
-  border: 3px solid var(--steel);
+  border: 2px solid var(--steel);
   color: var(--pure-white);
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -482,6 +566,13 @@ html, body {
   z-index: 100;
   cursor: text !important;
   pointer-events: auto !important;
+}
+
+@media (min-width: 640px) {
+  .input-brutal {
+    border: 3px solid var(--steel);
+    padding: 1rem 1.5rem;
+  }
 }
 
 .input-brutal:focus {
@@ -534,10 +625,16 @@ input[type="file"] {
   z-index: 999 !important;
 }
 
-/* Brutal Navigation */
+/* Responsive Brutal Navigation */
 .nav-brutal {
   background: var(--pure-black);
-  border-bottom: 4px solid var(--primary);
+  border-bottom: 3px solid var(--primary);
+}
+
+@media (min-width: 640px) {
+  .nav-brutal {
+    border-bottom: 4px solid var(--primary);
+  }
 }
 
 .nav-item-brutal {
@@ -554,12 +651,19 @@ input[type="file"] {
 .nav-item-brutal::after {
   content: '';
   position: absolute;
-  bottom: -4px;
+  bottom: -3px;
   left: 0;
   width: 0;
-  height: 4px;
+  height: 3px;
   background: var(--primary);
   transition: width 0.2s ease;
+}
+
+@media (min-width: 640px) {
+  .nav-item-brutal::after {
+    bottom: -4px;
+    height: 4px;
+  }
 }
 
 .nav-item-brutal:hover::after {
@@ -570,19 +674,46 @@ input[type="file"] {
   color: var(--primary);
 }
 
-/* Responsive brutal design */
-@media (max-width: 768px) {
+/* Responsive design utilities */
+@media (max-width: 640px) {
   .text-mega {
-    font-size: clamp(3rem, 12vw, 8rem);
+    font-size: clamp(2.5rem, 10vw, 6rem);
   }
   
   .text-giant {
-    font-size: clamp(2.5rem, 10vw, 6rem);
+    font-size: clamp(2rem, 8vw, 4rem);
   }
   
   .card-brutal {
     padding: 1rem;
   }
+  
+  .btn-primary, .btn-outline {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 /* Experimental typography effects */

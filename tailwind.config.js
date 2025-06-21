@@ -24,10 +24,10 @@ export default {
         'mono': ['JetBrains Mono', 'monospace']
       },
       fontSize: {
-        'mega': 'clamp(6rem, 15vw, 20rem)',
-        'giant': 'clamp(4rem, 10vw, 12rem)',
-        'huge': 'clamp(3rem, 8vw, 8rem)',
-        'big': 'clamp(2rem, 5vw, 5rem)',
+        'mega': 'clamp(4rem, 12vw, 20rem)',
+        'giant': 'clamp(3rem, 8vw, 12rem)',
+        'huge': 'clamp(2.5rem, 6vw, 8rem)',
+        'big': 'clamp(1.5rem, 4vw, 5rem)',
       },
       animation: {
         'glitch': 'glitch 0.3s infinite',
@@ -61,7 +61,10 @@ export default {
       },
       backdropBlur: {
         'brutal': '2px'
-      }
+      },
+      screens: {
+        'xs': '475px',
+      },
     },
   },
   plugins: [],

@@ -169,40 +169,40 @@ export const MessagesPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-pure-black noise py-8 px-6 pt-28">
+    <div className="min-h-screen bg-pure-black noise py-6 sm:py-8 px-4 sm:px-6 pt-20 sm:pt-28">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-huge font-black text-pure-white mb-4 font-display">
+        {/* Header - Responsive */}
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-huge font-black text-pure-white mb-3 sm:mb-4 font-display">
             MY <span className="text-primary">MESSAGES</span>
           </h1>
-          <p className="text-xl text-concrete font-display font-bold uppercase tracking-wide">
+          <p className="text-base sm:text-lg lg:text-xl text-concrete font-display font-bold uppercase tracking-wide">
             CHAT WITH OTHER STUDENTS
           </p>
-          <div className="divider-brutal mt-6" />
+          <div className="divider-brutal mt-4 sm:mt-6" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 h-[600px]">
-          {/* Conversations List */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 h-[500px] sm:h-[600px]">
+          {/* Conversations List - Responsive */}
           <div className={`lg:col-span-1 ${selectedConversation ? 'hidden lg:block' : ''}`}>
             <div className="card-brutal h-full p-0 overflow-hidden bg-charcoal border-3 border-steel">
-              <div className="p-6 border-b-2 border-steel">
-                <h2 className="text-xl font-black text-pure-white font-display uppercase">
+              <div className="p-4 sm:p-6 border-b-2 border-steel">
+                <h2 className="text-lg sm:text-xl font-black text-pure-white font-display uppercase">
                   CONVERSATIONS
                 </h2>
               </div>
               
               <div className="overflow-y-auto h-full">
                 {loading ? (
-                  <div className="p-6">
-                    <div className="loading-brutal h-20 mb-4" />
-                    <div className="loading-brutal h-20 mb-4" />
-                    <div className="loading-brutal h-20" />
+                  <div className="p-4 sm:p-6">
+                    <div className="loading-brutal h-16 sm:h-20 mb-4" />
+                    <div className="loading-brutal h-16 sm:h-20 mb-4" />
+                    <div className="loading-brutal h-16 sm:h-20" />
                   </div>
                 ) : conversations.length === 0 ? (
-                  <div className="p-6 text-center">
-                    <MessageSquare size={32} className="mx-auto mb-4 text-steel" />
-                    <p className="text-steel font-display font-bold uppercase tracking-wide text-sm">
+                  <div className="p-4 sm:p-6 text-center">
+                    <MessageSquare size={24} sm:size={32} className="mx-auto mb-3 sm:mb-4 text-steel" />
+                    <p className="text-steel font-display font-bold uppercase tracking-wide text-xs sm:text-sm">
                       NO CONVERSATIONS YET
                     </p>
                     <p className="text-steel font-display font-medium text-xs mt-2">
@@ -218,7 +218,7 @@ export const MessagesPage: React.FC = () => {
                       <button
                         key={conversation.id}
                         onClick={() => handleConversationClick(conversation)}
-                        className={`w-full p-4 border-b border-steel/30 text-left transition-all duration-200 hover:bg-charcoal/80 focus:outline-none focus:bg-charcoal/80 ${
+                        className={`w-full p-3 sm:p-4 border-b border-steel/30 text-left transition-all duration-200 hover:bg-charcoal/80 focus:outline-none focus:bg-charcoal/80 ${
                           isSelected ? 'bg-charcoal border-l-4 border-primary' : ''
                         }`}
                         style={{ 
@@ -228,20 +228,20 @@ export const MessagesPage: React.FC = () => {
                           position: 'relative'
                         }}
                       >
-                        <div className="flex items-start space-x-3">
-                          <div className="w-10 h-10 bg-primary flex items-center justify-center flex-shrink-0">
-                            <span className="text-pure-white font-bold text-sm">
+                        <div className="flex items-start space-x-2 sm:space-x-3">
+                          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary flex items-center justify-center flex-shrink-0">
+                            <span className="text-pure-white font-bold text-xs sm:text-sm">
                               {otherParticipant?.name.charAt(0).toUpperCase()}
                             </span>
                           </div>
                           
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between mb-1">
-                              <h3 className="text-pure-white font-display font-bold uppercase tracking-wide text-sm truncate">
+                              <h3 className="text-pure-white font-display font-bold uppercase tracking-wide text-xs sm:text-sm truncate">
                                 {otherParticipant?.name}
                               </h3>
                               {conversation.unread_count! > 0 && (
-                                <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center">
+                                <div className="w-4 h-4 sm:w-5 sm:h-5 bg-primary rounded-full flex items-center justify-center">
                                   <span className="text-pure-white text-xs font-bold">
                                     {conversation.unread_count}
                                   </span>
@@ -251,7 +251,7 @@ export const MessagesPage: React.FC = () => {
                             
                             {conversation.item && (
                               <div className="flex items-center text-steel text-xs mb-1">
-                                <Package size={12} className="mr-1" />
+                                <Package size={10} sm:size={12} className="mr-1" />
                                 <span className="truncate">{conversation.item.title}</span>
                               </div>
                             )}
@@ -269,34 +269,34 @@ export const MessagesPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Chat Area */}
+          {/* Chat Area - Responsive */}
           <div className={`lg:col-span-2 ${!selectedConversation ? 'hidden lg:block' : ''}`}>
             <Card className="h-full p-0 overflow-hidden flex flex-col">
               {selectedConversation ? (
                 <>
-                  {/* Chat Header */}
-                  <div className="p-4 sm:p-6 border-b-2 border-steel flex items-center space-x-4">
+                  {/* Chat Header - Responsive */}
+                  <div className="p-3 sm:p-4 lg:p-6 border-b-2 border-steel flex items-center space-x-3 sm:space-x-4">
                     <button
                       onClick={() => setSelectedConversation(null)}
                       className="lg:hidden text-steel hover:text-primary transition-colors"
                       style={{ cursor: 'pointer', pointerEvents: 'auto' }}
                     >
-                      <ArrowLeft size={20} />
+                      <ArrowLeft size={18} sm:size={20} />
                     </button>
                     
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary flex items-center justify-center">
-                      <span className="text-pure-white font-bold text-sm sm:text-base">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-primary flex items-center justify-center">
+                      <span className="text-pure-white font-bold text-xs sm:text-sm lg:text-base">
                         {getOtherParticipant(selectedConversation)?.name.charAt(0).toUpperCase()}
                       </span>
                     </div>
                     
                     <div className="flex-1 min-w-0">
-                      <h2 className="text-lg sm:text-xl font-black text-pure-white font-display uppercase truncate">
+                      <h2 className="text-base sm:text-lg lg:text-xl font-black text-pure-white font-display uppercase truncate">
                         {getOtherParticipant(selectedConversation)?.name}
                       </h2>
                       {selectedConversation.item && (
-                        <div className="flex items-center text-steel text-sm">
-                          <Package size={14} className="mr-2" />
+                        <div className="flex items-center text-steel text-xs sm:text-sm">
+                          <Package size={12} sm:size={14} className="mr-1 sm:mr-2" />
                           <span className="font-display font-bold uppercase tracking-wide truncate">
                             {selectedConversation.item.title}
                           </span>
@@ -305,12 +305,12 @@ export const MessagesPage: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Messages */}
-                  <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+                  {/* Messages - Responsive */}
+                  <div className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6 space-y-3 sm:space-y-4">
                     {messages.length === 0 ? (
-                      <div className="text-center py-8">
-                        <MessageSquare size={32} className="mx-auto mb-4 text-steel" />
-                        <p className="text-steel font-display font-bold uppercase tracking-wide text-sm">
+                      <div className="text-center py-6 sm:py-8">
+                        <MessageSquare size={24} sm:size={32} className="mx-auto mb-3 sm:mb-4 text-steel" />
+                        <p className="text-steel font-display font-bold uppercase tracking-wide text-xs sm:text-sm">
                           NO MESSAGES YET
                         </p>
                         <p className="text-steel font-display font-medium text-xs mt-2">
@@ -324,16 +324,16 @@ export const MessagesPage: React.FC = () => {
                           className={`flex ${message.sender_id === user?.id ? 'justify-end' : 'justify-start'}`}
                         >
                           <div
-                            className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
+                            className={`max-w-xs sm:max-w-sm lg:max-w-md px-3 sm:px-4 py-2 sm:py-3 rounded-lg ${
                               message.sender_id === user?.id
                                 ? 'bg-primary text-pure-white'
                                 : 'bg-charcoal text-pure-white border-2 border-steel'
                             }`}
                           >
-                            <p className="font-display font-medium text-sm leading-relaxed break-words">
+                            <p className="font-display font-medium text-xs sm:text-sm leading-relaxed break-words">
                               {message.content}
                             </p>
-                            <p className={`text-xs mt-2 ${
+                            <p className={`text-xs mt-1 sm:mt-2 ${
                               message.sender_id === user?.id ? 'text-pure-white/70' : 'text-steel'
                             }`}>
                               {formatDate(message.created_at)}
@@ -345,9 +345,9 @@ export const MessagesPage: React.FC = () => {
                     <div ref={messagesEndRef} />
                   </div>
 
-                  {/* Message Input */}
-                  <div className="p-4 sm:p-6 border-t-2 border-steel bg-charcoal">
-                    <div className="flex space-x-3">
+                  {/* Message Input - Responsive */}
+                  <div className="p-3 sm:p-4 lg:p-6 border-t-2 border-steel bg-charcoal">
+                    <div className="flex space-x-2 sm:space-x-3">
                       <div className="flex-1">
                         <textarea
                           ref={textareaRef}
@@ -356,7 +356,7 @@ export const MessagesPage: React.FC = () => {
                           onKeyPress={handleKeyPress}
                           placeholder="TYPE YOUR MESSAGE..."
                           rows={2}
-                          className="w-full bg-pure-black border-2 border-steel text-pure-white px-4 py-3 font-display font-medium text-sm placeholder-steel focus:border-primary focus:outline-none resize-none transition-colors"
+                          className="w-full bg-pure-black border-2 border-steel text-pure-white px-3 sm:px-4 py-2 sm:py-3 font-display font-medium text-xs sm:text-sm placeholder-steel focus:border-primary focus:outline-none resize-none transition-colors"
                           style={{ cursor: 'text', pointerEvents: 'auto' }}
                           disabled={sendingMessage}
                         />
@@ -364,11 +364,11 @@ export const MessagesPage: React.FC = () => {
                       <Button
                         onClick={sendMessage}
                         disabled={!newMessage.trim() || sendingMessage}
-                        className="flex items-center space-x-2 px-6"
+                        className="flex items-center space-x-1 sm:space-x-2 px-4 sm:px-6"
                         style={{ cursor: 'pointer', pointerEvents: 'auto' }}
                       >
-                        <Send size={16} />
-                        <span className="hidden sm:inline">SEND</span>
+                        <Send size={14} sm:size={16} />
+                        <span className="hidden sm:inline text-xs sm:text-sm">SEND</span>
                       </Button>
                     </div>
                     <div className="mt-2 text-steel font-display font-medium text-xs">
@@ -377,13 +377,13 @@ export const MessagesPage: React.FC = () => {
                   </div>
                 </>
               ) : (
-                <div className="flex-1 flex items-center justify-center p-6">
+                <div className="flex-1 flex items-center justify-center p-4 sm:p-6">
                   <div className="text-center">
-                    <MessageSquare size={48} className="mx-auto mb-4 text-steel" />
-                    <h3 className="text-xl font-black text-pure-white mb-2 font-display">
+                    <MessageSquare size={32} sm:size={48} className="mx-auto mb-3 sm:mb-4 text-steel" />
+                    <h3 className="text-lg sm:text-xl font-black text-pure-white mb-2 font-display">
                       SELECT A CONVERSATION
                     </h3>
-                    <p className="text-steel font-display font-bold uppercase tracking-wide text-sm">
+                    <p className="text-steel font-display font-bold uppercase tracking-wide text-xs sm:text-sm">
                       CHOOSE A CONVERSATION TO START CHATTING
                     </p>
                   </div>

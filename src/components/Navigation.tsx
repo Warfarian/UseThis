@@ -25,63 +25,63 @@ export const Navigation: React.FC = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-[100] nav-brutal">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo - Fixed width, pushed left */}
-          <div className="flex-shrink-0 w-48">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20">
+          {/* Logo - Responsive width */}
+          <div className="flex-shrink-0 w-32 sm:w-48">
             <Link 
               to="/home" 
-              className="flex items-center space-x-3 group"
+              className="flex items-center space-x-2 sm:space-x-3 group"
               data-cursor-interactive="true"
             >
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary flex items-center justify-center relative overflow-hidden">
-                <span className="text-pure-white font-black text-lg sm:text-2xl font-mono">U</span>
+              <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-primary flex items-center justify-center relative overflow-hidden">
+                <span className="text-pure-white font-black text-sm sm:text-lg lg:text-2xl font-mono">U</span>
                 <div className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-100"></div>
               </div>
               <div className="hidden sm:block">
-                <span className="text-xl sm:text-2xl font-black text-pure-white font-display uppercase tracking-tight">UseThis</span>
+                <span className="text-lg sm:text-xl lg:text-2xl font-black text-pure-white font-display uppercase tracking-tight">UseThis</span>
                 <div className="text-xs text-primary font-mono uppercase tracking-widest">BETA</div>
               </div>
             </Link>
           </div>
 
-          {/* Navigation Items - Centered, compact */}
+          {/* Navigation Items - Hidden on mobile, shown on desktop */}
           {user && (
-            <div className="hidden xl:flex items-center justify-center flex-1 max-w-4xl mx-8">
-              <div className="flex items-center space-x-4">
+            <div className="hidden lg:flex items-center justify-center flex-1 max-w-4xl mx-8">
+              <div className="flex items-center space-x-2 xl:space-x-4">
                 {navItems.map(({ path, icon: Icon, label }) => (
                   <Link
                     key={path}
                     to={path}
                     data-cursor-interactive="true"
                     className={cn(
-                      'nav-item-brutal flex items-center space-x-1 py-2 px-2 whitespace-nowrap transition-all duration-100',
+                      'nav-item-brutal flex items-center space-x-1 py-2 px-2 xl:px-3 whitespace-nowrap transition-all duration-100',
                       location.pathname === path 
                         ? 'text-primary border-b-2 border-primary' 
                         : 'text-pure-white hover:text-primary'
                     )}
                   >
                     <Icon size={14} />
-                    <span className="text-xs font-bold hidden 2xl:inline">{label}</span>
+                    <span className="text-xs font-bold hidden xl:inline">{label}</span>
                   </Link>
                 ))}
               </div>
             </div>
           )}
 
-          {/* User Actions - Fixed width, always visible */}
-          <div className="flex-shrink-0 w-48 flex justify-end">
-            <div className="flex items-center space-x-3">
+          {/* User Actions - Responsive */}
+          <div className="flex-shrink-0 w-32 sm:w-48 flex justify-end">
+            <div className="flex items-center space-x-2 sm:space-x-3">
               {user ? (
                 <>
-                  {/* Compact User Profile Info */}
-                  <div className="hidden xl:flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-primary flex items-center justify-center">
-                      <span className="text-pure-white font-black text-sm">
+                  {/* Compact User Profile Info - Hidden on small screens */}
+                  <div className="hidden lg:flex items-center space-x-2">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-primary flex items-center justify-center">
+                      <span className="text-pure-white font-black text-xs sm:text-sm">
                         {user.email?.charAt(0).toUpperCase()}
                       </span>
                     </div>
-                    <div className="text-right hidden 2xl:block">
+                    <div className="text-right hidden xl:block">
                       <div className="text-pure-white font-display font-bold uppercase tracking-wide text-xs">
                         WELCOME
                       </div>
@@ -95,16 +95,16 @@ export const Navigation: React.FC = () => {
                     variant="ghost"
                     size="sm"
                     onClick={handleSignOut}
-                    className="flex items-center space-x-2 px-4"
+                    className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4"
                     data-cursor-interactive="true"
                   >
-                    <LogOut size={16} />
-                    <span>EXIT</span>
+                    <LogOut size={14} sm:size={16} />
+                    <span className="text-xs sm:text-sm">EXIT</span>
                   </Button>
                 </>
               ) : (
                 <Link to="/login" data-cursor-interactive="true">
-                  <Button size="sm">ENTER</Button>
+                  <Button size="sm" className="text-xs sm:text-sm px-3 sm:px-4">ENTER</Button>
                 </Link>
               )}
             </div>
@@ -112,23 +112,23 @@ export const Navigation: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation - Improved responsive design */}
       {user && (
-        <div className="xl:hidden border-t-2 border-steel bg-charcoal">
-          <div className="flex justify-start py-3 px-4 overflow-x-auto whitespace-nowrap scrollbar-hide">
+        <div className="lg:hidden border-t-2 border-steel bg-charcoal">
+          <div className="flex justify-start py-2 sm:py-3 px-3 sm:px-4 overflow-x-auto whitespace-nowrap scrollbar-hide">
             {navItems.map(({ path, icon: Icon, label }) => (
               <Link
                 key={path}
                 to={path}
                 data-cursor-interactive="true"
                 className={cn(
-                  'flex flex-col items-center py-2 px-4 transition-colors font-display text-xs min-w-0 flex-shrink-0',
+                  'flex flex-col items-center py-2 px-3 sm:px-4 transition-colors font-display text-xs min-w-0 flex-shrink-0',
                   location.pathname === path
                     ? 'text-primary'
                     : 'text-steel hover:text-primary'
                 )}
               >
-                <Icon size={18} />
+                <Icon size={16} sm:size={18} />
                 <span className="mt-1 uppercase tracking-wide text-xs">{label}</span>
               </Link>
             ))}
