@@ -97,7 +97,7 @@ export const BrowsePage: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-12">
-          <h1 className="text-huge font-black text-pure-white mb-4 font-display">
+          <h1 className="text-huge font-black text-pure-white mb-4 font-display glitch" data-text="BROWSE ITEMS">
             BROWSE <span className="text-primary">ITEMS</span>
           </h1>
           <p className="text-xl text-concrete font-display font-bold uppercase tracking-wide">
