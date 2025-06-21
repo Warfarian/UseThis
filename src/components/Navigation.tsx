@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { Button } from './ui/Button'
 import { Home, Search, Plus, Calendar, User, LogOut } from 'lucide-react'
+import { cn } from '../lib/utils'
 
 export const Navigation: React.FC = () => {
   const { user, signOut } = useAuth()
@@ -30,13 +31,13 @@ export const Navigation: React.FC = () => {
             className="flex items-center space-x-4 group"
             data-cursor-interactive="true"
           >
-            <div className="w-12 h-12 bg-electric flex items-center justify-center relative overflow-hidden">
-              <span className="text-pure-black font-black text-2xl font-mono">U</span>
-              <div className="absolute inset-0 bg-hot-pink opacity-0 group-hover:opacity-100 transition-opacity duration-100"></div>
+            <div className="w-12 h-12 bg-primary flex items-center justify-center relative overflow-hidden">
+              <span className="text-pure-white font-black text-2xl font-mono">U</span>
+              <div className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-100"></div>
             </div>
             <div>
               <span className="text-2xl font-black text-pure-white font-display uppercase tracking-tight">UseThis</span>
-              <div className="text-xs text-electric font-mono uppercase tracking-widest">BETA</div>
+              <div className="text-xs text-primary font-mono uppercase tracking-widest">BETA</div>
             </div>
           </Link>
 
@@ -50,7 +51,7 @@ export const Navigation: React.FC = () => {
                   data-cursor-interactive="true"
                   className={cn(
                     'nav-item-brutal flex items-center space-x-2 py-2',
-                    location.pathname === path && 'text-electric neon-electric'
+                    location.pathname === path && 'text-primary'
                   )}
                 >
                   <Icon size={18} />
@@ -94,8 +95,8 @@ export const Navigation: React.FC = () => {
                 className={cn(
                   'flex flex-col items-center py-2 px-3 transition-colors font-display text-xs',
                   location.pathname === path
-                    ? 'text-electric'
-                    : 'text-steel hover:text-electric'
+                    ? 'text-primary'
+                    : 'text-steel hover:text-primary'
                 )}
               >
                 <Icon size={20} />

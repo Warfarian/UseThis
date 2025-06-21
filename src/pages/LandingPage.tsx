@@ -56,13 +56,13 @@ export const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center space-x-4 group" data-cursor-interactive>
-              <div className="w-12 h-12 bg-electric flex items-center justify-center relative overflow-hidden">
-                <span className="text-pure-black font-black text-xl font-mono">U</span>
-                <div className="absolute inset-0 bg-hot-pink opacity-0 group-hover:opacity-100 transition-opacity duration-100"></div>
+              <div className="w-12 h-12 bg-primary flex items-center justify-center relative overflow-hidden">
+                <span className="text-pure-white font-black text-xl font-mono">U</span>
+                <div className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-100"></div>
               </div>
               <div>
                 <span className="text-2xl font-black text-pure-white font-display uppercase tracking-tight">UseThis</span>
-                <div className="text-xs text-electric font-mono uppercase tracking-widest">BETA</div>
+                <div className="text-xs text-primary font-mono uppercase tracking-widest">BETA</div>
               </div>
             </div>
             
@@ -93,7 +93,7 @@ export const LandingPage: React.FC = () => {
           }}
         />
         <div 
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 border-4 border-electric opacity-30"
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 border-4 border-primary opacity-30"
           style={{
             transform: `translate(${mousePosition.x * -0.01}px, ${mousePosition.y * -0.01}px)`
           }}
@@ -102,28 +102,28 @@ export const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <div className={`mb-16 ${heroInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
             <div className="flex items-center justify-center mb-12">
-              <div className="flex items-center space-x-4 px-6 py-3 border-2 border-electric bg-charcoal">
-                <Zap className="text-electric" size={20} />
-                <span className="text-electric font-mono text-sm uppercase tracking-widest font-bold">
+              <div className="flex items-center space-x-4 px-6 py-3 border-2 border-primary bg-charcoal">
+                <Zap className="text-primary" size={20} />
+                <span className="text-primary font-mono text-sm uppercase tracking-widest font-bold">
                   STUDENT ECONOMY PLATFORM
                 </span>
               </div>
             </div>
             
             <h1 className="text-mega font-black text-pure-white mb-8 font-display glitch" data-text="SHARE. BORROW. THRIVE.">
-              <span className="neon-electric">SHARE.</span>{' '}
-              <span className="neon-pink">BORROW.</span>{' '}
+              <span className="text-primary">SHARE.</span>{' '}
+              <span className="text-accent">BORROW.</span>{' '}
               <br />
-              <span className="neon-blue">THRIVE.</span>
+              <span className="text-secondary">THRIVE.</span>
             </h1>
             
             <div className="divider-brutal mb-12" />
             
             <p className={`text-xl md:text-2xl text-concrete max-w-4xl mx-auto leading-tight font-display font-bold uppercase tracking-wide mb-16 ${heroInView ? 'animate-slide-brutal delay-200' : 'opacity-0'}`}>
               THE PEER-TO-PEER PLATFORM BUILT FOR STUDENTS. 
-              <span className="text-electric"> SHARE RESOURCES</span>, 
-              <span className="text-hot-pink"> MAKE MONEY</span>, 
-              <span className="text-neon-blue"> BUILD COMMUNITY</span>.
+              <span className="text-primary"> SHARE RESOURCES</span>, 
+              <span className="text-accent"> MAKE MONEY</span>, 
+              <span className="text-secondary"> BUILD COMMUNITY</span>.
             </p>
           </div>
 
@@ -146,7 +146,7 @@ export const LandingPage: React.FC = () => {
           <div className={`flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-16 ${heroInView ? 'animate-slide-brutal delay-500' : 'opacity-0'}`}>
             {stats.map(({ number, label }, index) => (
               <div key={label} className="text-center">
-                <div className="text-6xl font-black text-electric font-mono mb-2 neon-electric">{number}</div>
+                <div className="text-6xl font-black text-primary font-mono mb-2">{number}</div>
                 <div className="text-steel text-sm font-bold uppercase tracking-widest">{label}</div>
               </div>
             ))}
@@ -155,8 +155,8 @@ export const LandingPage: React.FC = () => {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2">
-          <div className="w-8 h-16 border-4 border-electric flex justify-center animate-pulse-neon">
-            <div className="w-2 h-6 bg-electric mt-3" />
+          <div className="w-8 h-16 border-4 border-primary flex justify-center">
+            <div className="w-2 h-6 bg-primary mt-3 animate-pulse" />
           </div>
         </div>
       </section>
@@ -165,10 +165,10 @@ export const LandingPage: React.FC = () => {
       <section className="py-32 px-6 relative bg-charcoal" ref={featuresRef}>
         <div className="max-w-7xl mx-auto">
           <div className={`text-center mb-24 ${featuresInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
-            <div className="text-electric text-sm font-bold uppercase tracking-widest mb-6 font-mono">HOW IT WORKS</div>
+            <div className="text-primary text-sm font-bold uppercase tracking-widest mb-6 font-mono">HOW IT WORKS</div>
             <h2 className="text-giant font-black text-pure-white mb-8 font-display">
               BUILT FOR{' '}
-              <span className="neon-pink">STUDENTS</span>
+              <span className="text-accent">STUDENTS</span>
             </h2>
             <div className="divider-brutal mb-8" />
             <p className="text-xl text-concrete font-display font-bold uppercase tracking-wide max-w-3xl mx-auto">
@@ -183,10 +183,10 @@ export const LandingPage: React.FC = () => {
                 className={`card-brutal text-center group ${featuresInView ? `animate-bounce-hard delay-${(index + 1) * 100}` : 'opacity-0'}`}
                 data-cursor-interactive
               >
-                <div className="w-24 h-24 mx-auto mb-8 border-4 border-steel flex items-center justify-center group-hover:border-electric transition-all duration-100 bg-pure-black">
-                  <Icon size={40} className="text-steel group-hover:text-electric transition-colors duration-100" />
+                <div className="w-24 h-24 mx-auto mb-8 border-4 border-steel flex items-center justify-center group-hover:border-primary transition-all duration-100 bg-pure-black">
+                  <Icon size={40} className="text-steel group-hover:text-primary transition-colors duration-100" />
                 </div>
-                <h3 className="text-big font-black text-pure-white mb-6 font-display group-hover:text-electric transition-colors duration-100">
+                <h3 className="text-big font-black text-pure-white mb-6 font-display group-hover:text-primary transition-colors duration-100">
                   {title}
                 </h3>
                 <div className="divider-brutal mb-6" />
@@ -203,12 +203,12 @@ export const LandingPage: React.FC = () => {
       <section className="py-32 px-6 relative bg-pure-black" ref={ctaRef}>
         <div className="max-w-5xl mx-auto text-center">
           <div className={`${ctaInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
-            <div className="text-electric text-sm font-bold uppercase tracking-widest mb-8 font-mono">READY TO START?</div>
+            <div className="text-primary text-sm font-bold uppercase tracking-widest mb-8 font-mono">READY TO START?</div>
             <h2 className="text-giant font-black text-pure-white mb-8 font-display leading-none">
               JOIN{' '}
-              <span className="neon-electric glitch" data-text="USETHIS">USETHIS</span>
+              <span className="text-primary glitch" data-text="USETHIS">USETHIS</span>
               <br />
-              <span className="neon-pink">TODAY</span>
+              <span className="text-accent">TODAY</span>
             </h2>
             <div className="divider-brutal mb-12" />
             <p className="text-xl text-concrete mb-16 max-w-4xl mx-auto font-display font-bold uppercase tracking-wide leading-tight">
@@ -235,12 +235,12 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-20 px-6 border-t-4 border-electric bg-charcoal">
+      <footer className="py-20 px-6 border-t-4 border-primary bg-charcoal">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row justify-between items-center">
             <div className="flex items-center space-x-4 mb-8 lg:mb-0">
-              <div className="w-10 h-10 bg-electric flex items-center justify-center">
-                <span className="text-pure-black font-black text-lg font-mono">U</span>
+              <div className="w-10 h-10 bg-primary flex items-center justify-center">
+                <span className="text-pure-white font-black text-lg font-mono">U</span>
               </div>
               <div>
                 <span className="text-xl font-black text-pure-white font-display uppercase">UseThis</span>

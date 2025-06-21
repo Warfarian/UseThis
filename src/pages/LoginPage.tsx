@@ -55,13 +55,13 @@ export const LoginPage: React.FC = () => {
         {/* Logo */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center space-x-4 mb-8 group">
-            <div className="w-16 h-16 bg-electric flex items-center justify-center relative overflow-hidden">
-              <span className="text-pure-black font-black text-2xl font-mono">U</span>
-              <div className="absolute inset-0 bg-hot-pink opacity-0 group-hover:opacity-100 transition-opacity duration-100"></div>
+            <div className="w-16 h-16 bg-primary flex items-center justify-center relative overflow-hidden">
+              <span className="text-pure-white font-black text-2xl font-mono">U</span>
+              <div className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-100"></div>
             </div>
             <div>
               <h1 className="text-4xl font-black text-pure-white font-display uppercase tracking-tight">UseThis</h1>
-              <div className="text-xs text-electric font-mono uppercase tracking-widest">PLATFORM</div>
+              <div className="text-xs text-primary font-mono uppercase tracking-widest">PLATFORM</div>
             </div>
           </div>
           <div className="divider-brutal mb-6" />
@@ -85,7 +85,7 @@ export const LoginPage: React.FC = () => {
             </div>
 
             {error && (
-              <div className="p-4 bg-blood-red border-2 border-blood-red">
+              <div className="p-4 bg-crimson border-2 border-crimson">
                 <p className="text-pure-white font-bold uppercase tracking-wide text-sm">{error}</p>
               </div>
             )}
@@ -163,11 +163,11 @@ export const LoginPage: React.FC = () => {
         <div className="text-center mt-12">
           <p className="text-steel text-xs font-display font-bold uppercase tracking-wide">
             BY CONTINUING, YOU AGREE TO OUR{' '}
-            <button className="text-electric hover:underline nav-item-brutal" data-cursor-interactive>
+            <button className="text-primary hover:underline nav-item-brutal" data-cursor-interactive>
               TERMS OF SERVICE
             </button>{' '}
             AND{' '}
-            <button className="text-electric hover:underline nav-item-brutal" data-cursor-interactive>
+            <button className="text-primary hover:underline nav-item-brutal" data-cursor-interactive>
               PRIVACY POLICY
             </button>
           </p>

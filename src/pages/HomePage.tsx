@@ -44,9 +44,9 @@ export const HomePage: React.FC = () => {
   }
 
   const categories = [
-    { name: 'ELECTRONICS', icon: Zap, color: 'electric' },
-    { name: 'GAMING', icon: Gamepad2, color: 'hot-pink' },
-    { name: 'KITCHEN', icon: ChefHat, color: 'neon-blue' },
+    { name: 'ELECTRONICS', icon: Zap, color: 'primary' },
+    { name: 'GAMING', icon: Gamepad2, color: 'accent' },
+    { name: 'KITCHEN', icon: ChefHat, color: 'secondary' },
   ]
 
   return (
@@ -56,10 +56,10 @@ export const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto text-center">
           <div className={`mb-12 ${heroInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
             <h1 className="text-giant font-black text-pure-white mb-8 font-display leading-none">
-              <span className="neon-electric">SHARE.</span>{' '}
-              <span className="neon-pink">BORROW.</span>{' '}
+              <span className="text-primary">SHARE.</span>{' '}
+              <span className="text-accent">BORROW.</span>{' '}
               <br />
-              <span className="neon-blue">THRIVE.</span>
+              <span className="text-secondary">THRIVE.</span>
             </h1>
             <p className="text-xl md:text-2xl text-concrete max-w-4xl mx-auto leading-tight font-display font-bold uppercase tracking-wide">
               THE PEER-TO-PEER RENTAL PLATFORM BUILT FOR COLLEGE STUDENTS. 
@@ -75,8 +75,8 @@ export const HomePage: React.FC = () => {
                 data-cursor-interactive="true"
                 className={`px-8 py-4 font-bold font-display text-sm uppercase tracking-wide transition-all duration-100 ${
                   mode === 'need'
-                    ? 'bg-electric text-pure-black'
-                    : 'text-pure-white hover:text-electric'
+                    ? 'bg-primary text-pure-white'
+                    : 'text-pure-white hover:text-primary'
                 }`}
               >
                 I NEED SOMETHING
@@ -86,8 +86,8 @@ export const HomePage: React.FC = () => {
                 data-cursor-interactive="true"
                 className={`px-8 py-4 font-bold font-display text-sm uppercase tracking-wide transition-all duration-100 ${
                   mode === 'have'
-                    ? 'bg-electric text-pure-black'
-                    : 'text-pure-white hover:text-electric'
+                    ? 'bg-primary text-pure-white'
+                    : 'text-pure-white hover:text-primary'
                 }`}
               >
                 I HAVE SOMETHING
@@ -132,9 +132,9 @@ export const HomePage: React.FC = () => {
         </div>
 
         {/* Abstract Background Elements */}
-        <div className="absolute top-1/4 left-10 w-32 h-32 bg-electric opacity-10 blur-3xl" />
-        <div className="absolute bottom-1/4 right-10 w-48 h-48 bg-hot-pink opacity-10 blur-3xl" />
-        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-neon-blue opacity-10 blur-2xl" />
+        <div className="absolute top-1/4 left-10 w-32 h-32 bg-primary opacity-10 blur-3xl" />
+        <div className="absolute bottom-1/4 right-10 w-48 h-48 bg-accent opacity-10 blur-3xl" />
+        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-secondary opacity-10 blur-2xl" />
       </section>
 
       {/* Popular Categories */}
@@ -153,10 +153,10 @@ export const HomePage: React.FC = () => {
             {categories.map(({ name, icon: Icon, color }, index) => (
               <Link key={name} to={`/browse?category=${encodeURIComponent(name)}`}>
                 <Card className={`text-center group ${categoriesInView ? `animate-bounce-hard delay-${(index + 1) * 100}` : 'opacity-0'}`}>
-                  <div className="w-20 h-20 mx-auto mb-6 glass-brutal flex items-center justify-center border-2 border-steel group-hover:border-electric transition-all duration-100">
-                    <Icon size={36} className="text-steel group-hover:text-electric transition-colors duration-100" />
+                  <div className="w-20 h-20 mx-auto mb-6 glass-brutal flex items-center justify-center border-2 border-steel group-hover:border-primary transition-all duration-100">
+                    <Icon size={36} className="text-steel group-hover:text-primary transition-colors duration-100" />
                   </div>
-                  <h3 className="text-big font-black text-pure-white mb-3 font-display group-hover:text-electric transition-colors duration-100">{name}</h3>
+                  <h3 className="text-big font-black text-pure-white mb-3 font-display group-hover:text-primary transition-colors duration-100">{name}</h3>
                   <p className="text-steel font-display font-bold uppercase tracking-wide text-sm">DISCOVER AVAILABLE ITEMS</p>
                 </Card>
               </Link>
@@ -171,7 +171,7 @@ export const HomePage: React.FC = () => {
           <div className={`flex items-center justify-between mb-16 ${featuredInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
             <div>
               <h2 className="text-huge font-black text-pure-white mb-6 font-display flex items-center">
-                <TrendingUp className="mr-6 text-electric" size={48} />
+                <TrendingUp className="mr-6 text-primary" size={48} />
                 TRENDING NOW
               </h2>
               <p className="text-xl text-concrete font-display font-bold uppercase tracking-wide">
@@ -210,14 +210,14 @@ export const HomePage: React.FC = () => {
                         </div>
                       )}
                     </div>
-                    <h3 className="text-xl font-black text-pure-white mb-3 font-display group-hover:text-electric transition-colors duration-100 uppercase">
+                    <h3 className="text-xl font-black text-pure-white mb-3 font-display group-hover:text-primary transition-colors duration-100 uppercase">
                       {item.title}
                     </h3>
                     <p className="text-steel text-sm mb-4 line-clamp-2 font-display font-bold uppercase tracking-wide">
                       {item.description}
                     </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-electric font-black text-lg font-mono">
+                      <span className="text-primary font-black text-lg font-mono">
                         {formatPrice(item.price_per_day)}/DAY
                       </span>
                       <span className="text-steel text-sm font-display font-bold uppercase tracking-wide">
@@ -238,7 +238,7 @@ export const HomePage: React.FC = () => {
           <div className={`${ctaInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
             <h2 className="text-giant font-black text-pure-white mb-8 font-display leading-none">
               READY TO{' '}
-              <span className="neon-electric glitch" data-text="USETHIS">USETHIS</span>?
+              <span className="text-primary glitch" data-text="USETHIS">USETHIS</span>?
             </h2>
             <p className="text-xl text-concrete mb-12 max-w-3xl mx-auto font-display font-bold uppercase tracking-wide leading-tight">
               JOIN THOUSANDS OF STUDENTS ALREADY SHARING, SAVING, AND BUILDING COMMUNITY THROUGH PEER-TO-PEER RENTALS.

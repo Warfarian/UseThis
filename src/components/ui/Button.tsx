@@ -2,13 +2,13 @@ import React from 'react'
 import { cn } from '../../lib/utils'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'electric' | 'outline' | 'ghost'
+  variant?: 'primary' | 'outline' | 'ghost'
   size?: 'sm' | 'md' | 'lg'
   children: React.ReactNode
 }
 
 export const Button: React.FC<ButtonProps> = ({
-  variant = 'electric',
+  variant = 'primary',
   size = 'md',
   className,
   children,
@@ -17,7 +17,7 @@ export const Button: React.FC<ButtonProps> = ({
   const baseClasses = 'font-display font-bold transition-all duration-100 inline-flex items-center justify-center focus-brutal relative overflow-hidden'
   
   const variantClasses = {
-    electric: 'btn-electric',
+    primary: 'btn-primary',
     outline: 'btn-outline',
     ghost: 'btn-ghost'
   }

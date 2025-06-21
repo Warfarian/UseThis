@@ -3,18 +3,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* RCA Records Inspired Design System */
+/* Bold Brutalist Design System */
 :root {
-  --electric: #00FF41;
-  --hot-pink: #FF0080;
-  --neon-blue: #0080FF;
-  --acid-yellow: #FFFF00;
-  --blood-red: #FF0000;
+  --primary: #FF6B35;
+  --secondary: #004E89;
+  --accent: #F7931E;
   --pure-black: #000000;
   --pure-white: #FFFFFF;
   --concrete: #F5F5F5;
   --charcoal: #1A1A1A;
   --steel: #808080;
+  --crimson: #DC143C;
 }
 
 * {
@@ -48,21 +47,18 @@ html, body {
   left: 0;
   width: 4px;
   height: 4px;
-  background: var(--electric);
+  background: var(--primary);
   pointer-events: none;
   z-index: 9999;
   transition: all 0.1s ease;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 10px var(--electric);
 }
 
 .custom-cursor.interactive {
   width: 40px;
   height: 40px;
   background: transparent;
-  border: 2px solid var(--electric);
-  box-shadow: 0 0 20px var(--electric);
-  animation: pulse-neon 1s infinite;
+  border: 2px solid var(--primary);
 }
 
 /* Noise texture overlay */
@@ -89,12 +85,12 @@ html, body {
 .glass-nav {
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(10px);
-  border-bottom: 3px solid var(--electric);
+  border-bottom: 3px solid var(--primary);
 }
 
 /* Text selection */
 ::selection {
-  background-color: var(--electric);
+  background-color: var(--primary);
   color: var(--pure-black);
 }
 
@@ -108,12 +104,12 @@ html, body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--electric);
+  background: var(--primary);
   border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--hot-pink);
+  background: var(--accent);
 }
 
 /* Typography System */
@@ -149,9 +145,9 @@ html, body {
 }
 
 /* Brutal Button System */
-.btn-electric {
-  background: var(--electric);
-  color: var(--pure-black);
+.btn-primary {
+  background: var(--primary);
+  color: var(--pure-white);
   border: none;
   padding: 1rem 2rem;
   font-weight: 800;
@@ -163,7 +159,7 @@ html, body {
   box-shadow: 4px 4px 0 var(--charcoal);
 }
 
-.btn-electric::before {
+.btn-primary::before {
   content: '';
   position: absolute;
   top: 0;
@@ -174,43 +170,43 @@ html, body {
   transition: left 0.5s;
 }
 
-.btn-electric:hover::before {
+.btn-primary:hover::before {
   left: 100%;
 }
 
-.btn-electric:hover {
+.btn-primary:hover {
   transform: translate(-2px, -2px);
   box-shadow: 6px 6px 0 var(--charcoal);
-  background: var(--acid-yellow);
+  background: var(--accent);
 }
 
-.btn-electric:active {
+.btn-primary:active {
   transform: translate(2px, 2px);
   box-shadow: 2px 2px 0 var(--charcoal);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--electric);
-  border: 3px solid var(--electric);
+  color: var(--primary);
+  border: 3px solid var(--primary);
   padding: 1rem 2rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   transition: all 0.1s ease;
-  box-shadow: 4px 4px 0 var(--electric);
+  box-shadow: 4px 4px 0 var(--primary);
 }
 
 .btn-outline:hover {
-  background: var(--electric);
-  color: var(--pure-black);
+  background: var(--primary);
+  color: var(--pure-white);
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--electric);
+  box-shadow: 6px 6px 0 var(--primary);
 }
 
 .btn-outline:active {
   transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 var(--electric);
+  box-shadow: 2px 2px 0 var(--primary);
 }
 
 .btn-ghost {
@@ -225,9 +221,8 @@ html, body {
 }
 
 .btn-ghost:hover {
-  border-color: var(--electric);
-  color: var(--electric);
-  box-shadow: 0 0 20px var(--electric);
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 /* Brutal Cards */
@@ -246,7 +241,7 @@ html, body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, var(--electric), var(--hot-pink));
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
   opacity: 0;
   transition: opacity 0.2s ease;
 }
@@ -256,9 +251,9 @@ html, body {
 }
 
 .card-brutal:hover {
-  border-color: var(--electric);
+  border-color: var(--primary);
   transform: translate(-4px, -4px);
-  box-shadow: 8px 8px 0 var(--electric);
+  box-shadow: 8px 8px 0 var(--primary);
 }
 
 /* Glitch Effects */
@@ -278,42 +273,31 @@ html, body {
 
 .glitch::before {
   animation: glitch 0.3s infinite;
-  color: var(--hot-pink);
+  color: var(--accent);
   z-index: -1;
 }
 
 .glitch::after {
   animation: glitch 0.3s infinite reverse;
-  color: var(--neon-blue);
+  color: var(--secondary);
   z-index: -2;
 }
 
-/* Neon Glow Effects */
-.neon-electric {
-  color: var(--electric);
-  text-shadow: 
-    0 0 5px var(--electric),
-    0 0 10px var(--electric),
-    0 0 15px var(--electric),
-    0 0 20px var(--electric);
+/* Bold Color Classes */
+.text-primary {
+  color: var(--primary);
 }
 
-.neon-pink {
-  color: var(--hot-pink);
-  text-shadow: 
-    0 0 5px var(--hot-pink),
-    0 0 10px var(--hot-pink),
-    0 0 15px var(--hot-pink),
-    0 0 20px var(--hot-pink);
+.text-secondary {
+  color: var(--secondary);
 }
 
-.neon-blue {
-  color: var(--neon-blue);
-  text-shadow: 
-    0 0 5px var(--neon-blue),
-    0 0 10px var(--neon-blue),
-    0 0 15px var(--neon-blue),
-    0 0 20px var(--neon-blue);
+.text-accent {
+  color: var(--accent);
+}
+
+.text-crimson {
+  color: var(--crimson);
 }
 
 /* Brutal Animations */
@@ -342,19 +326,19 @@ html, body {
 /* Hover states */
 .hover-brutal:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--electric);
+  box-shadow: 4px 4px 0 var(--primary);
 }
 
 /* Focus states */
 .focus-brutal:focus {
   outline: none;
-  box-shadow: 0 0 0 3px var(--electric);
+  box-shadow: 0 0 0 3px var(--primary);
 }
 
 /* Brutal Dividers */
 .divider-brutal {
   height: 4px;
-  background: linear-gradient(90deg, var(--electric), var(--hot-pink), var(--neon-blue));
+  background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
   margin: 2rem 0;
 }
 
@@ -383,8 +367,7 @@ html, body {
 }
 
 .input-brutal:focus {
-  border-color: var(--electric);
-  box-shadow: 0 0 20px var(--electric);
+  border-color: var(--primary);
   outline: none;
 }
 
@@ -396,7 +379,7 @@ html, body {
 /* Brutal Navigation */
 .nav-brutal {
   background: var(--pure-black);
-  border-bottom: 4px solid var(--electric);
+  border-bottom: 4px solid var(--primary);
 }
 
 .nav-item-brutal {
@@ -415,7 +398,7 @@ html, body {
   left: 0;
   width: 0;
   height: 4px;
-  background: var(--electric);
+  background: var(--primary);
   transition: width 0.2s ease;
 }
 
@@ -424,8 +407,7 @@ html, body {
 }
 
 .nav-item-brutal:hover {
-  color: var(--electric);
-  text-shadow: 0 0 10px var(--electric);
+  color: var(--primary);
 }
 
 /* Responsive brutal design */
@@ -442,7 +424,7 @@ html, body {
     padding: 1rem;
   }
   
-  .btn-electric,
+  .btn-primary,
   .btn-outline {
     padding: 0.75rem 1.5rem;
     font-size: 0.875rem;
