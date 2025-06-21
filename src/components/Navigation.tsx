@@ -26,9 +26,9 @@ export const Navigation: React.FC = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-[100] nav-brutal">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center h-20">
-          {/* Logo - Pushed further left */}
-          <div className="flex-shrink-0 mr-8 lg:mr-16">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo - Fixed width, pushed left */}
+          <div className="flex-shrink-0 w-48">
             <Link 
               to="/home" 
               className="flex items-center space-x-3 group"
@@ -45,45 +45,45 @@ export const Navigation: React.FC = () => {
             </Link>
           </div>
 
-          {/* Navigation Items - Centered with more space */}
+          {/* Navigation Items - Centered, compact */}
           {user && (
-            <div className="hidden lg:flex items-center justify-center flex-1">
-              <div className="flex items-center space-x-8">
+            <div className="hidden xl:flex items-center justify-center flex-1 max-w-4xl mx-8">
+              <div className="flex items-center space-x-4">
                 {navItems.map(({ path, icon: Icon, label }) => (
                   <Link
                     key={path}
                     to={path}
                     data-cursor-interactive="true"
                     className={cn(
-                      'nav-item-brutal flex items-center space-x-2 py-2 px-3 whitespace-nowrap transition-all duration-100',
+                      'nav-item-brutal flex items-center space-x-1 py-2 px-2 whitespace-nowrap transition-all duration-100',
                       location.pathname === path 
                         ? 'text-primary border-b-2 border-primary' 
                         : 'text-pure-white hover:text-primary'
                     )}
                   >
-                    <Icon size={16} />
-                    <span className="text-xs font-bold">{label}</span>
+                    <Icon size={14} />
+                    <span className="text-xs font-bold hidden 2xl:inline">{label}</span>
                   </Link>
                 ))}
               </div>
             </div>
           )}
 
-          {/* User Actions - More space on the right */}
-          <div className="flex-shrink-0 ml-auto">
-            <div className="flex items-center space-x-4">
+          {/* User Actions - Fixed width, always visible */}
+          <div className="flex-shrink-0 w-48 flex justify-end">
+            <div className="flex items-center space-x-3">
               {user ? (
                 <>
-                  {/* User Profile Info */}
-                  <div className="hidden lg:flex items-center space-x-3 mr-4">
+                  {/* Compact User Profile Info */}
+                  <div className="hidden xl:flex items-center space-x-2">
                     <div className="w-8 h-8 bg-primary flex items-center justify-center">
                       <span className="text-pure-white font-black text-sm">
                         {user.email?.charAt(0).toUpperCase()}
                       </span>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right hidden 2xl:block">
                       <div className="text-pure-white font-display font-bold uppercase tracking-wide text-xs">
-                        WELCOME BACK
+                        WELCOME
                       </div>
                       <div className="text-steel font-mono text-xs">
                         {user.email?.split('@')[0]}
@@ -95,11 +95,11 @@ export const Navigation: React.FC = () => {
                     variant="ghost"
                     size="sm"
                     onClick={handleSignOut}
-                    className="flex items-center space-x-2"
+                    className="flex items-center space-x-2 px-4"
                     data-cursor-interactive="true"
                   >
                     <LogOut size={16} />
-                    <span className="hidden sm:inline">EXIT</span>
+                    <span>EXIT</span>
                   </Button>
                 </>
               ) : (
@@ -114,7 +114,7 @@ export const Navigation: React.FC = () => {
 
       {/* Mobile Navigation */}
       {user && (
-        <div className="lg:hidden border-t-2 border-steel bg-charcoal">
+        <div className="xl:hidden border-t-2 border-steel bg-charcoal">
           <div className="flex justify-start py-3 px-4 overflow-x-auto whitespace-nowrap scrollbar-hide">
             {navItems.map(({ path, icon: Icon, label }) => (
               <Link
