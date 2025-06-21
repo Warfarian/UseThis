@@ -13,14 +13,14 @@ export const InteractiveCursor: React.FC = () => {
 
     const handleMouseEnter = (e: Event) => {
       const target = e.target as HTMLElement
-      if (target.hasAttribute('data-cursor-interactive')) {
+      if (target && target instanceof Element && target.hasAttribute('data-cursor-interactive')) {
         setIsInteractive(true)
       }
     }
 
     const handleMouseLeave = (e: Event) => {
       const target = e.target as HTMLElement
-      if (target.hasAttribute('data-cursor-interactive')) {
+      if (target && target instanceof Element && target.hasAttribute('data-cursor-interactive')) {
         setIsInteractive(false)
       }
     }
