@@ -451,7 +451,7 @@ html, body {
   100% { background-position: -200% 0; }
 }
 
-/* Brutal Input System */
+/* Brutal Input System - FIXED FOR CLICKABILITY */
 .input-brutal {
   background: var(--charcoal);
   border: 3px solid var(--steel);
@@ -462,17 +462,28 @@ html, body {
   letter-spacing: 0.05em;
   transition: all 0.1s ease;
   width: 100%;
+  position: relative;
+  z-index: 100;
+  pointer-events: auto;
 }
 
 .input-brutal:focus {
   border-color: var(--primary);
   outline: none;
   box-shadow: 0 0 0 2px var(--primary);
+  z-index: 101;
 }
 
 .input-brutal::placeholder {
   color: var(--steel);
   text-transform: uppercase;
+}
+
+/* Ensure form elements are always clickable */
+input, button, textarea, select {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 50;
 }
 
 /* Brutal Navigation */

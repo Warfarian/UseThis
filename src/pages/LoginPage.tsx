@@ -41,17 +41,17 @@ export const LoginPage: React.FC = () => {
     <div className="min-h-screen bg-pure-black noise flex items-center justify-center p-6 relative">
       <InteractiveCursor />
       
-      {/* Back to landing - Fixed positioning */}
+      {/* Back to landing - Fixed positioning with higher z-index */}
       <Link 
         to="/" 
-        className="fixed top-6 left-6 z-50 flex items-center space-x-3 nav-item-brutal bg-charcoal px-4 py-2 border-2 border-steel hover:border-primary"
+        className="fixed top-6 left-6 z-[60] flex items-center space-x-3 nav-item-brutal bg-charcoal px-4 py-2 border-2 border-steel hover:border-primary"
         data-cursor-interactive
       >
         <ArrowLeft size={18} />
         <span className="text-xs">BACK</span>
       </Link>
 
-      <div className="w-full max-w-lg relative z-10">
+      <div className="w-full max-w-lg relative z-20">
         {/* Logo Section */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center space-x-4 mb-6 group">
@@ -71,7 +71,7 @@ export const LoginPage: React.FC = () => {
         </div>
 
         {/* Main Form Card */}
-        <Card className="p-8 mb-6">
+        <div className="card-brutal p-8 mb-6 relative z-30">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-black text-pure-white mb-3 font-display uppercase">
@@ -86,49 +86,58 @@ export const LoginPage: React.FC = () => {
             </div>
 
             {error && (
-              <div className="p-4 bg-crimson/20 border-2 border-crimson">
+              <div className="p-4 bg-crimson/20 border-2 border-crimson relative z-40">
                 <p className="text-crimson font-bold uppercase tracking-wide text-sm">{error}</p>
               </div>
             )}
 
             {isSignUp && (
-              <div className="space-y-2">
-                <Input
-                  label="FULL NAME"
+              <div className="space-y-2 relative z-40">
+                <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display">
+                  FULL NAME
+                </label>
+                <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="ENTER YOUR FULL NAME"
+                  className="input-brutal w-full relative z-50"
                   required
                 />
               </div>
             )}
 
-            <div className="space-y-2">
-              <Input
-                label="EMAIL ADDRESS"
+            <div className="space-y-2 relative z-40">
+              <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display">
+                EMAIL ADDRESS
+              </label>
+              <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="ENTER YOUR EMAIL"
+                className="input-brutal w-full relative z-50"
                 required
               />
             </div>
 
-            <div className="space-y-2">
-              <Input
-                label="PASSWORD"
+            <div className="space-y-2 relative z-40">
+              <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display">
+                PASSWORD
+              </label>
+              <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="ENTER YOUR PASSWORD"
+                className="input-brutal w-full relative z-50"
                 required
               />
             </div>
 
             <Button
               type="submit"
-              className="w-full mt-8"
+              className="w-full mt-8 relative z-40"
               disabled={loading}
               data-cursor-interactive="true"
             >
@@ -138,7 +147,7 @@ export const LoginPage: React.FC = () => {
               }
             </Button>
 
-            <div className="text-center pt-6">
+            <div className="text-center pt-6 relative z-40">
               <div className="divider-brutal mb-6" />
               <button
                 type="button"
@@ -153,10 +162,10 @@ export const LoginPage: React.FC = () => {
               </button>
             </div>
           </form>
-        </Card>
+        </div>
 
         {/* Terms Footer */}
-        <div className="text-center">
+        <div className="text-center relative z-30">
           <p className="text-steel text-xs font-display font-bold uppercase tracking-wide leading-relaxed">
             BY CONTINUING, YOU AGREE TO OUR{' '}
             <button className="text-primary hover:underline nav-item-brutal" data-cursor-interactive>
