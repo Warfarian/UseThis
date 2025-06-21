@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { Button } from './ui/Button'
-import { Home, Search, Plus, Calendar, User, LogOut, MessageSquare, HelpCircle } from 'lucide-react'
+import { Home, Search, Plus, Calendar, User, LogOut, MessageSquare, HelpCircle, Menu, X } from 'lucide-react'
 import { cn } from '../lib/utils'
 
 export const Navigation: React.FC = () => {
   const { user, signOut } = useAuth()
   const location = useLocation()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const navItems = [
     { path: '/home', icon: Home, label: 'HOME' },
@@ -21,120 +22,183 @@ export const Navigation: React.FC = () => {
 
   const handleSignOut = async () => {
     await signOut()
+    setMobileMenuOpen(false)
+  }
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false)
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-[100] nav-brutal">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
-          {/* Logo - Responsive width */}
-          <div className="flex-shrink-0 w-32 sm:w-48">
-            <Link 
-              to="/home" 
-              className="flex items-center space-x-2 sm:space-x-3 group"
-              data-cursor-interactive="true"
-            >
-              <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-primary flex items-center justify-center relative overflow-hidden">
-                <span className="text-pure-white font-black text-sm sm:text-lg lg:text-2xl font-mono">U</span>
-                <div className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-100"></div>
-              </div>
-              <div className="hidden sm:block">
-                <span className="text-lg sm:text-xl lg:text-2xl font-black text-pure-white font-display uppercase tracking-tight">UseThis</span>
-                <div className="text-xs text-primary font-mono uppercase tracking-widest">BETA</div>
-              </div>
-            </Link>
-          </div>
+    <>
+      <nav className="fixed top-0 left-0 right-0 z-[100] nav-brutal">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 sm:h-20">
+            {/* Logo - Responsive width */}
+            <div className="flex-shrink-0 w-32 sm:w-48">
+              <Link 
+                to="/home" 
+                className="flex items-center space-x-2 sm:space-x-3 group"
+                data-cursor-interactive="true"
+                onClick={closeMobileMenu}
+              >
+                <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-primary flex items-center justify-center relative overflow-hidden">
+                  <span className="text-pure-white font-black text-sm sm:text-lg lg:text-2xl font-mono">U</span>
+                  <div className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-100"></div>
+                </div>
+                <div className="hidden sm:block">
+                  <span className="text-lg sm:text-xl lg:text-2xl font-black text-pure-white font-display uppercase tracking-tight">UseThis</span>
+                  <div className="text-xs text-primary font-mono uppercase tracking-widest">BETA</div>
+                </div>
+              </Link>
+            </div>
 
-          {/* Navigation Items - Hidden on mobile, shown on desktop */}
-          {user && (
-            <div className="hidden lg:flex items-center justify-center flex-1 max-w-4xl mx-8">
-              <div className="flex items-center space-x-2 xl:space-x-4">
+            {/* Desktop Navigation Items - Hidden on mobile */}
+            {user && (
+              <div className="hidden lg:flex items-center justify-center flex-1 max-w-4xl mx-8">
+                <div className="flex items-center space-x-2 xl:space-x-4">
+                  {navItems.map(({ path, icon: Icon, label }) => (
+                    <Link
+                      key={path}
+                      to={path}
+                      data-cursor-interactive="true"
+                      className={cn(
+                        'nav-item-brutal flex items-center space-x-1 py-2 px-2 xl:px-3 whitespace-nowrap transition-all duration-100',
+                        location.pathname === path 
+                          ? 'text-primary border-b-2 border-primary' 
+                          : 'text-pure-white hover:text-primary'
+                      )}
+                    >
+                      <Icon size={14} />
+                      <span className="text-xs font-bold hidden xl:inline">{label}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Right Side - User Actions and Mobile Menu */}
+            <div className="flex-shrink-0 w-32 sm:w-48 flex justify-end items-center">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                {user ? (
+                  <>
+                    {/* Desktop User Info - Hidden on mobile/tablet */}
+                    <div className="hidden xl:flex items-center space-x-2">
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 bg-primary flex items-center justify-center">
+                        <span className="text-pure-white font-black text-xs sm:text-sm">
+                          {user.email?.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-pure-white font-display font-bold uppercase tracking-wide text-xs">
+                          WELCOME
+                        </div>
+                        <div className="text-steel font-mono text-xs">
+                          {user.email?.split('@')[0]}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Desktop Sign Out - Hidden on mobile/tablet */}
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleSignOut}
+                      className="hidden lg:flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4"
+                      data-cursor-interactive="true"
+                    >
+                      <LogOut size={14} />
+                      <span className="text-xs sm:text-sm">EXIT</span>
+                    </Button>
+
+                    {/* Mobile Menu Button */}
+                    <button
+                      onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                      className="lg:hidden p-2 text-pure-white hover:text-primary transition-colors"
+                      data-cursor-interactive="true"
+                    >
+                      {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                    </button>
+                  </>
+                ) : (
+                  <Link to="/login" data-cursor-interactive="true">
+                    <Button size="sm" className="text-xs sm:text-sm px-3 sm:px-4">ENTER</Button>
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Dropdown Menu */}
+      {user && mobileMenuOpen && (
+        <div className="fixed top-16 sm:top-20 left-0 right-0 z-[90] lg:hidden">
+          <div className="bg-charcoal border-b-2 border-primary shadow-lg">
+            <div className="max-w-7xl mx-auto px-3 sm:px-6">
+              {/* User Info Section */}
+              <div className="py-4 border-b border-steel/30">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-primary flex items-center justify-center">
+                    <span className="text-pure-white font-black text-sm">
+                      {user.email?.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                  <div>
+                    <div className="text-pure-white font-display font-bold uppercase tracking-wide text-sm">
+                      WELCOME BACK
+                    </div>
+                    <div className="text-steel font-mono text-xs">
+                      {user.email?.split('@')[0]}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Navigation Items */}
+              <div className="py-2">
                 {navItems.map(({ path, icon: Icon, label }) => (
                   <Link
                     key={path}
                     to={path}
+                    onClick={closeMobileMenu}
                     data-cursor-interactive="true"
                     className={cn(
-                      'nav-item-brutal flex items-center space-x-1 py-2 px-2 xl:px-3 whitespace-nowrap transition-all duration-100',
-                      location.pathname === path 
-                        ? 'text-primary border-b-2 border-primary' 
-                        : 'text-pure-white hover:text-primary'
+                      'flex items-center space-x-3 py-3 px-2 transition-colors font-display text-sm border-l-4',
+                      location.pathname === path
+                        ? 'text-primary border-primary bg-primary/10'
+                        : 'text-pure-white hover:text-primary border-transparent hover:border-primary/50 hover:bg-primary/5'
                     )}
                   >
-                    <Icon size={14} />
-                    <span className="text-xs font-bold hidden xl:inline">{label}</span>
+                    <Icon size={18} />
+                    <span className="font-bold uppercase tracking-wide">{label}</span>
                   </Link>
                 ))}
               </div>
-            </div>
-          )}
 
-          {/* User Actions - Responsive */}
-          <div className="flex-shrink-0 w-32 sm:w-48 flex justify-end">
-            <div className="flex items-center space-x-2 sm:space-x-3">
-              {user ? (
-                <>
-                  {/* Compact User Profile Info - Hidden on small screens */}
-                  <div className="hidden lg:flex items-center space-x-2">
-                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-primary flex items-center justify-center">
-                      <span className="text-pure-white font-black text-xs sm:text-sm">
-                        {user.email?.charAt(0).toUpperCase()}
-                      </span>
-                    </div>
-                    <div className="text-right hidden xl:block">
-                      <div className="text-pure-white font-display font-bold uppercase tracking-wide text-xs">
-                        WELCOME
-                      </div>
-                      <div className="text-steel font-mono text-xs">
-                        {user.email?.split('@')[0]}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleSignOut}
-                    className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4"
-                    data-cursor-interactive="true"
-                  >
-                    <LogOut size={14} sm:size={16} />
-                    <span className="text-xs sm:text-sm">EXIT</span>
-                  </Button>
-                </>
-              ) : (
-                <Link to="/login" data-cursor-interactive="true">
-                  <Button size="sm" className="text-xs sm:text-sm px-3 sm:px-4">ENTER</Button>
-                </Link>
-              )}
+              {/* Sign Out */}
+              <div className="py-4 border-t border-steel/30">
+                <button
+                  onClick={handleSignOut}
+                  className="flex items-center space-x-3 py-3 px-2 text-crimson hover:text-crimson/80 transition-colors font-display text-sm font-bold uppercase tracking-wide w-full"
+                  data-cursor-interactive="true"
+                >
+                  <LogOut size={18} />
+                  <span>SIGN OUT</span>
+                </button>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Navigation - Improved responsive design */}
-      {user && (
-        <div className="lg:hidden border-t-2 border-steel bg-charcoal">
-          <div className="flex justify-start py-2 sm:py-3 px-3 sm:px-4 overflow-x-auto whitespace-nowrap scrollbar-hide">
-            {navItems.map(({ path, icon: Icon, label }) => (
-              <Link
-                key={path}
-                to={path}
-                data-cursor-interactive="true"
-                className={cn(
-                  'flex flex-col items-center py-2 px-3 sm:px-4 transition-colors font-display text-xs min-w-0 flex-shrink-0',
-                  location.pathname === path
-                    ? 'text-primary'
-                    : 'text-steel hover:text-primary'
-                )}
-              >
-                <Icon size={16} sm:size={18} />
-                <span className="mt-1 uppercase tracking-wide text-xs">{label}</span>
-              </Link>
-            ))}
           </div>
         </div>
       )}
-    </nav>
+
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-pure-black/50 z-[80] lg:hidden"
+          onClick={closeMobileMenu}
+        />
+      )}
+    </>
   )
 }
