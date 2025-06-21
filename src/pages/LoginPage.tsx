@@ -4,6 +4,8 @@ import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
 import { Card } from '../components/ui/Card'
 import { InteractiveCursor } from '../components/InteractiveCursor'
+import { ArrowLeft, Lock, Mail, User } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 export const LoginPage: React.FC = () => {
   const [isSignUp, setIsSignUp] = useState(false)
@@ -36,74 +38,101 @@ export const LoginPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-canvas grain flex items-center justify-center p-6">
+    <div className="min-h-screen bg-pure-black geometric-grid flex items-center justify-center p-8">
       <InteractiveCursor />
+      
+      {/* Back to landing */}
+      <Link 
+        to="/" 
+        className="fixed top-8 left-8 z-50 flex items-center space-x-3 text-gray-400 hover:text-cyan transition-colors link-hover"
+        data-cursor-interactive
+      >
+        <ArrowLeft size={20} />
+        <span className="font-body">Back to Home</span>
+      </Link>
+
       <div className="w-full max-w-md">
         {/* Logo */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center space-x-4 mb-6">
-            <div className="w-16 h-16 bg-gradient-to-br from-accent-1 to-accent-2 rounded-full flex items-center justify-center animate-float">
-              <span className="text-canvas font-bold text-2xl font-primary">U</span>
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center space-x-4 mb-8">
+            <div className="w-16 h-16 bg-cyan rounded-sm flex items-center justify-center">
+              <span className="text-pure-black font-black text-2xl font-mono">U</span>
             </div>
-            <h1 className="text-5xl font-bold text-ink font-primary">UseThis</h1>
+            <div>
+              <h1 className="text-4xl font-black text-pure-white font-primary">UseThis</h1>
+              <div className="text-xs text-gray-400 font-mono uppercase tracking-extra-wide">Platform</div>
+            </div>
           </div>
-          <p className="text-focus text-lg font-body">
-            {isSignUp ? "Join the community" : "Welcome back"}
+          <div className="divider w-24 mx-auto mb-6" />
+          <p className="text-gray-400 text-lg font-body">
+            {isSignUp ? "Join the revolution" : "Welcome back"}
           </p>
         </div>
 
-        <Card>
+        <Card className="p-12">
           <form onSubmit={handleSubmit} className="space-y-8">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold text-ink mb-3 font-primary">
+            <div className="text-center mb-8">
+              <h2 className="heading-2 font-bold text-pure-white mb-4 font-primary">
                 {isSignUp ? "Create Account" : "Sign In"}
               </h2>
-              <p className="text-focus font-body">
+              <p className="text-gray-400 font-body">
                 {isSignUp 
-                  ? "Start borrowing and lending with your peers" 
+                  ? "Start your journey in the student economy" 
                   : "Access your rental marketplace"
                 }
               </p>
             </div>
 
             {error && (
-              <div className="p-4 bg-accent-1/10 border border-accent-1/30 rounded-2xl">
-                <p className="text-accent-1 text-sm font-body">{error}</p>
+              <div className="p-6 bg-red-500/10 border-2 border-red-500/30 rounded-none">
+                <p className="text-red-400 font-body">{error}</p>
               </div>
             )}
 
             {isSignUp && (
-              <Input
-                label="Full Name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Enter your full name"
-                required
-              />
+              <div className="relative">
+                <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" size={20} />
+                <Input
+                  label="Full Name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Enter your full name"
+                  className="pl-12"
+                  required
+                />
+              </div>
             )}
 
-            <Input
-              label="Email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              required
-            />
+            <div className="relative">
+              <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" size={20} />
+              <Input
+                label="Email Address"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="pl-12"
+                required
+              />
+            </div>
 
-            <Input
-              label="Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              required
-            />
+            <div className="relative">
+              <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" size={20} />
+              <Input
+                label="Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                className="pl-12"
+                required
+              />
+            </div>
 
             <Button
               type="submit"
-              className="w-full"
+              className="w-full magnetic"
               disabled={loading}
               data-cursor-interactive="true"
             >
@@ -114,11 +143,12 @@ export const LoginPage: React.FC = () => {
             </Button>
 
             <div className="text-center">
+              <div className="divider w-16 mx-auto mb-6" />
               <button
                 type="button"
                 onClick={() => setIsSignUp(!isSignUp)}
                 data-cursor-interactive="true"
-                className="text-focus hover:text-accent-1 transition-colors font-body"
+                className="text-gray-400 hover:text-cyan transition-colors font-body link-hover"
               >
                 {isSignUp 
                   ? "Already have an account? Sign in" 
@@ -129,9 +159,16 @@ export const LoginPage: React.FC = () => {
           </form>
         </Card>
 
-        <div className="text-center mt-8">
-          <p className="text-focus text-sm font-body">
-            By continuing, you agree to our terms and privacy policy
+        <div className="text-center mt-12">
+          <p className="text-gray-500 text-sm font-body">
+            By continuing, you agree to our{' '}
+            <button className="text-cyan hover:underline link-hover" data-cursor-interactive>
+              Terms of Service
+            </button>{' '}
+            and{' '}
+            <button className="text-cyan hover:underline link-hover" data-cursor-interactive>
+              Privacy Policy
+            </button>
           </p>
         </div>
       </div>

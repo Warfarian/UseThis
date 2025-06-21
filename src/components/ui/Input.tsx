@@ -13,25 +13,25 @@ export const Input: React.FC<InputProps> = ({
   ...props
 }) => {
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {label && (
-        <label className="block text-sm font-medium text-ink font-body">
+        <label className="block caption text-gray-300 font-body">
           {label}
         </label>
       )}
       <input
         className={cn(
-          'w-full px-6 py-4 bg-transparent border border-ink/20 rounded-2xl',
-          'text-ink placeholder-focus focus:border-accent-1 focus:outline-none',
+          'w-full px-6 py-4 bg-transparent border-2 border-gray-700 rounded-none',
+          'text-pure-white placeholder-gray-500 focus:border-cyan focus:outline-none focus-ring',
           'transition-all duration-300 font-body',
-          'hover:border-ink/40',
-          error && 'border-accent-1',
+          'hover:border-gray-600',
+          error && 'border-red-500',
           className
         )}
         {...props}
       />
       {error && (
-        <p className="text-sm text-accent-1 font-body">{error}</p>
+        <p className="text-sm text-red-400 font-body">{error}</p>
       )}
     </div>
   )
