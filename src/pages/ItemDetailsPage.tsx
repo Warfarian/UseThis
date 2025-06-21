@@ -405,3 +405,4 @@ export const ItemDetailsPage: React.FC = () => {
       </div>
     </div>
   )
+}
