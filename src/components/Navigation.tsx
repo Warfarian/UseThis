@@ -53,9 +53,9 @@ export const Navigation: React.FC = () => {
               </Link>
             </div>
 
-            {/* Desktop Navigation Items - Hidden on mobile */}
+            {/* Desktop Navigation Items - Hidden on mobile/tablet */}
             {user && (
-              <div className="hidden lg:flex items-center justify-center flex-1 max-w-4xl mx-8">
+              <div className="hidden xl:flex items-center justify-center flex-1 max-w-4xl mx-8">
                 <div className="flex items-center space-x-2 xl:space-x-4">
                   {navItems.map(({ path, icon: Icon, label }) => (
                     <Link
@@ -104,17 +104,17 @@ export const Navigation: React.FC = () => {
                       variant="ghost"
                       size="sm"
                       onClick={handleSignOut}
-                      className="hidden lg:flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4"
+                      className="hidden xl:flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4"
                       data-cursor-interactive="true"
                     >
                       <LogOut size={14} />
                       <span className="text-xs sm:text-sm">EXIT</span>
                     </Button>
 
-                    {/* Mobile Menu Button */}
+                    {/* Mobile/Tablet Menu Button - Show on screens smaller than xl */}
                     <button
                       onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                      className="lg:hidden p-2 text-pure-white hover:text-primary transition-colors"
+                      className="xl:hidden p-2 text-pure-white hover:text-primary transition-colors border-2 border-steel hover:border-primary"
                       data-cursor-interactive="true"
                     >
                       {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -131,9 +131,9 @@ export const Navigation: React.FC = () => {
         </div>
       </nav>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile/Tablet Dropdown Menu */}
       {user && mobileMenuOpen && (
-        <div className="fixed top-16 sm:top-20 left-0 right-0 z-[90] lg:hidden">
+        <div className="fixed top-16 sm:top-20 left-0 right-0 z-[90] xl:hidden">
           <div className="bg-charcoal border-b-2 border-primary shadow-lg">
             <div className="max-w-7xl mx-auto px-3 sm:px-6">
               {/* User Info Section */}
@@ -195,7 +195,7 @@ export const Navigation: React.FC = () => {
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-pure-black/50 z-[80] lg:hidden"
+          className="fixed inset-0 bg-pure-black/50 z-[80] xl:hidden"
           onClick={closeMobileMenu}
         />
       )}
