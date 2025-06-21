@@ -157,6 +157,13 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Spacer Section */}
+      <section className="py-24 bg-pure-black">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="divider-brutal opacity-30" />
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="py-32 px-6 relative bg-charcoal" ref={featuresRef}>
         <div className="max-w-7xl mx-auto">
