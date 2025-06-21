@@ -15,6 +15,7 @@ export const MessagesPage: React.FC = () => {
   const [loading, setLoading] = useState(true)
   const [sendingMessage, setSendingMessage] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
     if (user) {
@@ -32,6 +33,15 @@ export const MessagesPage: React.FC = () => {
   useEffect(() => {
     scrollToBottom()
   }, [messages])
+
+  // Auto-focus textarea when conversation is selected
+  useEffect(() => {
+    if (selectedConversation && textareaRef.current) {
+      setTimeout(() => {
+        textareaRef.current?.focus()
+      }, 100)
+    }
+  }, [selectedConversation])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -110,7 +120,7 @@ export const MessagesPage: React.FC = () => {
   }
 
   const sendMessage = async () => {
-    if (!newMessage.trim() || !selectedConversation || !user) return
+    if (!newMessage.trim() || !selectedConversation || !user || sendingMessage) return
 
     setSendingMessage(true)
     try {
@@ -128,6 +138,11 @@ export const MessagesPage: React.FC = () => {
       setNewMessage('')
       fetchMessages(selectedConversation.id)
       fetchConversations()
+      
+      // Refocus textarea after sending
+      setTimeout(() => {
+        textareaRef.current?.focus()
+      }, 100)
     } catch (error) {
       console.error('Error sending message:', error)
       alert('Failed to send message. Please try again.')
@@ -165,7 +180,7 @@ export const MessagesPage: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 h-[600px]">
           {/* Conversations List */}
-          <div className="lg:col-span-1">
+          <div className={`lg:col-span-1 ${selectedConversation ? 'hidden lg:block' : ''}`}>
             <Card className="h-full p-0 overflow-hidden">
               <div className="p-6 border-b-2 border-steel">
                 <h2 className="text-xl font-black text-pure-white font-display uppercase">
@@ -186,6 +201,9 @@ export const MessagesPage: React.FC = () => {
                     <p className="text-steel font-display font-bold uppercase tracking-wide text-sm">
                       NO CONVERSATIONS YET
                     </p>
+                    <p className="text-steel font-display font-medium text-xs mt-2">
+                      Start a conversation by messaging someone about their item
+                    </p>
                   </div>
                 ) : (
                   conversations.map((conversation) => {
@@ -195,8 +213,9 @@ export const MessagesPage: React.FC = () => {
                         key={conversation.id}
                         onClick={() => setSelectedConversation(conversation)}
                         className={`p-4 border-b border-steel/30 cursor-pointer transition-colors hover:bg-charcoal/50 ${
-                          selectedConversation?.id === conversation.id ? 'bg-charcoal' : ''
+                          selectedConversation?.id === conversation.id ? 'bg-charcoal border-l-4 border-primary' : ''
                         }`}
+                        data-cursor-interactive="true"
                       >
                         <div className="flex items-start space-x-3">
                           <div className="w-10 h-10 bg-primary flex items-center justify-center flex-shrink-0">
@@ -240,33 +259,34 @@ export const MessagesPage: React.FC = () => {
           </div>
 
           {/* Chat Area */}
-          <div className="lg:col-span-2">
+          <div className={`lg:col-span-2 ${!selectedConversation ? 'hidden lg:block' : ''}`}>
             <Card className="h-full p-0 overflow-hidden flex flex-col">
               {selectedConversation ? (
                 <>
                   {/* Chat Header */}
-                  <div className="p-6 border-b-2 border-steel flex items-center space-x-4">
+                  <div className="p-4 sm:p-6 border-b-2 border-steel flex items-center space-x-4">
                     <button
                       onClick={() => setSelectedConversation(null)}
-                      className="lg:hidden text-steel hover:text-primary"
+                      className="lg:hidden text-steel hover:text-primary transition-colors"
+                      data-cursor-interactive="true"
                     >
                       <ArrowLeft size={20} />
                     </button>
                     
-                    <div className="w-12 h-12 bg-primary flex items-center justify-center">
-                      <span className="text-pure-white font-bold">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary flex items-center justify-center">
+                      <span className="text-pure-white font-bold text-sm sm:text-base">
                         {getOtherParticipant(selectedConversation)?.name.charAt(0).toUpperCase()}
                       </span>
                     </div>
                     
-                    <div>
-                      <h2 className="text-xl font-black text-pure-white font-display uppercase">
+                    <div className="flex-1 min-w-0">
+                      <h2 className="text-lg sm:text-xl font-black text-pure-white font-display uppercase truncate">
                         {getOtherParticipant(selectedConversation)?.name}
                       </h2>
                       {selectedConversation.item && (
                         <div className="flex items-center text-steel text-sm">
                           <Package size={14} className="mr-2" />
-                          <span className="font-display font-bold uppercase tracking-wide">
+                          <span className="font-display font-bold uppercase tracking-wide truncate">
                             {selectedConversation.item.title}
                           </span>
                         </div>
@@ -275,57 +295,77 @@ export const MessagesPage: React.FC = () => {
                   </div>
 
                   {/* Messages */}
-                  <div className="flex-1 overflow-y-auto p-6 space-y-4">
-                    {messages.map((message) => (
-                      <div
-                        key={message.id}
-                        className={`flex ${message.sender_id === user?.id ? 'justify-end' : 'justify-start'}`}
-                      >
-                        <div
-                          className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
-                            message.sender_id === user?.id
-                              ? 'bg-primary text-pure-white'
-                              : 'bg-charcoal text-pure-white border-2 border-steel'
-                          }`}
-                        >
-                          <p className="font-display font-medium text-sm leading-relaxed">
-                            {message.content}
-                          </p>
-                          <p className={`text-xs mt-2 ${
-                            message.sender_id === user?.id ? 'text-pure-white/70' : 'text-steel'
-                          }`}>
-                            {formatDate(message.created_at)}
-                          </p>
-                        </div>
+                  <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+                    {messages.length === 0 ? (
+                      <div className="text-center py-8">
+                        <MessageSquare size={32} className="mx-auto mb-4 text-steel" />
+                        <p className="text-steel font-display font-bold uppercase tracking-wide text-sm">
+                          NO MESSAGES YET
+                        </p>
+                        <p className="text-steel font-display font-medium text-xs mt-2">
+                          Start the conversation by sending a message below
+                        </p>
                       </div>
-                    ))}
+                    ) : (
+                      messages.map((message) => (
+                        <div
+                          key={message.id}
+                          className={`flex ${message.sender_id === user?.id ? 'justify-end' : 'justify-start'}`}
+                        >
+                          <div
+                            className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
+                              message.sender_id === user?.id
+                                ? 'bg-primary text-pure-white'
+                                : 'bg-charcoal text-pure-white border-2 border-steel'
+                            }`}
+                          >
+                            <p className="font-display font-medium text-sm leading-relaxed break-words">
+                              {message.content}
+                            </p>
+                            <p className={`text-xs mt-2 ${
+                              message.sender_id === user?.id ? 'text-pure-white/70' : 'text-steel'
+                            }`}>
+                              {formatDate(message.created_at)}
+                            </p>
+                          </div>
+                        </div>
+                      ))
+                    )}
                     <div ref={messagesEndRef} />
                   </div>
 
                   {/* Message Input */}
-                  <div className="p-6 border-t-2 border-steel">
-                    <div className="flex space-x-4">
-                      <textarea
-                        value={newMessage}
-                        onChange={(e) => setNewMessage(e.target.value)}
-                        onKeyPress={handleKeyPress}
-                        placeholder="TYPE YOUR MESSAGE..."
-                        rows={2}
-                        className="input-brutal flex-1 resize-none"
-                      />
+                  <div className="p-4 sm:p-6 border-t-2 border-steel bg-charcoal">
+                    <div className="flex space-x-3">
+                      <div className="flex-1">
+                        <textarea
+                          ref={textareaRef}
+                          value={newMessage}
+                          onChange={(e) => setNewMessage(e.target.value)}
+                          onKeyPress={handleKeyPress}
+                          placeholder="TYPE YOUR MESSAGE..."
+                          rows={2}
+                          className="w-full bg-pure-black border-2 border-steel text-pure-white px-4 py-3 font-display font-medium text-sm placeholder-steel focus:border-primary focus:outline-none resize-none transition-colors"
+                          disabled={sendingMessage}
+                        />
+                      </div>
                       <Button
                         onClick={sendMessage}
                         disabled={!newMessage.trim() || sendingMessage}
-                        className="flex items-center space-x-2"
+                        className="flex items-center space-x-2 px-6"
+                        data-cursor-interactive="true"
                       >
                         <Send size={16} />
-                        <span>SEND</span>
+                        <span className="hidden sm:inline">SEND</span>
                       </Button>
+                    </div>
+                    <div className="mt-2 text-steel font-display font-medium text-xs">
+                      Press Enter to send, Shift+Enter for new line
                     </div>
                   </div>
                 </>
               ) : (
-                <div className="flex-1 flex items-center justify-center">
+                <div className="flex-1 flex items-center justify-center p-6">
                   <div className="text-center">
                     <MessageSquare size={48} className="mx-auto mb-4 text-steel" />
                     <h3 className="text-xl font-black text-pure-white mb-2 font-display">
