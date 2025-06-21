@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth'
 import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
 import { Card } from '../components/ui/Card'
+import { InteractiveCursor } from '../components/InteractiveCursor'
 
 export const LoginPage: React.FC = () => {
   const [isSignUp, setIsSignUp] = useState(false)
@@ -35,28 +36,29 @@ export const LoginPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-canvas grain flex items-center justify-center p-4">
+    <div className="min-h-screen bg-canvas grain flex items-center justify-center p-6">
+      <InteractiveCursor />
       <div className="w-full max-w-md">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center space-x-3 mb-4">
-            <div className="w-12 h-12 bg-accent-1 rounded-full flex items-center justify-center animate-float">
-              <span className="text-canvas font-bold text-xl">U</span>
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center space-x-4 mb-6">
+            <div className="w-16 h-16 bg-gradient-to-br from-accent-1 to-accent-2 rounded-full flex items-center justify-center animate-float">
+              <span className="text-canvas font-bold text-2xl font-primary">U</span>
             </div>
-            <h1 className="text-4xl font-bold text-ink font-primary">UseThis</h1>
+            <h1 className="text-5xl font-bold text-ink font-primary">UseThis</h1>
           </div>
-          <p className="text-focus text-lg">
+          <p className="text-focus text-lg font-body">
             {isSignUp ? "Join the community" : "Welcome back"}
           </p>
         </div>
 
         <Card>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-8">
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-ink mb-2">
+              <h2 className="text-3xl font-bold text-ink mb-3 font-primary">
                 {isSignUp ? "Create Account" : "Sign In"}
               </h2>
-              <p className="text-focus">
+              <p className="text-focus font-body">
                 {isSignUp 
                   ? "Start borrowing and lending with your peers" 
                   : "Access your rental marketplace"
@@ -65,8 +67,8 @@ export const LoginPage: React.FC = () => {
             </div>
 
             {error && (
-              <div className="p-4 bg-accent-2/10 border border-accent-2/30 rounded-2xl">
-                <p className="text-accent-2 text-sm">{error}</p>
+              <div className="p-4 bg-accent-1/10 border border-accent-1/30 rounded-2xl">
+                <p className="text-accent-1 text-sm font-body">{error}</p>
               </div>
             )}
 
@@ -103,6 +105,7 @@ export const LoginPage: React.FC = () => {
               type="submit"
               className="w-full"
               disabled={loading}
+              data-cursor-interactive="true"
             >
               {loading 
                 ? (isSignUp ? "Creating Account..." : "Signing In...") 
@@ -114,7 +117,8 @@ export const LoginPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsSignUp(!isSignUp)}
-                className="text-focus hover:text-accent-1 transition-colors slot-machine"
+                data-cursor-interactive="true"
+                className="text-focus hover:text-accent-1 transition-colors font-body"
               >
                 {isSignUp 
                   ? "Already have an account? Sign in" 
@@ -126,7 +130,7 @@ export const LoginPage: React.FC = () => {
         </Card>
 
         <div className="text-center mt-8">
-          <p className="text-focus text-sm">
+          <p className="text-focus text-sm font-body">
             By continuing, you agree to our terms and privacy policy
           </p>
         </div>
