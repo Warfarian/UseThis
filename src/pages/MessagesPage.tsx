@@ -164,6 +164,10 @@ export const MessagesPage: React.FC = () => {
       : conversation.participant_1
   }
 
+  const handleConversationClick = (conversation: Conversation) => {
+    setSelectedConversation(conversation)
+  }
+
   return (
     <div className="min-h-screen bg-pure-black noise py-8 px-6 pt-28">
       <div className="max-w-7xl mx-auto">
@@ -181,7 +185,7 @@ export const MessagesPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 h-[600px]">
           {/* Conversations List */}
           <div className={`lg:col-span-1 ${selectedConversation ? 'hidden lg:block' : ''}`}>
-            <Card className="h-full p-0 overflow-hidden">
+            <div className="card-brutal h-full p-0 overflow-hidden bg-charcoal border-3 border-steel">
               <div className="p-6 border-b-2 border-steel">
                 <h2 className="text-xl font-black text-pure-white font-display uppercase">
                   CONVERSATIONS
@@ -208,14 +212,21 @@ export const MessagesPage: React.FC = () => {
                 ) : (
                   conversations.map((conversation) => {
                     const otherParticipant = getOtherParticipant(conversation)
+                    const isSelected = selectedConversation?.id === conversation.id
+                    
                     return (
-                      <div
+                      <button
                         key={conversation.id}
-                        onClick={() => setSelectedConversation(conversation)}
-                        className={`p-4 border-b border-steel/30 cursor-pointer transition-colors hover:bg-charcoal/50 ${
-                          selectedConversation?.id === conversation.id ? 'bg-charcoal border-l-4 border-primary' : ''
+                        onClick={() => handleConversationClick(conversation)}
+                        className={`w-full p-4 border-b border-steel/30 text-left transition-all duration-200 hover:bg-charcoal/80 focus:outline-none focus:bg-charcoal/80 ${
+                          isSelected ? 'bg-charcoal border-l-4 border-primary' : ''
                         }`}
-                        data-cursor-interactive="true"
+                        style={{ 
+                          cursor: 'pointer',
+                          pointerEvents: 'auto',
+                          zIndex: 10,
+                          position: 'relative'
+                        }}
                       >
                         <div className="flex items-start space-x-3">
                           <div className="w-10 h-10 bg-primary flex items-center justify-center flex-shrink-0">
@@ -250,12 +261,12 @@ export const MessagesPage: React.FC = () => {
                             </p>
                           </div>
                         </div>
-                      </div>
+                      </button>
                     )
                   })
                 )}
               </div>
-            </Card>
+            </div>
           </div>
 
           {/* Chat Area */}
@@ -268,7 +279,7 @@ export const MessagesPage: React.FC = () => {
                     <button
                       onClick={() => setSelectedConversation(null)}
                       className="lg:hidden text-steel hover:text-primary transition-colors"
-                      data-cursor-interactive="true"
+                      style={{ cursor: 'pointer', pointerEvents: 'auto' }}
                     >
                       <ArrowLeft size={20} />
                     </button>
@@ -346,6 +357,7 @@ export const MessagesPage: React.FC = () => {
                           placeholder="TYPE YOUR MESSAGE..."
                           rows={2}
                           className="w-full bg-pure-black border-2 border-steel text-pure-white px-4 py-3 font-display font-medium text-sm placeholder-steel focus:border-primary focus:outline-none resize-none transition-colors"
+                          style={{ cursor: 'text', pointerEvents: 'auto' }}
                           disabled={sendingMessage}
                         />
                       </div>
@@ -353,7 +365,7 @@ export const MessagesPage: React.FC = () => {
                         onClick={sendMessage}
                         disabled={!newMessage.trim() || sendingMessage}
                         className="flex items-center space-x-2 px-6"
-                        data-cursor-interactive="true"
+                        style={{ cursor: 'pointer', pointerEvents: 'auto' }}
                       >
                         <Send size={16} />
                         <span className="hidden sm:inline">SEND</span>
