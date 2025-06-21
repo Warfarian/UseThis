@@ -60,7 +60,7 @@ export const LoginPage: React.FC = () => {
               <div className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-100"></div>
             </div>
             <div>
-              <h1 className="text-4xl font-black text-pure-white font-display uppercase tracking-tight glitch" data-text="UseThis">UseThis</h1>
+              <h1 className="text-4xl font-black text-pure-white font-display uppercase tracking-tight">UseThis</h1>
               <div className="text-xs text-primary font-mono uppercase tracking-widest">PLATFORM</div>
             </div>
           </div>

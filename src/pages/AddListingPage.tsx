@@ -116,7 +116,7 @@ export const AddListingPage: React.FC = () => {
             <span>BACK TO HOME</span>
           </Button>
 
-          <h1 className="text-huge font-black text-pure-white mb-4 font-display glitch" data-text="LIST YOUR ITEM">
+          <h1 className="text-huge font-black text-pure-white mb-4 font-display">
             LIST YOUR <span className="text-primary">ITEM</span>
           </h1>
           <p className="text-xl text-concrete font-display font-bold uppercase tracking-wide">
