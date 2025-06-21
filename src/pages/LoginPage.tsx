@@ -38,13 +38,13 @@ export const LoginPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-pure-black geometric-grid flex items-center justify-center p-8">
+    <div className="min-h-screen bg-canvas grain flex items-center justify-center p-8">
       <InteractiveCursor />
       
       {/* Back to landing */}
       <Link 
         to="/" 
-        className="fixed top-8 left-8 z-50 flex items-center space-x-3 text-gray-400 hover:text-cyan transition-colors link-hover"
+        className="fixed top-8 left-8 z-50 flex items-center space-x-3 text-focus hover:text-accent-1 transition-colors link-hover"
         data-cursor-interactive
       >
         <ArrowLeft size={20} />
@@ -55,29 +55,29 @@ export const LoginPage: React.FC = () => {
         {/* Logo */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center space-x-4 mb-8">
-            <div className="w-16 h-16 bg-cyan rounded-sm flex items-center justify-center">
-              <span className="text-pure-black font-black text-2xl font-mono">U</span>
+            <div className="w-16 h-16 bg-accent-1 rounded-sm flex items-center justify-center">
+              <span className="text-canvas font-black text-2xl font-mono">U</span>
             </div>
             <div>
-              <h1 className="text-4xl font-black text-pure-white font-primary">UseThis</h1>
-              <div className="text-xs text-gray-400 font-mono uppercase tracking-extra-wide">Platform</div>
+              <h1 className="text-4xl font-black text-ink font-primary">UseThis</h1>
+              <div className="text-xs text-focus font-mono uppercase tracking-extra-wide">Platform</div>
             </div>
           </div>
-          <div className="divider w-24 mx-auto mb-6" />
-          <p className="text-gray-400 text-lg font-body">
-            {isSignUp ? "Join the revolution" : "Welcome back"}
+          <div className="w-24 h-1 bg-accent-1 mx-auto mb-6" />
+          <p className="text-focus text-lg font-body">
+            {isSignUp ? "Join the community" : "Welcome back"}
           </p>
         </div>
 
         <Card className="p-12">
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="text-center mb-8">
-              <h2 className="heading-2 font-bold text-pure-white mb-4 font-primary">
+              <h2 className="heading-2 font-bold text-ink mb-4 font-primary">
                 {isSignUp ? "Create Account" : "Sign In"}
               </h2>
-              <p className="text-gray-400 font-body">
+              <p className="text-focus font-body">
                 {isSignUp 
-                  ? "Start your journey in the student economy" 
+                  ? "Start sharing and borrowing today" 
                   : "Access your rental marketplace"
                 }
               </p>
@@ -91,7 +91,7 @@ export const LoginPage: React.FC = () => {
 
             {isSignUp && (
               <div className="relative">
-                <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" size={20} />
+                <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-focus" size={20} />
                 <Input
                   label="Full Name"
                   type="text"
@@ -105,7 +105,7 @@ export const LoginPage: React.FC = () => {
             )}
 
             <div className="relative">
-              <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" size={20} />
+              <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-focus" size={20} />
               <Input
                 label="Email Address"
                 type="email"
@@ -118,7 +118,7 @@ export const LoginPage: React.FC = () => {
             </div>
 
             <div className="relative">
-              <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" size={20} />
+              <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-focus" size={20} />
               <Input
                 label="Password"
                 type="password"
@@ -132,7 +132,7 @@ export const LoginPage: React.FC = () => {
 
             <Button
               type="submit"
-              className="w-full magnetic"
+              className="w-full"
               disabled={loading}
               data-cursor-interactive="true"
             >
@@ -143,12 +143,12 @@ export const LoginPage: React.FC = () => {
             </Button>
 
             <div className="text-center">
-              <div className="divider w-16 mx-auto mb-6" />
+              <div className="w-16 h-px bg-focus mx-auto mb-6" />
               <button
                 type="button"
                 onClick={() => setIsSignUp(!isSignUp)}
                 data-cursor-interactive="true"
-                className="text-gray-400 hover:text-cyan transition-colors font-body link-hover"
+                className="text-focus hover:text-accent-1 transition-colors font-body link-hover"
               >
                 {isSignUp 
                   ? "Already have an account? Sign in" 
@@ -160,13 +160,13 @@ export const LoginPage: React.FC = () => {
         </Card>
 
         <div className="text-center mt-12">
-          <p className="text-gray-500 text-sm font-body">
+          <p className="text-focus text-sm font-body">
             By continuing, you agree to our{' '}
-            <button className="text-cyan hover:underline link-hover" data-cursor-interactive>
+            <button className="text-accent-1 hover:underline link-hover" data-cursor-interactive>
               Terms of Service
             </button>{' '}
             and{' '}
-            <button className="text-cyan hover:underline link-hover" data-cursor-interactive>
+            <button className="text-accent-1 hover:underline link-hover" data-cursor-interactive>
               Privacy Policy
             </button>
           </p>

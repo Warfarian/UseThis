@@ -7,10 +7,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        'dark-charcoal': '#222831',
-        'gunmetal': '#393E46',
-        'cyan': '#00ADB5',
-        'light-gray': '#EEEEEE',
+        'canvas': '#000000',
+        'ink': '#EEEEEE', 
+        'focus': '#393E46',
+        'muted': '#222831',
+        'accent-1': '#00ADB5',
+        'accent-2': '#00ADB5',
         'pure-white': '#FFFFFF',
         'pure-black': '#000000',
         gray: {
@@ -27,7 +29,7 @@ export default {
         }
       },
       fontFamily: {
-        'primary': ['Playfair Display', 'serif'],
+        'primary': ['Inter', 'system-ui', 'sans-serif'],
         'body': ['Inter', 'system-ui', 'sans-serif'],
         'mono': ['JetBrains Mono', 'monospace']
       },
@@ -47,21 +49,21 @@ export default {
         '38': '9.5rem',
       },
       animation: {
-        'fade-in-up': 'fade-in-up 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
-        'fade-in': 'fade-in 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
-        'scale-in': 'scale-in 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
-        'slide-in-left': 'slide-in-left 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
-        'slide-in-right': 'slide-in-right 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
-        'float': 'float 12s ease-in-out infinite',
-        'rotate': 'rotate 20s linear infinite',
-        'pulse': 'pulse 2s infinite',
-        'loading': 'loading 1.5s infinite'
+        'fade-in-up': 'fade-in-up 1s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+        'fade-in': 'fade-in 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+        'scale-in': 'scale-in 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+        'slide-in-left': 'slide-in-left 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+        'slide-in-right': 'slide-in-right 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+        'float': 'float 8s ease-in-out infinite',
+        'rotate': 'rotate 15s linear infinite',
+        'pulse': 'pulse 1.5s infinite',
+        'loading': 'loading 1.2s infinite'
       },
       keyframes: {
         'fade-in-up': {
           '0%': { 
             opacity: '0', 
-            transform: 'translateY(100px)' 
+            transform: 'translateY(60px)' 
           },
           '100%': { 
             opacity: '1', 
@@ -75,7 +77,7 @@ export default {
         'scale-in': {
           '0%': { 
             opacity: '0', 
-            transform: 'scale(0.8) translateY(40px)' 
+            transform: 'scale(0.9) translateY(20px)' 
           },
           '100%': { 
             opacity: '1', 
@@ -85,7 +87,7 @@ export default {
         'slide-in-left': {
           '0%': { 
             opacity: '0', 
-            transform: 'translateX(-80px)' 
+            transform: 'translateX(-40px)' 
           },
           '100%': { 
             opacity: '1', 
@@ -95,7 +97,7 @@ export default {
         'slide-in-right': {
           '0%': { 
             opacity: '0', 
-            transform: 'translateX(80px)' 
+            transform: 'translateX(40px)' 
           },
           '100%': { 
             opacity: '1', 
@@ -103,10 +105,8 @@ export default {
           }
         },
         'float': {
-          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
-          '25%': { transform: 'translateY(-30px) rotate(1deg)' },
-          '50%': { transform: 'translateY(-15px) rotate(-1deg)' },
-          '75%': { transform: 'translateY(-25px) rotate(0.5deg)' }
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' }
         },
         'rotate': {
           'from': { transform: 'rotate(0deg)' },
@@ -114,7 +114,7 @@ export default {
         },
         'pulse': {
           '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.5' }
+          '50%': { opacity: '0.7' }
         },
         'loading': {
           '0%': { backgroundPosition: '200% 0' },
@@ -125,8 +125,8 @@ export default {
         xs: '2px'
       },
       letterSpacing: {
-        'tightest': '-0.025em',
-        'extra-wide': '0.1em'
+        'tightest': '-0.02em',
+        'extra-wide': '0.08em'
       }
     },
   },

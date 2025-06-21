@@ -44,8 +44,8 @@ export const HomePage: React.FC = () => {
   }
 
   const categories = [
-    { name: 'Appliances', icon: Zap, color: 'accent-1' },
-    { name: 'Gaming Consoles', icon: Gamepad2, color: 'accent-2' },
+    { name: 'Electronics', icon: Zap, color: 'accent-1' },
+    { name: 'Gaming', icon: Gamepad2, color: 'accent-1' },
     { name: 'Kitchen', icon: ChefHat, color: 'accent-1' },
   ]
 
@@ -55,11 +55,11 @@ export const HomePage: React.FC = () => {
       <section className="relative py-32 px-6 overflow-hidden" ref={heroRef}>
         <div className="max-w-7xl mx-auto text-center">
           <div className={`mb-12 animate-on-scroll ${heroInView ? 'in-view' : ''}`}>
-            <h1 className="text-7xl md:text-9xl font-bold text-ink mb-8 font-primary leading-none">
+            <h1 className="text-7xl md:text-9xl font-black text-ink mb-8 font-primary leading-none">
               Share.{' '}
               <span className="text-gradient">Borrow.</span>{' '}
               <br />
-              <span className="text-accent-2">Thrive.</span>
+              <span className="text-accent-1">Thrive.</span>
             </h1>
             <p className="text-xl md:text-2xl text-focus max-w-4xl mx-auto leading-relaxed font-body">
               The peer-to-peer rental platform built for college students. 
@@ -69,13 +69,13 @@ export const HomePage: React.FC = () => {
 
           {/* Mode Toggle */}
           <div className={`mb-16 animate-on-scroll stagger-1 ${heroInView ? 'in-view' : ''}`}>
-            <div className="inline-flex glass rounded-full p-2 border border-ink/10">
+            <div className="inline-flex glass rounded-full p-2 border border-focus">
               <button
                 onClick={() => setMode('need')}
                 data-cursor-interactive="true"
-                className={`px-10 py-4 rounded-full font-medium font-body transition-all duration-500 ${
+                className={`px-10 py-4 rounded-full font-medium font-body transition-all duration-300 ${
                   mode === 'need'
-                    ? 'bg-gradient-to-r from-accent-1 to-accent-2 text-canvas shadow-lg glow-accent'
+                    ? 'bg-accent-1 text-canvas shadow-lg glow-accent'
                     : 'text-ink hover:text-accent-1'
                 }`}
               >
@@ -84,9 +84,9 @@ export const HomePage: React.FC = () => {
               <button
                 onClick={() => setMode('have')}
                 data-cursor-interactive="true"
-                className={`px-10 py-4 rounded-full font-medium font-body transition-all duration-500 ${
+                className={`px-10 py-4 rounded-full font-medium font-body transition-all duration-300 ${
                   mode === 'have'
-                    ? 'bg-gradient-to-r from-accent-1 to-accent-2 text-canvas shadow-lg glow-accent'
+                    ? 'bg-accent-1 text-canvas shadow-lg glow-accent'
                     : 'text-ink hover:text-accent-1'
                 }`}
               >
@@ -132,16 +132,16 @@ export const HomePage: React.FC = () => {
         </div>
 
         {/* Abstract Background Elements */}
-        <div className="absolute top-1/4 left-10 w-32 h-32 bg-gradient-to-br from-accent-1/10 to-accent-2/10 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-10 w-48 h-48 bg-gradient-to-br from-accent-2/10 to-accent-1/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-gradient-to-br from-focus/10 to-muted/10 rounded-full blur-2xl animate-float" style={{ animationDelay: '4s' }} />
+        <div className="absolute top-1/4 left-10 w-32 h-32 bg-accent-1/5 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-10 w-48 h-48 bg-accent-1/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-focus/10 rounded-full blur-2xl animate-float" style={{ animationDelay: '4s' }} />
       </section>
 
       {/* Popular Categories */}
       <section className="py-24 px-6" ref={categoriesRef}>
         <div className="max-w-7xl mx-auto">
           <div className={`text-center mb-16 animate-on-scroll ${categoriesInView ? 'in-view' : ''}`}>
-            <h2 className="text-5xl md:text-6xl font-bold text-ink mb-6 font-primary">
+            <h2 className="text-5xl md:text-6xl font-black text-ink mb-6 font-primary">
               Popular Categories
             </h2>
             <p className="text-xl text-focus font-body">
@@ -153,10 +153,10 @@ export const HomePage: React.FC = () => {
             {categories.map(({ name, icon: Icon, color }, index) => (
               <Link key={name} to={`/browse?category=${encodeURIComponent(name)}`}>
                 <Card className={`text-center group animate-on-scroll stagger-${index + 1} ${categoriesInView ? 'in-view' : ''}`}>
-                  <div className="w-20 h-20 mx-auto mb-6 glass rounded-full flex items-center justify-center border border-accent-1/20 group-hover:border-accent-1/50 transition-all duration-500">
-                    <Icon size={36} className="text-accent-1 group-hover:scale-110 transition-transform duration-500" />
+                  <div className="w-20 h-20 mx-auto mb-6 glass rounded-full flex items-center justify-center border border-accent-1/20 group-hover:border-accent-1/50 transition-all duration-300">
+                    <Icon size={36} className="text-accent-1 group-hover:scale-110 transition-transform duration-300" />
                   </div>
-                  <h3 className="text-2xl font-semibold text-ink mb-3 font-primary group-hover:text-accent-1 transition-colors duration-300">{name}</h3>
+                  <h3 className="text-2xl font-bold text-ink mb-3 font-primary group-hover:text-accent-1 transition-colors duration-300">{name}</h3>
                   <p className="text-focus font-body">Discover available items</p>
                 </Card>
               </Link>
@@ -170,7 +170,7 @@ export const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className={`flex items-center justify-between mb-16 animate-on-scroll ${featuredInView ? 'in-view' : ''}`}>
             <div>
-              <h2 className="text-5xl md:text-6xl font-bold text-ink mb-6 font-primary flex items-center">
+              <h2 className="text-5xl md:text-6xl font-black text-ink mb-6 font-primary flex items-center">
                 <TrendingUp className="mr-6 text-accent-1" size={48} />
                 Trending Now
               </h2>
@@ -206,7 +206,7 @@ export const HomePage: React.FC = () => {
                         <img
                           src={item.image_url}
                           alt={item.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
@@ -214,7 +214,7 @@ export const HomePage: React.FC = () => {
                         </div>
                       )}
                     </div>
-                    <h3 className="text-xl font-semibold text-ink mb-3 font-primary group-hover:text-accent-1 transition-colors duration-300">
+                    <h3 className="text-xl font-bold text-ink mb-3 font-primary group-hover:text-accent-1 transition-colors duration-300">
                       {item.title}
                     </h3>
                     <p className="text-focus text-sm mb-4 line-clamp-2 font-body">
@@ -240,7 +240,7 @@ export const HomePage: React.FC = () => {
       <section className="py-32 px-6" ref={ctaRef}>
         <div className="max-w-5xl mx-auto text-center">
           <div className={`animate-on-scroll ${ctaInView ? 'in-view' : ''}`}>
-            <h2 className="text-6xl md:text-8xl font-bold text-ink mb-8 font-primary leading-none">
+            <h2 className="text-6xl md:text-8xl font-black text-ink mb-8 font-primary leading-none">
               Ready to{' '}
               <span className="text-gradient">UseThis</span>?
             </h2>
