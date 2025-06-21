@@ -8,7 +8,6 @@ import { HomePage } from './pages/HomePage'
 import { BrowsePage } from './pages/BrowsePage'
 import { ItemDetailsPage } from './pages/ItemDetailsPage'
 import { AddListingPage } from './pages/AddListingPage'
-import { EditListingPage } from './pages/EditListingPage'
 import { BookingsPage } from './pages/BookingsPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { ReviewsPage } from './pages/ReviewsPage'
@@ -42,7 +41,6 @@ function App() {
             <Route path="browse" element={<BrowsePage />} />
             <Route path="item/:id" element={<ItemDetailsPage />} />
             <Route path="add-listing" element={<AddListingPage />} />
-            <Route path="edit-listing/:id" element={<EditListingPage />} />
             <Route path="bookings" element={<BookingsPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="reviews" element={<ReviewsPage />} />

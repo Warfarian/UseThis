@@ -5,7 +5,7 @@ import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Input } from '../components/ui/Input'
 import { formatPrice, formatDate } from '../lib/utils'
-import { User, Star, Package, Edit, Trash2, Plus, MapPin, Calendar, Camera, Archive, Eye } from 'lucide-react'
+import { User, Star, Package, Trash2, Plus, MapPin, Calendar, Camera, Archive, Eye } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 export const ProfilePage: React.FC = () => {
@@ -334,7 +334,7 @@ export const ProfilePage: React.FC = () => {
                       </div>
                     )}
                     <Button size="sm" onClick={() => setEditingProfile(true)} className="flex items-center space-x-2">
-                      <Edit size={16} />
+                      <User size={16} />
                       <span>EDIT PROFILE</span>
                     </Button>
                   </>
@@ -525,13 +525,6 @@ export const ProfilePage: React.FC = () => {
                           <Button size="sm" variant="outline" className="w-full flex items-center justify-center space-x-1">
                             <Eye size={14} />
                             <span>VIEW</span>
-                          </Button>
-                        </Link>
-                        
-                        <Link to={`/edit-listing/${item.id}`}>
-                          <Button size="sm" variant="outline" className="w-full flex items-center justify-center space-x-1">
-                            <Edit size={14} />
-                            <span>EDIT</span>
                           </Button>
                         </Link>
                         
