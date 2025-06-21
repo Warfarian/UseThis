@@ -21,8 +21,11 @@ export const BrowsePage: React.FC = () => {
 
   useEffect(() => {
     fetchCategories()
+  }, [])
+
+  useEffect(() => {
     fetchItems()
-  }, [searchTerm, selectedCategory, sortBy])
+  }, [searchTerm, selectedCategory, priceRange.min, priceRange.max, sortBy])
 
   const fetchCategories = async () => {
     try {
@@ -39,6 +42,7 @@ export const BrowsePage: React.FC = () => {
   }
 
   const fetchItems = async () => {
+    setLoading(true)
     try {
       let query = supabase
         .from('items')
@@ -48,23 +52,32 @@ export const BrowsePage: React.FC = () => {
         `)
         .eq('is_available', true)
 
-      if (searchTerm) {
-        query = query.or(`title.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`)
+      if (searchTerm.trim()) {
+        query = query.or(`title.ilike.%${searchTerm.trim()}%,description.ilike.%${searchTerm.trim()}%`)
       }
 
       if (selectedCategory) {
         query = query.eq('category', selectedCategory)
       }
 
-      if (priceRange.min) {
+      if (priceRange.min && !isNaN(parseFloat(priceRange.min))) {
         query = query.gte('price_per_day', parseFloat(priceRange.min))
       }
 
-      if (priceRange.max) {
+      if (priceRange.max && !isNaN(parseFloat(priceRange.max))) {
         query = query.lte('price_per_day', parseFloat(priceRange.max))
       }
 
-      const { data, error } = await query.order(sortBy, { ascending: false })
+      // Handle sorting
+      if (sortBy === 'price_per_day') {
+        query = query.order('price_per_day', { ascending: true })
+      } else if (sortBy === 'title') {
+        query = query.order('title', { ascending: true })
+      } else {
+        query = query.order('created_at', { ascending: false })
+      }
+
+      const { data, error } = await query
 
       if (error) throw error
       setItems(data || [])
@@ -77,11 +90,30 @@ export const BrowsePage: React.FC = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
+    updateSearchParams()
+    fetchItems()
+  }
+
+  const updateSearchParams = () => {
     const params = new URLSearchParams()
-    if (searchTerm) params.set('search', searchTerm)
+    if (searchTerm.trim()) params.set('search', searchTerm.trim())
     if (selectedCategory) params.set('category', selectedCategory)
     setSearchParams(params)
-    fetchItems()
+  }
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category)
+    // Fetch will be triggered by useEffect
+  }
+
+  const handlePriceChange = (field: 'min' | 'max', value: string) => {
+    setPriceRange(prev => ({ ...prev, [field]: value }))
+    // Fetch will be triggered by useEffect with a slight delay
+  }
+
+  const handleSortChange = (sort: string) => {
+    setSortBy(sort)
+    // Fetch will be triggered by useEffect
   }
 
   const clearFilters = () => {
@@ -90,7 +122,7 @@ export const BrowsePage: React.FC = () => {
     setPriceRange({ min: '', max: '' })
     setSortBy('created_at')
     setSearchParams({})
-    fetchItems()
+    // fetchItems will be called by useEffect when state changes
   }
 
   return (
@@ -113,7 +145,7 @@ export const BrowsePage: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <div className="flex-1">
                 <div className="relative">
-                  <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-steel z-10" size={18} sm:size={20} />
+                  <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-steel z-10" size={18} />
                   <input
                     type="text"
                     value={searchTerm}
@@ -124,7 +156,7 @@ export const BrowsePage: React.FC = () => {
                 </div>
               </div>
               <Button type="submit" className="flex items-center justify-center space-x-2 px-6 sm:px-8">
-                <Search size={16} sm:size={18} />
+                <Search size={16} />
                 <span className="text-sm sm:text-base">SEARCH</span>
               </Button>
             </div>
@@ -150,7 +182,7 @@ export const BrowsePage: React.FC = () => {
               </label>
               <select
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={(e) => handleCategoryChange(e.target.value)}
                 className="input-brutal w-full text-sm sm:text-base"
               >
                 <option value="">ALL CATEGORIES</option>
@@ -168,8 +200,10 @@ export const BrowsePage: React.FC = () => {
               </label>
               <input
                 type="number"
+                min="0"
+                step="0.01"
                 value={priceRange.min}
-                onChange={(e) => setPriceRange(prev => ({ ...prev, min: e.target.value }))}
+                onChange={(e) => handlePriceChange('min', e.target.value)}
                 placeholder="$0"
                 className="input-brutal w-full text-sm sm:text-base"
               />
@@ -181,8 +215,10 @@ export const BrowsePage: React.FC = () => {
               </label>
               <input
                 type="number"
+                min="0"
+                step="0.01"
                 value={priceRange.max}
-                onChange={(e) => setPriceRange(prev => ({ ...prev, max: e.target.value }))}
+                onChange={(e) => handlePriceChange('max', e.target.value)}
                 placeholder="$999"
                 className="input-brutal w-full text-sm sm:text-base"
               />
@@ -194,11 +230,11 @@ export const BrowsePage: React.FC = () => {
               </label>
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
+                onChange={(e) => handleSortChange(e.target.value)}
                 className="input-brutal w-full text-sm sm:text-base"
               >
                 <option value="created_at">NEWEST</option>
-                <option value="price_per_day">PRICE LOW</option>
+                <option value="price_per_day">PRICE LOW TO HIGH</option>
                 <option value="title">NAME A-Z</option>
               </select>
             </div>
@@ -206,10 +242,10 @@ export const BrowsePage: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div className="text-steel font-display font-bold uppercase tracking-wide text-xs sm:text-sm">
-              {items.length} ITEMS FOUND
+              {loading ? 'SEARCHING...' : `${items.length} ITEMS FOUND`}
             </div>
             <Button variant="ghost" onClick={clearFilters} className="flex items-center justify-center space-x-2 w-full sm:w-auto">
-              <Filter size={14} sm:size={16} />
+              <Filter size={14} />
               <span className="text-xs sm:text-sm">CLEAR FILTERS</span>
             </Button>
           </div>
