@@ -4,7 +4,8 @@ import { useAuth } from '../hooks/useAuth'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { formatPrice, formatDate } from '../lib/utils'
-import { Calendar, Clock, User, Package, CheckCircle, XCircle, AlertCircle, Star } from 'lucide-react'
+import { Calendar, Clock, User, Package, CheckCircle, XCircle, AlertCircle, Star, Plus, Eye } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 export const BookingsPage: React.FC = () => {
   const { user } = useAuth()
@@ -148,28 +149,46 @@ export const BookingsPage: React.FC = () => {
           <div className="divider-brutal mt-6" />
         </div>
 
+        {/* Quick Actions */}
+        <div className="mb-8 flex flex-wrap gap-4">
+          <Link to="/profile">
+            <Button variant="outline" className="flex items-center space-x-2">
+              <Eye size={16} />
+              <span>VIEW MY LISTINGS</span>
+            </Button>
+          </Link>
+          <Link to="/add-listing">
+            <Button variant="outline" className="flex items-center space-x-2">
+              <Plus size={16} />
+              <span>CREATE NEW LISTING</span>
+            </Button>
+          </Link>
+        </div>
+
         {/* Tabs */}
         <div className="mb-8">
           <div className="inline-flex glass-brutal border-2 border-steel">
             <button
               onClick={() => setActiveTab('renter')}
-              className={`px-8 py-4 font-bold font-display text-sm uppercase tracking-wide transition-all duration-100 ${
+              className={`px-6 py-4 font-bold font-display text-sm uppercase tracking-wide transition-all duration-100 ${
                 activeTab === 'renter'
                   ? 'bg-primary text-pure-white'
                   : 'text-pure-white hover:text-primary'
               }`}
             >
               MY RENTALS
+              <div className="text-xs opacity-75 mt-1">Items I'm renting</div>
             </button>
             <button
               onClick={() => setActiveTab('owner')}
-              className={`px-8 py-4 font-bold font-display text-sm uppercase tracking-wide transition-all duration-100 ${
+              className={`px-6 py-4 font-bold font-display text-sm uppercase tracking-wide transition-all duration-100 ${
                 activeTab === 'owner'
                   ? 'bg-primary text-pure-white'
                   : 'text-pure-white hover:text-primary'
               }`}
             >
-              MY LISTINGS
+              RENTAL REQUESTS
+              <div className="text-xs opacity-75 mt-1">People renting my items</div>
             </button>
           </div>
         </div>
@@ -192,12 +211,31 @@ export const BookingsPage: React.FC = () => {
             <p className="text-steel font-display font-bold uppercase tracking-wide mb-6">
               {activeTab === 'renter' 
                 ? 'START BROWSING TO FIND ITEMS TO RENT'
-                : 'CREATE LISTINGS TO START EARNING'
+                : 'YOUR ITEMS HAVEN\'T BEEN BOOKED YET'
               }
             </p>
-            <Button onClick={() => window.location.href = activeTab === 'renter' ? '/browse' : '/add-listing'}>
-              {activeTab === 'renter' ? 'BROWSE ITEMS' : 'CREATE LISTING'}
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {activeTab === 'renter' ? (
+                <Link to="/browse">
+                  <Button>BROWSE ITEMS</Button>
+                </Link>
+              ) : (
+                <>
+                  <Link to="/add-listing">
+                    <Button className="flex items-center space-x-2">
+                      <Plus size={16} />
+                      <span>CREATE LISTING</span>
+                    </Button>
+                  </Link>
+                  <Link to="/profile">
+                    <Button variant="outline" className="flex items-center space-x-2">
+                      <Eye size={16} />
+                      <span>VIEW MY LISTINGS</span>
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
         ) : (
           <div className="space-y-6">
@@ -236,7 +274,10 @@ export const BookingsPage: React.FC = () => {
                         <div className="flex items-center text-steel text-sm">
                           <User size={14} className="mr-2" />
                           <span className="font-display font-bold uppercase tracking-wide">
-                            {activeTab === 'renter' ? booking.owner?.name : booking.renter?.name}
+                            {activeTab === 'renter' 
+                              ? `OWNER: ${booking.owner?.name}` 
+                              : `RENTER: ${booking.renter?.name}`
+                            }
                           </span>
                         </div>
                       </div>
