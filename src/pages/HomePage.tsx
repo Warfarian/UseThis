@@ -50,9 +50,9 @@ export const HomePage: React.FC = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-pure-black noise">
+    <div className="min-h-screen bg-pure-black noise pt-20">
       {/* Hero Section */}
-      <section className="relative py-32 px-6 overflow-hidden" ref={heroRef}>
+      <section className="relative py-16 sm:py-32 px-6 overflow-hidden" ref={heroRef}>
         <div className="max-w-7xl mx-auto text-center">
           <div className={`mb-12 ${heroInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
             <h1 className="text-giant font-black text-pure-white mb-8 font-display leading-none">
@@ -61,7 +61,7 @@ export const HomePage: React.FC = () => {
               <br />
               <span className="text-secondary">THRIVE.</span>
             </h1>
-            <p className="text-xl md:text-2xl text-concrete max-w-4xl mx-auto leading-tight font-display font-bold uppercase tracking-wide">
+            <p className="text-lg sm:text-xl md:text-2xl text-concrete max-w-4xl mx-auto leading-tight font-display font-bold uppercase tracking-wide">
               THE PEER-TO-PEER RENTAL PLATFORM BUILT FOR COLLEGE STUDENTS. 
               TURN YOUR UNUSED ITEMS INTO INCOME, OR FIND EXACTLY WHAT YOU NEED.
             </p>
@@ -73,7 +73,7 @@ export const HomePage: React.FC = () => {
               <button
                 onClick={() => setMode('need')}
                 data-cursor-interactive="true"
-                className={`px-8 py-4 font-bold font-display text-sm uppercase tracking-wide transition-all duration-100 ${
+                className={`px-4 sm:px-8 py-3 sm:py-4 font-bold font-display text-xs sm:text-sm uppercase tracking-wide transition-all duration-100 ${
                   mode === 'need'
                     ? 'bg-primary text-pure-white'
                     : 'text-pure-white hover:text-primary'
@@ -84,7 +84,7 @@ export const HomePage: React.FC = () => {
               <button
                 onClick={() => setMode('have')}
                 data-cursor-interactive="true"
-                className={`px-8 py-4 font-bold font-display text-sm uppercase tracking-wide transition-all duration-100 ${
+                className={`px-4 sm:px-8 py-3 sm:py-4 font-bold font-display text-xs sm:text-sm uppercase tracking-wide transition-all duration-100 ${
                   mode === 'have'
                     ? 'bg-primary text-pure-white'
                     : 'text-pure-white hover:text-primary'
@@ -100,14 +100,14 @@ export const HomePage: React.FC = () => {
             {mode === 'need' ? (
               <>
                 <Link to="/browse" data-cursor-interactive="true">
-                  <Button size="lg" className="flex items-center space-x-3">
+                  <Button size="lg" className="flex items-center space-x-3 w-full sm:w-auto">
                     <Search size={20} />
                     <span>BROWSE ITEMS</span>
                     <ArrowRight size={16} />
                   </Button>
                 </Link>
                 <Link to="/login" data-cursor-interactive="true">
-                  <Button variant="outline" size="lg">
+                  <Button variant="outline" size="lg" className="w-full sm:w-auto">
                     JOIN THE COMMUNITY
                   </Button>
                 </Link>
@@ -115,14 +115,14 @@ export const HomePage: React.FC = () => {
             ) : (
               <>
                 <Link to="/add-listing" data-cursor-interactive="true">
-                  <Button size="lg" className="flex items-center space-x-3">
+                  <Button size="lg" className="flex items-center space-x-3 w-full sm:w-auto">
                     <Plus size={20} />
                     <span>LIST YOUR ITEM</span>
                     <ArrowRight size={16} />
                   </Button>
                 </Link>
                 <Link to="/profile" data-cursor-interactive="true">
-                  <Button variant="outline" size="lg">
+                  <Button variant="outline" size="lg" className="w-full sm:w-auto">
                     MANAGE LISTINGS
                   </Button>
                 </Link>
@@ -138,13 +138,13 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* Popular Categories */}
-      <section className="py-24 px-6 bg-charcoal" ref={categoriesRef}>
+      <section className="py-16 sm:py-24 px-6 bg-charcoal" ref={categoriesRef}>
         <div className="max-w-7xl mx-auto">
           <div className={`text-center mb-16 ${categoriesInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
             <h2 className="text-huge font-black text-pure-white mb-6 font-display">
               POPULAR CATEGORIES
             </h2>
-            <p className="text-xl text-concrete font-display font-bold uppercase tracking-wide">
+            <p className="text-lg sm:text-xl text-concrete font-display font-bold uppercase tracking-wide">
               WHAT STUDENTS ARE SHARING MOST
             </p>
           </div>
@@ -166,20 +166,20 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* Featured Items */}
-      <section className="py-24 px-6" ref={featuredRef}>
+      <section className="py-16 sm:py-24 px-6" ref={featuredRef}>
         <div className="max-w-7xl mx-auto">
-          <div className={`flex items-center justify-between mb-16 ${featuredInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
-            <div>
-              <h2 className="text-huge font-black text-pure-white mb-6 font-display flex items-center">
-                <TrendingUp className="mr-6 text-primary" size={48} />
+          <div className={`flex flex-col sm:flex-row sm:items-center sm:justify-between mb-16 ${featuredInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
+            <div className="mb-6 sm:mb-0">
+              <h2 className="text-huge font-black text-pure-white mb-6 font-display flex flex-col sm:flex-row sm:items-center">
+                <TrendingUp className="mb-4 sm:mb-0 sm:mr-6 text-primary" size={48} />
                 TRENDING NOW
               </h2>
-              <p className="text-xl text-concrete font-display font-bold uppercase tracking-wide">
+              <p className="text-lg sm:text-xl text-concrete font-display font-bold uppercase tracking-wide">
                 ITEMS THAT ARE IN HIGH DEMAND
               </p>
             </div>
             <Link to="/browse" data-cursor-interactive="true">
-              <Button variant="outline" className="flex items-center space-x-2">
+              <Button variant="outline" className="flex items-center space-x-2 w-full sm:w-auto">
                 <span>VIEW ALL</span>
                 <ArrowRight size={16} />
               </Button>
@@ -233,25 +233,25 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-32 px-6 bg-charcoal" ref={ctaRef}>
+      <section className="py-16 sm:py-32 px-6 bg-charcoal" ref={ctaRef}>
         <div className="max-w-5xl mx-auto text-center">
           <div className={`${ctaInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
             <h2 className="text-giant font-black text-pure-white mb-8 font-display leading-none">
               READY TO{' '}
               <span className="text-primary glitch" data-text="USETHIS">USETHIS</span>?
             </h2>
-            <p className="text-xl text-concrete mb-12 max-w-3xl mx-auto font-display font-bold uppercase tracking-wide leading-tight">
+            <p className="text-lg sm:text-xl text-concrete mb-12 max-w-3xl mx-auto font-display font-bold uppercase tracking-wide leading-tight">
               JOIN THOUSANDS OF STUDENTS ALREADY SHARING, SAVING, AND BUILDING COMMUNITY THROUGH PEER-TO-PEER RENTALS.
             </p>
             <div className={`flex flex-col sm:flex-row gap-6 justify-center ${ctaInView ? 'animate-bounce-hard delay-200' : 'opacity-0'}`}>
               <Link to="/login" data-cursor-interactive="true">
-                <Button size="lg" className="flex items-center space-x-3">
+                <Button size="lg" className="flex items-center space-x-3 w-full sm:w-auto">
                   <span>GET STARTED</span>
                   <ArrowRight size={20} />
                 </Button>
               </Link>
               <Link to="/browse" data-cursor-interactive="true">
-                <Button variant="outline" size="lg">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto">
                   EXPLORE ITEMS
                 </Button>
               </Link>

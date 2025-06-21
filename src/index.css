@@ -40,6 +40,16 @@ html, body {
   background-color: var(--pure-black);
 }
 
+/* Hide scrollbar for mobile navigation */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Ultra-Fast, Responsive Cursor */
 .custom-cursor {
   position: fixed;

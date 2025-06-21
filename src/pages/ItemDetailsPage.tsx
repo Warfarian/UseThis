@@ -112,12 +112,16 @@ export const ItemDetailsPage: React.FC = () => {
 
     try {
       // Check if conversation already exists
-      const { data: existingConv } = await supabase
+      const { data: existingConv, error: searchError } = await supabase
         .from('conversations')
         .select('id')
         .or(`and(participant_1_id.eq.${user.id},participant_2_id.eq.${item.owner_id}),and(participant_1_id.eq.${item.owner_id},participant_2_id.eq.${user.id})`)
         .eq('item_id', item.id)
-        .single()
+        .maybeSingle()
+
+      if (searchError && searchError.code !== 'PGRST116') {
+        throw searchError
+      }
 
       let conversationId = existingConv?.id
 
@@ -133,11 +137,14 @@ export const ItemDetailsPage: React.FC = () => {
           .select('id')
           .single()
 
-        if (convError) throw convError
+        if (convError) {
+          console.error('Conversation creation error:', convError)
+          throw new Error('Failed to create conversation. Please try again.')
+        }
         conversationId = newConv.id
 
         // Send initial message
-        await supabase
+        const { error: messageError } = await supabase
           .from('messages')
           .insert({
             conversation_id: conversationId,
@@ -145,13 +152,18 @@ export const ItemDetailsPage: React.FC = () => {
             content: `Hi! I'm interested in your item "${item.title}". Can we chat about it?`,
             message_type: 'inquiry'
           })
+
+        if (messageError) {
+          console.error('Message creation error:', messageError)
+          throw new Error('Failed to send initial message. Please try again.')
+        }
       }
 
       // Redirect to messages
       navigate('/messages')
     } catch (error) {
       console.error('Error starting conversation:', error)
-      alert('Failed to start conversation. Please try again.')
+      alert(error instanceof Error ? error.message : 'Failed to start conversation. Please try again.')
     }
   }
 
@@ -232,12 +244,12 @@ export const ItemDetailsPage: React.FC = () => {
 
             {/* Item Info */}
             <Card className="mb-6">
-              <h1 className="text-3xl font-black text-pure-white mb-4 font-display uppercase">
+              <h1 className="text-2xl sm:text-3xl font-black text-pure-white mb-4 font-display uppercase">
                 {item.title}
               </h1>
               
               <div className="flex items-center justify-between mb-6">
-                <div className="text-primary font-black text-2xl font-mono">
+                <div className="text-primary font-black text-xl sm:text-2xl font-mono">
                   {formatPrice(item.price_per_day)}/DAY
                 </div>
                 <div className="text-steel font-display font-bold uppercase tracking-wide text-sm">
@@ -360,7 +372,7 @@ export const ItemDetailsPage: React.FC = () => {
           {/* Right Column - Booking */}
           <div>
             <Card className="sticky top-32">
-              <h2 className="text-2xl font-black text-pure-white mb-6 font-display uppercase">
+              <h2 className="text-xl sm:text-2xl font-black text-pure-white mb-6 font-display uppercase">
                 {isOwner ? 'YOUR LISTING' : 'BOOK THIS ITEM'}
               </h2>
 

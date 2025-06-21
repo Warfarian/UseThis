@@ -25,46 +25,46 @@ export const Navigation: React.FC = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-[100] nav-brutal">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link 
             to="/home" 
-            className="flex items-center space-x-4 group"
+            className="flex items-center space-x-3 group flex-shrink-0"
             data-cursor-interactive="true"
           >
-            <div className="w-12 h-12 bg-primary flex items-center justify-center relative overflow-hidden">
-              <span className="text-pure-white font-black text-2xl font-mono">U</span>
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary flex items-center justify-center relative overflow-hidden">
+              <span className="text-pure-white font-black text-lg sm:text-2xl font-mono">U</span>
               <div className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-100"></div>
             </div>
-            <div>
-              <span className="text-2xl font-black text-pure-white font-display uppercase tracking-tight">UseThis</span>
+            <div className="hidden sm:block">
+              <span className="text-xl sm:text-2xl font-black text-pure-white font-display uppercase tracking-tight">UseThis</span>
               <div className="text-xs text-primary font-mono uppercase tracking-widest">BETA</div>
             </div>
           </Link>
 
-          {/* Navigation Items */}
+          {/* Navigation Items - Desktop */}
           {user && (
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden lg:flex items-center space-x-8">
               {navItems.map(({ path, icon: Icon, label }) => (
                 <Link
                   key={path}
                   to={path}
                   data-cursor-interactive="true"
                   className={cn(
-                    'nav-item-brutal flex items-center space-x-2 py-2',
+                    'nav-item-brutal flex items-center space-x-2 py-2 px-3 whitespace-nowrap',
                     location.pathname === path && 'text-primary'
                   )}
                 >
                   <Icon size={18} />
-                  <span className="text-sm">{label}</span>
+                  <span className="text-sm font-bold">{label}</span>
                 </Link>
               ))}
             </div>
           )}
 
           {/* User Actions */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3 sm:space-x-4 flex-shrink-0">
             {user ? (
               <Button
                 variant="ghost"
@@ -74,7 +74,7 @@ export const Navigation: React.FC = () => {
                 data-cursor-interactive="true"
               >
                 <LogOut size={16} />
-                <span>EXIT</span>
+                <span className="hidden sm:inline">EXIT</span>
               </Button>
             ) : (
               <Link to="/login" data-cursor-interactive="true">
@@ -87,22 +87,22 @@ export const Navigation: React.FC = () => {
 
       {/* Mobile Navigation */}
       {user && (
-        <div className="md:hidden border-t-2 border-steel bg-charcoal">
-          <div className="flex justify-around py-3 overflow-x-auto">
-            {navItems.slice(0, 5).map(({ path, icon: Icon, label }) => (
+        <div className="lg:hidden border-t-2 border-steel bg-charcoal">
+          <div className="flex justify-start py-3 px-4 overflow-x-auto whitespace-nowrap scrollbar-hide">
+            {navItems.map(({ path, icon: Icon, label }) => (
               <Link
                 key={path}
                 to={path}
                 data-cursor-interactive="true"
                 className={cn(
-                  'flex flex-col items-center py-2 px-3 transition-colors font-display text-xs min-w-0 flex-shrink-0',
+                  'flex flex-col items-center py-2 px-4 transition-colors font-display text-xs min-w-0 flex-shrink-0',
                   location.pathname === path
                     ? 'text-primary'
                     : 'text-steel hover:text-primary'
                 )}
               >
-                <Icon size={20} />
-                <span className="mt-1 uppercase tracking-wide">{label}</span>
+                <Icon size={18} />
+                <span className="mt-1 uppercase tracking-wide text-xs">{label}</span>
               </Link>
             ))}
           </div>
