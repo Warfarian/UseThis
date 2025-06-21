@@ -5,13 +5,17 @@ import { useAuth } from '../hooks/useAuth'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Input } from '../components/ui/Input'
-import { ArrowLeft, Upload, DollarSign, MapPin, Calendar } from 'lucide-react'
+import { ArrowLeft, Upload, DollarSign, MapPin, Calendar, Image, Link } from 'lucide-react'
 
 export const AddListingPage: React.FC = () => {
   const navigate = useNavigate()
   const { user } = useAuth()
   const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(false)
+  const [imageUploadMethod, setImageUploadMethod] = useState<'upload' | 'url'>('upload')
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState<string>('')
+  const [uploadingImage, setUploadingImage] = useState(false)
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -42,6 +46,61 @@ export const AddListingPage: React.FC = () => {
     }
   }
 
+  const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        setErrors(prev => ({ ...prev, image: 'Please select a valid image file' }))
+        return
+      }
+
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setErrors(prev => ({ ...prev, image: 'Image must be less than 5MB' }))
+        return
+      }
+
+      setImageFile(file)
+      setErrors(prev => ({ ...prev, image: '' }))
+
+      // Create preview
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setImagePreview(e.target?.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleImageUrlChange = (url: string) => {
+    setFormData(prev => ({ ...prev, image_url: url }))
+    setImagePreview(url)
+    if (errors.image) {
+      setErrors(prev => ({ ...prev, image: '' }))
+    }
+  }
+
+  const uploadImageToSupabase = async (file: File): Promise<string> => {
+    const fileExt = file.name.split('.').pop()
+    const fileName = `${user?.id}-${Date.now()}.${fileExt}`
+    const filePath = `item-images/${fileName}`
+
+    const { error: uploadError } = await supabase.storage
+      .from('item-images')
+      .upload(filePath, file)
+
+    if (uploadError) {
+      throw uploadError
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('item-images')
+      .getPublicUrl(filePath)
+
+    return publicUrl
+  }
+
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
 
@@ -55,6 +114,19 @@ export const AddListingPage: React.FC = () => {
     if (!formData.availability_start_date) newErrors.availability_start_date = 'Start date is required'
     if (!formData.availability_end_date) newErrors.availability_end_date = 'End date is required'
     
+    // Image validation - now mandatory
+    if (imageUploadMethod === 'upload') {
+      if (!imageFile) {
+        newErrors.image = 'Please select an image file'
+      }
+    } else {
+      if (!formData.image_url.trim()) {
+        newErrors.image = 'Please provide an image URL'
+      } else if (!isValidUrl(formData.image_url)) {
+        newErrors.image = 'Please provide a valid image URL'
+      }
+    }
+    
     if (formData.availability_start_date && formData.availability_end_date) {
       if (new Date(formData.availability_end_date) <= new Date(formData.availability_start_date)) {
         newErrors.availability_end_date = 'End date must be after start date'
@@ -65,6 +137,15 @@ export const AddListingPage: React.FC = () => {
     return Object.keys(newErrors).length === 0
   }
 
+  const isValidUrl = (string: string) => {
+    try {
+      new URL(string)
+      return true
+    } catch (_) {
+      return false
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
@@ -72,12 +153,21 @@ export const AddListingPage: React.FC = () => {
 
     setLoading(true)
     try {
+      let finalImageUrl = formData.image_url
+
+      // Upload image if using file upload method
+      if (imageUploadMethod === 'upload' && imageFile) {
+        setUploadingImage(true)
+        finalImageUrl = await uploadImageToSupabase(imageFile)
+      }
+
       const { error } = await supabase
         .from('items')
         .insert({
           ...formData,
           price_per_day: parseFloat(formData.price_per_day),
           owner_id: user.id,
+          image_url: finalImageUrl,
           is_available: true
         })
 
@@ -90,6 +180,7 @@ export const AddListingPage: React.FC = () => {
       alert('Failed to create listing. Please try again.')
     } finally {
       setLoading(false)
+      setUploadingImage(false)
     }
   }
 
@@ -273,26 +364,129 @@ export const AddListingPage: React.FC = () => {
 
             <div className="divider-brutal" />
 
-            {/* Image */}
+            {/* Image Upload - Now Mandatory */}
             <div>
               <h2 className="text-2xl font-black text-pure-white mb-6 font-display uppercase">
-                ITEM IMAGE
+                ITEM IMAGE <span className="text-crimson">*REQUIRED</span>
               </h2>
               
-              <div className="relative">
-                <Upload className="absolute left-4 top-1/2 transform -translate-y-1/2 text-steel z-10" size={20} />
-                <Input
-                  label="IMAGE URL (OPTIONAL)"
-                  type="url"
-                  value={formData.image_url}
-                  onChange={(e) => handleInputChange('image_url', e.target.value)}
-                  placeholder="HTTPS://EXAMPLE.COM/IMAGE.JPG"
-                  className="pl-12"
-                />
+              {/* Upload Method Toggle */}
+              <div className="mb-6">
+                <div className="inline-flex glass-brutal border-2 border-steel">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setImageUploadMethod('upload')
+                      setFormData(prev => ({ ...prev, image_url: '' }))
+                      setImagePreview('')
+                    }}
+                    className={`px-6 py-3 font-bold font-display text-sm uppercase tracking-wide transition-all duration-100 flex items-center space-x-2 ${
+                      imageUploadMethod === 'upload'
+                        ? 'bg-primary text-pure-white'
+                        : 'text-pure-white hover:text-primary'
+                    }`}
+                  >
+                    <Upload size={16} />
+                    <span>UPLOAD FILE</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setImageUploadMethod('url')
+                      setImageFile(null)
+                      setImagePreview('')
+                    }}
+                    className={`px-6 py-3 font-bold font-display text-sm uppercase tracking-wide transition-all duration-100 flex items-center space-x-2 ${
+                      imageUploadMethod === 'url'
+                        ? 'bg-primary text-pure-white'
+                        : 'text-pure-white hover:text-primary'
+                    }`}
+                  >
+                    <Link size={16} />
+                    <span>IMAGE URL</span>
+                  </button>
+                </div>
               </div>
+
+              {/* Upload Method Content */}
+              {imageUploadMethod === 'upload' ? (
+                <div>
+                  <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display mb-2">
+                    UPLOAD IMAGE FILE
+                  </label>
+                  <div className="border-2 border-dashed border-steel hover:border-primary transition-colors p-8 text-center">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageFileChange}
+                      className="hidden"
+                      id="image-upload"
+                    />
+                    <label
+                      htmlFor="image-upload"
+                      className="cursor-pointer flex flex-col items-center space-y-4"
+                    >
+                      <div className="w-16 h-16 border-2 border-steel flex items-center justify-center hover:border-primary transition-colors">
+                        <Upload size={24} className="text-steel" />
+                      </div>
+                      <div>
+                        <p className="text-pure-white font-display font-bold uppercase tracking-wide">
+                          CLICK TO UPLOAD IMAGE
+                        </p>
+                        <p className="text-steel font-display font-medium text-sm mt-2">
+                          JPG, PNG, GIF up to 5MB
+                        </p>
+                      </div>
+                    </label>
+                  </div>
+                  {imageFile && (
+                    <p className="text-primary font-display font-bold text-sm mt-2">
+                      Selected: {imageFile.name}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <div className="relative">
+                  <Link className="absolute left-4 top-1/2 transform -translate-y-1/2 text-steel z-10" size={20} />
+                  <Input
+                    label="IMAGE URL"
+                    type="url"
+                    value={formData.image_url}
+                    onChange={(e) => handleImageUrlChange(e.target.value)}
+                    placeholder="HTTPS://EXAMPLE.COM/IMAGE.JPG"
+                    className="pl-12"
+                  />
+                </div>
+              )}
+
+              {/* Image Preview */}
+              {imagePreview && (
+                <div className="mt-6">
+                  <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display mb-2">
+                    PREVIEW
+                  </label>
+                  <div className="w-full max-w-md aspect-video bg-steel/20 overflow-hidden border-2 border-steel">
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="w-full h-full object-cover"
+                      onError={() => {
+                        setImagePreview('')
+                        setErrors(prev => ({ ...prev, image: 'Invalid image URL or file' }))
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {errors.image && (
+                <p className="text-sm text-crimson font-bold uppercase tracking-wide mt-2">
+                  {errors.image}
+                </p>
+              )}
               
               <p className="text-steel font-display font-medium text-sm mt-2">
-                Add a photo URL to make your listing more attractive
+                <span className="text-crimson">*</span> An image is required to make your listing attractive and trustworthy
               </p>
             </div>
 
@@ -310,10 +504,10 @@ export const AddListingPage: React.FC = () => {
               </Button>
               <Button
                 type="submit"
-                disabled={loading}
+                disabled={loading || uploadingImage}
                 className="sm:w-auto"
               >
-                {loading ? 'CREATING LISTING...' : 'CREATE LISTING'}
+                {uploadingImage ? 'UPLOADING IMAGE...' : loading ? 'CREATING LISTING...' : 'CREATE LISTING'}
               </Button>
             </div>
           </form>
