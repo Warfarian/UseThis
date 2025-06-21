@@ -43,23 +43,27 @@ export const Navigation: React.FC = () => {
             </div>
           </Link>
 
-          {/* Navigation Items - Desktop */}
+          {/* Navigation Items - Desktop Only */}
           {user && (
-            <div className="hidden lg:flex items-center space-x-8">
-              {navItems.map(({ path, icon: Icon, label }) => (
-                <Link
-                  key={path}
-                  to={path}
-                  data-cursor-interactive="true"
-                  className={cn(
-                    'nav-item-brutal flex items-center space-x-2 py-2 px-3 whitespace-nowrap',
-                    location.pathname === path && 'text-primary'
-                  )}
-                >
-                  <Icon size={18} />
-                  <span className="text-sm font-bold">{label}</span>
-                </Link>
-              ))}
+            <div className="hidden lg:flex items-center justify-center flex-1 mx-8">
+              <div className="flex items-center space-x-12">
+                {navItems.map(({ path, icon: Icon, label }) => (
+                  <Link
+                    key={path}
+                    to={path}
+                    data-cursor-interactive="true"
+                    className={cn(
+                      'nav-item-brutal flex items-center space-x-2 py-2 px-4 whitespace-nowrap transition-all duration-100',
+                      location.pathname === path 
+                        ? 'text-primary border-b-2 border-primary' 
+                        : 'text-pure-white hover:text-primary'
+                    )}
+                  >
+                    <Icon size={18} />
+                    <span className="text-sm font-bold">{label}</span>
+                  </Link>
+                ))}
+              </div>
             </div>
           )}
 
