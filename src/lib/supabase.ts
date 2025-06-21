@@ -15,6 +15,8 @@ export interface User {
   email: string
   name: string
   rating: number
+  profile_picture_url?: string
+  bio?: string
   created_at: string
   updated_at: string
 }
@@ -30,6 +32,7 @@ export interface Item {
   availability_end_date: string
   owner_id: string
   image_url: string
+  is_available: boolean
   created_at: string
   updated_at: string
   owner?: User

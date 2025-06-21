@@ -233,7 +233,7 @@ export const BrowsePage: React.FC = () => {
                   <div className="aspect-video bg-steel/20 mb-4 overflow-hidden">
                     {item.image_url ? (
                       <img
-                        src={item.image_url}
+                        src={item.image_url.split(',')[0]}
                         alt={item.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useInView } from 'react-intersection-observer'
 import { InteractiveCursor } from '../components/InteractiveCursor'
 import { Button } from '../components/ui/Button'
-import { ArrowRight, Zap, Users, Shield } from 'lucide-react'
+import { ArrowRight, Zap, Users, Shield, GraduationCap, Globe } from 'lucide-react'
 
 export const LandingPage: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -11,6 +11,7 @@ export const LandingPage: React.FC = () => {
   // Intersection Observer hooks
   const [heroRef, heroInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [featuresRef, featuresInView] = useInView({ threshold: 0.1, triggerOnce: true })
+  const [visionRef, visionInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [statsRef, statsInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [ctaRef, ctaInView] = useInView({ threshold: 0.1, triggerOnce: true })
 
@@ -218,8 +219,92 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Vision Section */}
+      <section className="py-32 px-6 relative bg-pure-black" ref={visionRef}>
+        <div className="max-w-6xl mx-auto">
+          <div className={`text-center mb-16 ${visionInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
+            <div className="text-accent text-sm font-bold uppercase tracking-widest mb-6 font-mono">OUR VISION</div>
+            <h2 className="text-giant font-black text-pure-white mb-8 font-display">
+              THE{' '}
+              <span className="text-primary">FUTURE</span>{' '}
+              OF CAMPUS{' '}
+              <span className="text-secondary">SHARING</span>
+            </h2>
+            <div className="divider-brutal mb-8" />
+          </div>
+
+          <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${visionInView ? 'animate-slide-brutal delay-200' : 'opacity-0'}`}>
+            {/* Left Column - Current Demo */}
+            <div className="bg-charcoal border-4 border-steel p-8">
+              <div className="flex items-center mb-6">
+                <div className="w-12 h-12 bg-accent flex items-center justify-center mr-4">
+                  <Zap size={24} className="text-pure-white" />
+                </div>
+                <h3 className="text-2xl font-black text-pure-white font-display uppercase">
+                  CURRENT: DEMO MODE
+                </h3>
+              </div>
+              
+              <div className="space-y-4 text-concrete font-display font-medium leading-relaxed">
+                <p>
+                  <strong className="text-accent">What you're experiencing now:</strong> A fully functional demonstration of our peer-to-peer rental platform where students can share resources, build community, and earn money.
+                </p>
+                <p>
+                  This demo showcases all core features including item listings, booking requests, messaging, reviews, and secure transactions - giving you a complete preview of the UseThis experience.
+                </p>
+              </div>
+            </div>
+
+            {/* Right Column - Future Vision */}
+            <div className="bg-charcoal border-4 border-primary p-8">
+              <div className="flex items-center mb-6">
+                <div className="w-12 h-12 bg-primary flex items-center justify-center mr-4">
+                  <GraduationCap size={24} className="text-pure-white" />
+                </div>
+                <h3 className="text-2xl font-black text-pure-white font-display uppercase">
+                  FUTURE: CAMPUS-SPECIFIC
+                </h3>
+              </div>
+              
+              <div className="space-y-4 text-concrete font-display font-medium leading-relaxed">
+                <p>
+                  <strong className="text-primary">Our ultimate vision:</strong> University-specific instances where students can only sign up using their official .edu email addresses, creating trusted campus communities.
+                </p>
+                <p>
+                  Each university will have its own dedicated UseThis platform, ensuring all transactions happen within verified student networks for maximum safety and relevance.
+                </p>
+                <div className="flex items-center mt-6 p-4 bg-primary/20 border-l-4 border-primary">
+                  <Globe size={20} className="text-primary mr-3 flex-shrink-0" />
+                  <span className="text-primary font-display font-bold uppercase text-sm">
+                    INTER-UNIVERSITY TRADING UNDER CONSIDERATION
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom CTA */}
+          <div className={`text-center mt-16 ${visionInView ? 'animate-bounce-hard delay-400' : 'opacity-0'}`}>
+            <div className="bg-steel/10 border-2 border-steel p-8 max-w-4xl mx-auto">
+              <h4 className="text-xl font-black text-pure-white mb-4 font-display uppercase">
+                BE PART OF THE REVOLUTION
+              </h4>
+              <p className="text-steel font-display font-bold uppercase tracking-wide mb-6">
+                Experience the demo today and help shape the future of campus resource sharing
+              </p>
+              <Link to="/login" data-cursor-interactive>
+                <Button className="flex items-center space-x-2 mx-auto">
+                  <span>TRY THE DEMO</span>
+                  <ArrowRight size={16} />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
-      <section className="py-32 px-6 relative bg-pure-black" ref={ctaRef}>
+      <section className="py-16 sm:py-32 px-6 bg-charcoal" ref={ctaRef}>
         <div className="max-w-5xl mx-auto text-center">
           <div className={`${ctaInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
             <div className="text-primary text-sm font-bold uppercase tracking-widest mb-8 font-mono">READY TO START?</div>

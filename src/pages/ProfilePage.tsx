@@ -5,7 +5,7 @@ import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Input } from '../components/ui/Input'
 import { formatPrice, formatDate } from '../lib/utils'
-import { User, Star, Package, Edit, Trash2, Plus, MapPin, Calendar } from 'lucide-react'
+import { User, Star, Package, Edit, Trash2, Plus, MapPin, Calendar, Camera, Archive, Eye } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 export const ProfilePage: React.FC = () => {
@@ -14,7 +14,11 @@ export const ProfilePage: React.FC = () => {
   const [items, setItems] = useState<Item[]>([])
   const [loading, setLoading] = useState(true)
   const [editingProfile, setEditingProfile] = useState(false)
-  const [profileData, setProfileData] = useState({ name: '', email: '' })
+  const [profileData, setProfileData] = useState({ name: '', email: '', bio: '' })
+  const [profilePictureFile, setProfilePictureFile] = useState<File | null>(null)
+  const [profilePicturePreview, setProfilePicturePreview] = useState<string>('')
+  const [uploadingPicture, setUploadingPicture] = useState(false)
+  const [showArchived, setShowArchived] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -35,7 +39,12 @@ export const ProfilePage: React.FC = () => {
 
       if (error) throw error
       setProfile(data)
-      setProfileData({ name: data.name, email: data.email })
+      setProfileData({ 
+        name: data.name, 
+        email: data.email, 
+        bio: data.bio || '' 
+      })
+      setProfilePicturePreview(data.profile_picture_url || '')
     } catch (error) {
       console.error('Error fetching profile:', error)
     }
@@ -60,21 +69,89 @@ export const ProfilePage: React.FC = () => {
     }
   }
 
+  const handleProfilePictureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        alert('Please select a valid image file')
+        return
+      }
+
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('Image must be less than 5MB')
+        return
+      }
+
+      setProfilePictureFile(file)
+
+      // Create preview
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setProfilePicturePreview(e.target?.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const uploadProfilePicture = async (): Promise<string | null> => {
+    if (!profilePictureFile || !user) return null
+
+    setUploadingPicture(true)
+    try {
+      const fileExt = profilePictureFile.name.split('.').pop()
+      const fileName = `${user.id}/avatar.${fileExt}`
+      const filePath = fileName
+
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, profilePictureFile, { upsert: true })
+
+      if (uploadError) throw uploadError
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath)
+
+      return publicUrl
+    } catch (error) {
+      console.error('Error uploading profile picture:', error)
+      alert('Failed to upload profile picture. Please try again.')
+      return null
+    } finally {
+      setUploadingPicture(false)
+    }
+  }
+
   const updateProfile = async () => {
     if (!user) return
 
     try {
+      let profilePictureUrl = profile?.profile_picture_url
+
+      // Upload new profile picture if selected
+      if (profilePictureFile) {
+        const uploadedUrl = await uploadProfilePicture()
+        if (uploadedUrl) {
+          profilePictureUrl = uploadedUrl
+        }
+      }
+
       const { error } = await supabase
         .from('users')
         .update({
           name: profileData.name,
-          email: profileData.email
+          email: profileData.email,
+          bio: profileData.bio,
+          profile_picture_url: profilePictureUrl
         })
         .eq('id', user.id)
 
       if (error) throw error
       
       setEditingProfile(false)
+      setProfilePictureFile(null)
       fetchProfile()
       alert('Profile updated successfully!')
     } catch (error) {
@@ -84,7 +161,7 @@ export const ProfilePage: React.FC = () => {
   }
 
   const deleteItem = async (itemId: string) => {
-    if (!confirm('Are you sure you want to delete this item?')) return
+    if (!confirm('Are you sure you want to delete this item? This action cannot be undone.')) return
 
     try {
       const { error } = await supabase
@@ -118,6 +195,15 @@ export const ProfilePage: React.FC = () => {
     }
   }
 
+  const triggerProfilePictureInput = () => {
+    const fileInput = document.getElementById('profile-picture-input') as HTMLInputElement
+    if (fileInput) {
+      fileInput.click()
+    }
+  }
+
+  const filteredItems = showArchived ? items.filter(item => !item.is_available) : items.filter(item => item.is_available)
+
   if (loading) {
     return (
       <div className="min-h-screen bg-pure-black noise py-8 px-6 pt-28">
@@ -147,30 +233,87 @@ export const ProfilePage: React.FC = () => {
           <div className="lg:col-span-1">
             <Card className="p-6">
               <div className="text-center mb-6">
-                <div className="w-24 h-24 bg-primary flex items-center justify-center mx-auto mb-4">
-                  <span className="text-pure-white font-black text-3xl">
-                    {profile?.name.charAt(0).toUpperCase()}
-                  </span>
+                {/* Profile Picture */}
+                <div className="relative w-24 h-24 mx-auto mb-4">
+                  {profilePicturePreview || profile?.profile_picture_url ? (
+                    <img
+                      src={profilePicturePreview || profile?.profile_picture_url}
+                      alt="Profile"
+                      className="w-24 h-24 object-cover border-4 border-primary"
+                    />
+                  ) : (
+                    <div className="w-24 h-24 bg-primary flex items-center justify-center">
+                      <span className="text-pure-white font-black text-3xl">
+                        {profile?.name.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                  )}
+                  
+                  {editingProfile && (
+                    <>
+                      <input
+                        id="profile-picture-input"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleProfilePictureChange}
+                        style={{ display: 'none' }}
+                      />
+                      <button
+                        onClick={triggerProfilePictureInput}
+                        className="absolute -bottom-2 -right-2 w-8 h-8 bg-accent flex items-center justify-center border-2 border-pure-black hover:bg-accent/80 transition-colors"
+                        disabled={uploadingPicture}
+                      >
+                        <Camera size={16} className="text-pure-white" />
+                      </button>
+                    </>
+                  )}
                 </div>
                 
                 {editingProfile ? (
                   <div className="space-y-4">
                     <Input
+                      label="FULL NAME"
                       value={profileData.name}
                       onChange={(e) => setProfileData(prev => ({ ...prev, name: e.target.value }))}
                       placeholder="YOUR NAME"
                     />
                     <Input
+                      label="EMAIL ADDRESS"
                       type="email"
                       value={profileData.email}
                       onChange={(e) => setProfileData(prev => ({ ...prev, email: e.target.value }))}
                       placeholder="YOUR EMAIL"
                     />
+                    <div>
+                      <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display mb-2">
+                        BIO (OPTIONAL)
+                      </label>
+                      <textarea
+                        value={profileData.bio}
+                        onChange={(e) => setProfileData(prev => ({ ...prev, bio: e.target.value }))}
+                        placeholder="TELL OTHERS ABOUT YOURSELF..."
+                        rows={3}
+                        className="input-brutal w-full resize-none"
+                      />
+                    </div>
                     <div className="flex gap-2">
-                      <Button size="sm" onClick={updateProfile}>
-                        SAVE
+                      <Button size="sm" onClick={updateProfile} disabled={uploadingPicture}>
+                        {uploadingPicture ? 'UPLOADING...' : 'SAVE'}
                       </Button>
-                      <Button size="sm" variant="ghost" onClick={() => setEditingProfile(false)}>
+                      <Button 
+                        size="sm" 
+                        variant="ghost" 
+                        onClick={() => {
+                          setEditingProfile(false)
+                          setProfilePictureFile(null)
+                          setProfilePicturePreview(profile?.profile_picture_url || '')
+                          setProfileData({ 
+                            name: profile?.name || '', 
+                            email: profile?.email || '', 
+                            bio: profile?.bio || '' 
+                          })
+                        }}
+                      >
                         CANCEL
                       </Button>
                     </div>
@@ -183,6 +326,13 @@ export const ProfilePage: React.FC = () => {
                     <p className="text-steel font-display font-bold uppercase tracking-wide text-sm mb-4">
                       {profile?.email}
                     </p>
+                    {profile?.bio && (
+                      <div className="bg-charcoal border-l-4 border-primary p-3 mb-4 text-left">
+                        <p className="text-concrete font-display font-medium text-sm leading-relaxed">
+                          {profile.bio}
+                        </p>
+                      </div>
+                    )}
                     <Button size="sm" onClick={() => setEditingProfile(true)} className="flex items-center space-x-2">
                       <Edit size={16} />
                       <span>EDIT PROFILE</span>
@@ -223,6 +373,15 @@ export const ProfilePage: React.FC = () => {
                     {items.filter(item => item.is_available).length}
                   </span>
                 </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-steel font-display font-bold uppercase tracking-wide text-sm">
+                    ARCHIVED LISTINGS
+                  </span>
+                  <span className="text-steel font-mono font-bold">
+                    {items.filter(item => !item.is_available).length}
+                  </span>
+                </div>
               </div>
             </Card>
           </div>
@@ -233,30 +392,79 @@ export const ProfilePage: React.FC = () => {
               <h2 className="text-2xl font-black text-pure-white font-display uppercase">
                 MY LISTINGS
               </h2>
-              <Link to="/add-listing">
-                <Button className="flex items-center space-x-2">
-                  <Plus size={18} />
-                  <span>ADD LISTING</span>
-                </Button>
-              </Link>
+              <div className="flex items-center space-x-4">
+                {/* Archive Toggle */}
+                <div className="inline-flex glass-brutal border-2 border-steel">
+                  <button
+                    onClick={() => setShowArchived(false)}
+                    className={`px-4 py-2 font-bold font-display text-xs uppercase tracking-wide transition-all duration-100 ${
+                      !showArchived
+                        ? 'bg-primary text-pure-white'
+                        : 'text-pure-white hover:text-primary'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-1">
+                      <Eye size={12} />
+                      <span>ACTIVE</span>
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => setShowArchived(true)}
+                    className={`px-4 py-2 font-bold font-display text-xs uppercase tracking-wide transition-all duration-100 ${
+                      showArchived
+                        ? 'bg-primary text-pure-white'
+                        : 'text-pure-white hover:text-primary'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-1">
+                      <Archive size={12} />
+                      <span>ARCHIVED</span>
+                    </div>
+                  </button>
+                </div>
+                
+                <Link to="/add-listing">
+                  <Button className="flex items-center space-x-2">
+                    <Plus size={18} />
+                    <span>ADD LISTING</span>
+                  </Button>
+                </Link>
+              </div>
             </div>
 
-            {items.length === 0 ? (
+            {filteredItems.length === 0 ? (
               <Card className="text-center py-12">
-                <Package size={48} className="mx-auto mb-4 text-steel" />
-                <h3 className="text-xl font-black text-pure-white mb-4 font-display">
-                  NO LISTINGS YET
-                </h3>
-                <p className="text-steel font-display font-bold uppercase tracking-wide mb-6">
-                  START SHARING YOUR ITEMS TO EARN MONEY
-                </p>
-                <Link to="/add-listing">
-                  <Button>CREATE YOUR FIRST LISTING</Button>
-                </Link>
+                {showArchived ? (
+                  <>
+                    <Archive size={48} className="mx-auto mb-4 text-steel" />
+                    <h3 className="text-xl font-black text-pure-white mb-4 font-display">
+                      NO ARCHIVED LISTINGS
+                    </h3>
+                    <p className="text-steel font-display font-bold uppercase tracking-wide mb-6">
+                      ARCHIVED ITEMS WILL APPEAR HERE
+                    </p>
+                    <Button onClick={() => setShowArchived(false)}>
+                      VIEW ACTIVE LISTINGS
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Package size={48} className="mx-auto mb-4 text-steel" />
+                    <h3 className="text-xl font-black text-pure-white mb-4 font-display">
+                      NO ACTIVE LISTINGS
+                    </h3>
+                    <p className="text-steel font-display font-bold uppercase tracking-wide mb-6">
+                      START SHARING YOUR ITEMS TO EARN MONEY
+                    </p>
+                    <Link to="/add-listing">
+                      <Button>CREATE YOUR FIRST LISTING</Button>
+                    </Link>
+                  </>
+                )}
               </Card>
             ) : (
               <div className="space-y-4">
-                {items.map((item) => (
+                {filteredItems.map((item) => (
                   <Card key={item.id} className="p-6">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                       {/* Item Info */}
@@ -264,7 +472,7 @@ export const ProfilePage: React.FC = () => {
                         <div className="w-20 h-20 bg-steel/20 flex-shrink-0 overflow-hidden">
                           {item.image_url ? (
                             <img
-                              src={item.image_url}
+                              src={item.image_url.split(',')[0]}
                               alt={item.title}
                               className="w-full h-full object-cover"
                             />
@@ -305,7 +513,7 @@ export const ProfilePage: React.FC = () => {
                             <div className={`font-display font-bold uppercase tracking-wide ${
                               item.is_available ? 'text-primary' : 'text-steel'
                             }`}>
-                              {item.is_available ? 'AVAILABLE' : 'UNAVAILABLE'}
+                              {item.is_available ? 'ACTIVE' : 'ARCHIVED'}
                             </div>
                           </div>
                         </div>
@@ -314,8 +522,16 @@ export const ProfilePage: React.FC = () => {
                       {/* Actions */}
                       <div className="flex flex-col sm:flex-row gap-2 lg:flex-col lg:w-32">
                         <Link to={`/item/${item.id}`}>
-                          <Button size="sm" variant="outline" className="w-full">
-                            VIEW
+                          <Button size="sm" variant="outline" className="w-full flex items-center justify-center space-x-1">
+                            <Eye size={14} />
+                            <span>VIEW</span>
+                          </Button>
+                        </Link>
+                        
+                        <Link to={`/edit-listing/${item.id}`}>
+                          <Button size="sm" variant="outline" className="w-full flex items-center justify-center space-x-1">
+                            <Edit size={14} />
+                            <span>EDIT</span>
                           </Button>
                         </Link>
                         
@@ -323,16 +539,17 @@ export const ProfilePage: React.FC = () => {
                           size="sm"
                           variant="ghost"
                           onClick={() => toggleItemAvailability(item.id, item.is_available)}
-                          className="w-full"
+                          className="w-full flex items-center justify-center space-x-1"
                         >
-                          {item.is_available ? 'HIDE' : 'SHOW'}
+                          <Archive size={14} />
+                          <span>{item.is_available ? 'ARCHIVE' : 'UNARCHIVE'}</span>
                         </Button>
                         
                         <Button
                           size="sm"
                           variant="ghost"
                           onClick={() => deleteItem(item.id)}
-                          className="w-full flex items-center justify-center space-x-1"
+                          className="w-full flex items-center justify-center space-x-1 text-crimson hover:text-crimson"
                         >
                           <Trash2 size={14} />
                           <span>DELETE</span>
