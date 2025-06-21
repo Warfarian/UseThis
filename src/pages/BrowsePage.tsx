@@ -93,7 +93,7 @@ export const BrowsePage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-pure-black noise py-8 px-6">
+    <div className="min-h-screen bg-pure-black noise py-8 px-6 pt-28">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-12">
@@ -112,7 +112,7 @@ export const BrowsePage: React.FC = () => {
             <div className="flex flex-col lg:flex-row gap-4">
               <div className="flex-1">
                 <div className="relative">
-                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-steel" size={20} />
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-steel z-10" size={20} />
                   <input
                     type="text"
                     value={searchTerm}
@@ -306,4 +306,3 @@ export const BrowsePage: React.FC = () => {
       </div>
     </div>
   )
-}

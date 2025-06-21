@@ -4,13 +4,15 @@ import { useAuth } from '../hooks/useAuth'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { formatPrice, formatDate } from '../lib/utils'
-import { Calendar, Clock, User, Package, CheckCircle, XCircle, AlertCircle } from 'lucide-react'
+import { Calendar, Clock, User, Package, CheckCircle, XCircle, AlertCircle, Star } from 'lucide-react'
 
 export const BookingsPage: React.FC = () => {
   const { user } = useAuth()
   const [bookings, setBookings] = useState<Booking[]>([])
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<'renter' | 'owner'>('renter')
+  const [reviewModal, setReviewModal] = useState<{ booking: Booking; type: 'item' | 'user' } | null>(null)
+  const [reviewData, setReviewData] = useState({ rating: 5, comment: '' })
 
   useEffect(() => {
     if (user) {
@@ -65,6 +67,39 @@ export const BookingsPage: React.FC = () => {
     }
   }
 
+  const submitReview = async () => {
+    if (!reviewModal || !user) return
+
+    try {
+      const { booking, type } = reviewModal
+      
+      const reviewData_final = {
+        item_id: booking.item?.id || booking.item_id,
+        reviewer_id: user.id,
+        reviewee_id: type === 'item' 
+          ? booking.owner_id 
+          : (activeTab === 'renter' ? booking.owner_id : booking.renter_id),
+        booking_id: booking.id,
+        rating: reviewData.rating,
+        comment: reviewData.comment
+      }
+
+      const { error } = await supabase
+        .from('reviews')
+        .insert(reviewData_final)
+
+      if (error) throw error
+
+      alert('Review submitted successfully!')
+      setReviewModal(null)
+      setReviewData({ rating: 5, comment: '' })
+      fetchBookings()
+    } catch (error) {
+      console.error('Error submitting review:', error)
+      alert('Failed to submit review. Please try again.')
+    }
+  }
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'confirmed':
@@ -95,8 +130,12 @@ export const BookingsPage: React.FC = () => {
     }
   }
 
+  const canReview = (booking: Booking) => {
+    return booking.status === 'returned'
+  }
+
   return (
-    <div className="min-h-screen bg-pure-black noise py-8 px-6">
+    <div className="min-h-screen bg-pure-black noise py-8 px-6 pt-28">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-12">
@@ -261,6 +300,18 @@ export const BookingsPage: React.FC = () => {
                       </Button>
                     )}
 
+                    {canReview(booking) && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => setReviewModal({ booking, type: 'item' })}
+                        className="w-full flex items-center justify-center space-x-1"
+                      >
+                        <Star size={14} />
+                        <span>REVIEW</span>
+                      </Button>
+                    )}
+
                     <div className="text-center">
                       <p className="text-steel font-display font-bold uppercase tracking-wide text-xs">
                         BOOKED {formatDate(booking.created_at)}
@@ -272,7 +323,66 @@ export const BookingsPage: React.FC = () => {
             ))}
           </div>
         )}
+
+        {/* Review Modal */}
+        {reviewModal && (
+          <div className="fixed inset-0 bg-pure-black/80 flex items-center justify-center z-50 p-6">
+            <Card className="w-full max-w-md p-6">
+              <h3 className="text-xl font-black text-pure-white mb-4 font-display uppercase">
+                LEAVE A REVIEW
+              </h3>
+              
+              <div className="mb-4">
+                <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display mb-2">
+                  RATING
+                </label>
+                <div className="flex items-center space-x-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      onClick={() => setReviewData(prev => ({ ...prev, rating: star }))}
+                      className="text-2xl transition-colors"
+                    >
+                      <Star 
+                        size={24} 
+                        className={star <= reviewData.rating ? 'text-accent fill-accent' : 'text-steel'} 
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <label className="block text-sm font-bold text-primary uppercase tracking-wider font-display mb-2">
+                  COMMENT (OPTIONAL)
+                </label>
+                <textarea
+                  value={reviewData.comment}
+                  onChange={(e) => setReviewData(prev => ({ ...prev, comment: e.target.value }))}
+                  placeholder="SHARE YOUR EXPERIENCE..."
+                  rows={3}
+                  className="input-brutal w-full resize-none"
+                />
+              </div>
+
+              <div className="flex gap-3">
+                <Button onClick={submitReview} className="flex-1">
+                  SUBMIT REVIEW
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => {
+                    setReviewModal(null)
+                    setReviewData({ rating: 5, comment: '' })
+                  }}
+                  className="flex-1"
+                >
+                  CANCEL
+                </Button>
+              </div>
+            </Card>
+          </div>
+        )}
       </div>
     </div>
   )
-}

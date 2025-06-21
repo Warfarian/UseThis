@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { supabase, Item, Booking } from '../lib/supabase'
+import { supabase, Item, Booking, Review } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuth'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { formatPrice, formatDate, calculateDays } from '../lib/utils'
-import { ArrowLeft, MapPin, Calendar, Star, User, Shield, Clock } from 'lucide-react'
+import { ArrowLeft, MapPin, Calendar, Star, User, Shield, Clock, MessageSquare } from 'lucide-react'
 
 export const ItemDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { user } = useAuth()
   const [item, setItem] = useState<Item | null>(null)
+  const [reviews, setReviews] = useState<Review[]>([])
   const [loading, setLoading] = useState(true)
   const [bookingLoading, setBookingLoading] = useState(false)
   const [startDate, setStartDate] = useState('')
@@ -21,6 +22,7 @@ export const ItemDetailsPage: React.FC = () => {
   useEffect(() => {
     if (id) {
       fetchItem()
+      fetchReviews()
     }
   }, [id])
 
@@ -49,6 +51,25 @@ export const ItemDetailsPage: React.FC = () => {
       navigate('/browse')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const fetchReviews = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('reviews')
+        .select(`
+          *,
+          reviewer:users!reviews_reviewer_id_fkey(name)
+        `)
+        .eq('item_id', id)
+        .order('created_at', { ascending: false })
+        .limit(5)
+
+      if (error) throw error
+      setReviews(data || [])
+    } catch (error) {
+      console.error('Error fetching reviews:', error)
     }
   }
 
@@ -84,9 +105,23 @@ export const ItemDetailsPage: React.FC = () => {
     }
   }
 
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star
+        key={i}
+        size={14}
+        className={i < rating ? 'text-accent fill-accent' : 'text-steel'}
+      />
+    ))
+  }
+
+  const averageRating = reviews.length > 0 
+    ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length 
+    : (item?.owner?.rating || 5.0)
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-pure-black noise py-8 px-6">
+      <div className="min-h-screen bg-pure-black noise py-8 px-6 pt-28">
         <div className="max-w-4xl mx-auto">
           <Card className="loading-brutal h-96" />
         </div>
@@ -96,7 +131,7 @@ export const ItemDetailsPage: React.FC = () => {
 
   if (!item) {
     return (
-      <div className="min-h-screen bg-pure-black noise py-8 px-6">
+      <div className="min-h-screen bg-pure-black noise py-8 px-6 pt-28">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-huge font-black text-pure-white mb-4 font-display">
             ITEM NOT FOUND
@@ -113,7 +148,7 @@ export const ItemDetailsPage: React.FC = () => {
   const today = new Date().toISOString().split('T')[0]
 
   return (
-    <div className="min-h-screen bg-pure-black noise py-8 px-6">
+    <div className="min-h-screen bg-pure-black noise py-8 px-6 pt-28">
       <div className="max-w-6xl mx-auto">
         {/* Back Button */}
         <Button
@@ -192,7 +227,7 @@ export const ItemDetailsPage: React.FC = () => {
 
             {/* Owner Info */}
             {item.owner && (
-              <Card>
+              <Card className="mb-6">
                 <h3 className="text-xl font-black text-pure-white mb-4 font-display uppercase">
                   ITEM OWNER
                 </h3>
@@ -226,11 +261,55 @@ export const ItemDetailsPage: React.FC = () => {
                 </div>
               </Card>
             )}
+
+            {/* Reviews Section */}
+            {reviews.length > 0 && (
+              <Card>
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-black text-pure-white font-display uppercase">
+                    REVIEWS ({reviews.length})
+                  </h3>
+                  <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-1">
+                      {renderStars(Math.round(averageRating))}
+                    </div>
+                    <span className="text-accent font-mono font-bold">
+                      {averageRating.toFixed(1)}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  {reviews.map((review) => (
+                    <div key={review.id} className="border-l-4 border-primary pl-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center space-x-2">
+                          <span className="text-pure-white font-display font-bold uppercase tracking-wide text-sm">
+                            {review.reviewer?.name}
+                          </span>
+                          <div className="flex items-center space-x-1">
+                            {renderStars(review.rating)}
+                          </div>
+                        </div>
+                        <span className="text-steel font-display font-bold uppercase tracking-wide text-xs">
+                          {formatDate(review.created_at)}
+                        </span>
+                      </div>
+                      {review.comment && (
+                        <p className="text-concrete font-display font-medium text-sm">
+                          "{review.comment}"
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            )}
           </div>
 
           {/* Right Column - Booking */}
           <div>
-            <Card className="sticky top-24">
+            <Card className="sticky top-32">
               <h2 className="text-2xl font-black text-pure-white mb-6 font-display uppercase">
                 {isOwner ? 'YOUR LISTING' : 'BOOK THIS ITEM'}
               </h2>
@@ -326,4 +405,3 @@ export const ItemDetailsPage: React.FC = () => {
       </div>
     </div>
   )
-}
