@@ -15,8 +15,8 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       className={cn(
-        'glass-card rounded-none p-8 transition-all duration-600',
-        hover && 'hover:border-cyan/30 hover:shadow-2xl hover:shadow-cyan/10',
+        'glass-card rounded-none p-8 transition-all duration-300',
+        hover && 'hover:border-accent-1/30 hover:shadow-2xl hover:shadow-accent-1/10',
         className
       )}
       data-cursor-interactive="true"

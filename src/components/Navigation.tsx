@@ -30,12 +30,12 @@ export const Navigation: React.FC = () => {
             className="flex items-center space-x-4"
             data-cursor-interactive="true"
           >
-            <div className="w-10 h-10 bg-cyan rounded-sm flex items-center justify-center">
-              <span className="text-pure-black font-black text-lg font-mono">U</span>
+            <div className="w-10 h-10 bg-accent-1 rounded-none flex items-center justify-center">
+              <span className="text-canvas font-black text-lg font-mono">U</span>
             </div>
             <div>
-              <span className="text-2xl font-black text-pure-white font-primary">UseThis</span>
-              <div className="text-xs text-gray-400 font-mono uppercase tracking-extra-wide">Platform</div>
+              <span className="text-2xl font-black text-ink font-primary">UseThis</span>
+              <div className="text-xs text-focus font-mono uppercase tracking-extra-wide">Platform</div>
             </div>
           </Link>
 
@@ -49,8 +49,8 @@ export const Navigation: React.FC = () => {
                   data-cursor-interactive="true"
                   className={`flex items-center space-x-3 py-2 transition-all duration-300 font-body font-medium link-hover ${
                     location.pathname === path
-                      ? 'text-cyan'
-                      : 'text-gray-300 hover:text-cyan'
+                      ? 'text-accent-1'
+                      : 'text-ink hover:text-accent-1'
                   }`}
                 >
                   <Icon size={18} />
@@ -84,7 +84,7 @@ export const Navigation: React.FC = () => {
 
       {/* Mobile Navigation */}
       {user && (
-        <div className="md:hidden border-t border-gray-800">
+        <div className="md:hidden border-t border-muted">
           <div className="flex justify-around py-4">
             {navItems.slice(0, 4).map(({ path, icon: Icon, label }) => (
               <Link
@@ -93,8 +93,8 @@ export const Navigation: React.FC = () => {
                 data-cursor-interactive="true"
                 className={`flex flex-col items-center py-2 px-3 rounded-sm transition-colors font-body ${
                   location.pathname === path
-                    ? 'text-cyan'
-                    : 'text-gray-400 hover:text-cyan'
+                    ? 'text-accent-1'
+                    : 'text-focus hover:text-accent-1'
                 }`}
               >
                 <Icon size={20} />

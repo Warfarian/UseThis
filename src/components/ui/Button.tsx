@@ -14,7 +14,7 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   ...props
 }) => {
-  const baseClasses = 'font-body font-semibold transition-all duration-400 rounded-none inline-flex items-center justify-center focus-ring relative overflow-hidden'
+  const baseClasses = 'font-body font-semibold transition-all duration-200 rounded-none inline-flex items-center justify-center focus-ring relative overflow-hidden'
   
   const variantClasses = {
     primary: 'btn-primary',
