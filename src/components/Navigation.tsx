@@ -26,65 +26,88 @@ export const Navigation: React.FC = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-[100] nav-brutal">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link 
-            to="/home" 
-            className="flex items-center space-x-3 group flex-shrink-0"
-            data-cursor-interactive="true"
-          >
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary flex items-center justify-center relative overflow-hidden">
-              <span className="text-pure-white font-black text-lg sm:text-2xl font-mono">U</span>
-              <div className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-100"></div>
-            </div>
-            <div className="hidden sm:block">
-              <span className="text-xl sm:text-2xl font-black text-pure-white font-display uppercase tracking-tight">UseThis</span>
-              <div className="text-xs text-primary font-mono uppercase tracking-widest">BETA</div>
-            </div>
-          </Link>
+        <div className="flex items-center h-20">
+          {/* Logo - Pushed further left */}
+          <div className="flex-shrink-0 mr-8 lg:mr-16">
+            <Link 
+              to="/home" 
+              className="flex items-center space-x-3 group"
+              data-cursor-interactive="true"
+            >
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary flex items-center justify-center relative overflow-hidden">
+                <span className="text-pure-white font-black text-lg sm:text-2xl font-mono">U</span>
+                <div className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-100"></div>
+              </div>
+              <div className="hidden sm:block">
+                <span className="text-xl sm:text-2xl font-black text-pure-white font-display uppercase tracking-tight">UseThis</span>
+                <div className="text-xs text-primary font-mono uppercase tracking-widest">BETA</div>
+              </div>
+            </Link>
+          </div>
 
-          {/* Navigation Items - Desktop Only */}
+          {/* Navigation Items - Centered with more space */}
           {user && (
-            <div className="hidden lg:flex items-center justify-center flex-1 mx-8">
-              <div className="flex items-center space-x-12">
+            <div className="hidden lg:flex items-center justify-center flex-1">
+              <div className="flex items-center space-x-8">
                 {navItems.map(({ path, icon: Icon, label }) => (
                   <Link
                     key={path}
                     to={path}
                     data-cursor-interactive="true"
                     className={cn(
-                      'nav-item-brutal flex items-center space-x-2 py-2 px-4 whitespace-nowrap transition-all duration-100',
+                      'nav-item-brutal flex items-center space-x-2 py-2 px-3 whitespace-nowrap transition-all duration-100',
                       location.pathname === path 
                         ? 'text-primary border-b-2 border-primary' 
                         : 'text-pure-white hover:text-primary'
                     )}
                   >
-                    <Icon size={18} />
-                    <span className="text-sm font-bold">{label}</span>
+                    <Icon size={16} />
+                    <span className="text-xs font-bold">{label}</span>
                   </Link>
                 ))}
               </div>
             </div>
           )}
 
-          {/* User Actions */}
-          <div className="flex items-center space-x-3 sm:space-x-4 flex-shrink-0">
-            {user ? (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleSignOut}
-                className="flex items-center space-x-2"
-                data-cursor-interactive="true"
-              >
-                <LogOut size={16} />
-                <span className="hidden sm:inline">EXIT</span>
-              </Button>
-            ) : (
-              <Link to="/login" data-cursor-interactive="true">
-                <Button size="sm">ENTER</Button>
-              </Link>
-            )}
+          {/* User Actions - More space on the right */}
+          <div className="flex-shrink-0 ml-auto">
+            <div className="flex items-center space-x-4">
+              {user ? (
+                <>
+                  {/* User Profile Info */}
+                  <div className="hidden lg:flex items-center space-x-3 mr-4">
+                    <div className="w-8 h-8 bg-primary flex items-center justify-center">
+                      <span className="text-pure-white font-black text-sm">
+                        {user.email?.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-pure-white font-display font-bold uppercase tracking-wide text-xs">
+                        WELCOME BACK
+                      </div>
+                      <div className="text-steel font-mono text-xs">
+                        {user.email?.split('@')[0]}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleSignOut}
+                    className="flex items-center space-x-2"
+                    data-cursor-interactive="true"
+                  >
+                    <LogOut size={16} />
+                    <span className="hidden sm:inline">EXIT</span>
+                  </Button>
+                </>
+              ) : (
+                <Link to="/login" data-cursor-interactive="true">
+                  <Button size="sm">ENTER</Button>
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>
