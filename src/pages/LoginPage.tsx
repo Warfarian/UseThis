@@ -38,66 +38,67 @@ export const LoginPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-canvas grain flex items-center justify-center p-8">
+    <div className="min-h-screen bg-pure-black noise flex items-center justify-center p-6">
       <InteractiveCursor />
       
       {/* Back to landing */}
       <Link 
         to="/" 
-        className="fixed top-8 left-8 z-50 flex items-center space-x-3 text-focus hover:text-accent-1 transition-colors link-hover"
+        className="fixed top-8 left-8 z-50 flex items-center space-x-3 nav-item-brutal"
         data-cursor-interactive
       >
         <ArrowLeft size={20} />
-        <span className="font-body">Back to Home</span>
+        <span className="text-sm">BACK TO HOME</span>
       </Link>
 
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center space-x-4 mb-8">
-            <div className="w-16 h-16 bg-accent-1 rounded-sm flex items-center justify-center">
-              <span className="text-canvas font-black text-2xl font-mono">U</span>
+          <div className="inline-flex items-center space-x-4 mb-8 group">
+            <div className="w-16 h-16 bg-electric flex items-center justify-center relative overflow-hidden">
+              <span className="text-pure-black font-black text-2xl font-mono">U</span>
+              <div className="absolute inset-0 bg-hot-pink opacity-0 group-hover:opacity-100 transition-opacity duration-100"></div>
             </div>
             <div>
-              <h1 className="text-4xl font-black text-ink font-primary">UseThis</h1>
-              <div className="text-xs text-focus font-mono uppercase tracking-extra-wide">Platform</div>
+              <h1 className="text-4xl font-black text-pure-white font-display uppercase tracking-tight">UseThis</h1>
+              <div className="text-xs text-electric font-mono uppercase tracking-widest">PLATFORM</div>
             </div>
           </div>
-          <div className="w-24 h-1 bg-accent-1 mx-auto mb-6" />
-          <p className="text-focus text-lg font-body">
-            {isSignUp ? "Join the community" : "Welcome back"}
+          <div className="divider-brutal mb-6" />
+          <p className="text-steel text-lg font-display font-bold uppercase tracking-wide">
+            {isSignUp ? "JOIN THE REVOLUTION" : "WELCOME BACK"}
           </p>
         </div>
 
-        <Card className="p-12">
-          <form onSubmit={handleSubmit} className="space-y-8">
+        <Card className="p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="text-center mb-8">
-              <h2 className="heading-2 font-bold text-ink mb-4 font-primary">
-                {isSignUp ? "Create Account" : "Sign In"}
+              <h2 className="text-big font-black text-pure-white mb-4 font-display">
+                {isSignUp ? "CREATE ACCOUNT" : "SIGN IN"}
               </h2>
-              <p className="text-focus font-body">
+              <p className="text-steel font-display font-bold uppercase tracking-wide text-sm">
                 {isSignUp 
-                  ? "Start sharing and borrowing today" 
-                  : "Access your rental marketplace"
+                  ? "START YOUR JOURNEY IN THE STUDENT ECONOMY" 
+                  : "ACCESS YOUR RENTAL MARKETPLACE"
                 }
               </p>
             </div>
 
             {error && (
-              <div className="p-6 bg-red-500/10 border-2 border-red-500/30 rounded-none">
-                <p className="text-red-400 font-body">{error}</p>
+              <div className="p-4 bg-blood-red border-2 border-blood-red">
+                <p className="text-pure-white font-bold uppercase tracking-wide text-sm">{error}</p>
               </div>
             )}
 
             {isSignUp && (
               <div className="relative">
-                <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-focus" size={20} />
+                <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-steel" size={20} />
                 <Input
-                  label="Full Name"
+                  label="FULL NAME"
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Enter your full name"
+                  placeholder="ENTER YOUR FULL NAME"
                   className="pl-12"
                   required
                 />
@@ -105,26 +106,26 @@ export const LoginPage: React.FC = () => {
             )}
 
             <div className="relative">
-              <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-focus" size={20} />
+              <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-steel" size={20} />
               <Input
-                label="Email Address"
+                label="EMAIL ADDRESS"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
+                placeholder="ENTER YOUR EMAIL"
                 className="pl-12"
                 required
               />
             </div>
 
             <div className="relative">
-              <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-focus" size={20} />
+              <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-steel" size={20} />
               <Input
-                label="Password"
+                label="PASSWORD"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
+                placeholder="ENTER YOUR PASSWORD"
                 className="pl-12"
                 required
               />
@@ -137,22 +138,22 @@ export const LoginPage: React.FC = () => {
               data-cursor-interactive="true"
             >
               {loading 
-                ? (isSignUp ? "Creating Account..." : "Signing In...") 
-                : (isSignUp ? "Create Account" : "Sign In")
+                ? (isSignUp ? "CREATING ACCOUNT..." : "SIGNING IN...") 
+                : (isSignUp ? "CREATE ACCOUNT" : "SIGN IN")
               }
             </Button>
 
             <div className="text-center">
-              <div className="w-16 h-px bg-focus mx-auto mb-6" />
+              <div className="divider-brutal mb-6" />
               <button
                 type="button"
                 onClick={() => setIsSignUp(!isSignUp)}
                 data-cursor-interactive="true"
-                className="text-focus hover:text-accent-1 transition-colors font-body link-hover"
+                className="nav-item-brutal text-sm"
               >
                 {isSignUp 
-                  ? "Already have an account? Sign in" 
-                  : "Need an account? Sign up"
+                  ? "ALREADY HAVE AN ACCOUNT? SIGN IN" 
+                  : "NEED AN ACCOUNT? SIGN UP"
                 }
               </button>
             </div>
@@ -160,14 +161,14 @@ export const LoginPage: React.FC = () => {
         </Card>
 
         <div className="text-center mt-12">
-          <p className="text-focus text-sm font-body">
-            By continuing, you agree to our{' '}
-            <button className="text-accent-1 hover:underline link-hover" data-cursor-interactive>
-              Terms of Service
+          <p className="text-steel text-xs font-display font-bold uppercase tracking-wide">
+            BY CONTINUING, YOU AGREE TO OUR{' '}
+            <button className="text-electric hover:underline nav-item-brutal" data-cursor-interactive>
+              TERMS OF SERVICE
             </button>{' '}
-            and{' '}
-            <button className="text-accent-1 hover:underline link-hover" data-cursor-interactive>
-              Privacy Policy
+            AND{' '}
+            <button className="text-electric hover:underline nav-item-brutal" data-cursor-interactive>
+              PRIVACY POLICY
             </button>
           </p>
         </div>

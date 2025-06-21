@@ -9,11 +9,11 @@ export const Navigation: React.FC = () => {
   const location = useLocation()
 
   const navItems = [
-    { path: '/home', icon: Home, label: 'Home' },
-    { path: '/browse', icon: Search, label: 'Browse' },
-    { path: '/add-listing', icon: Plus, label: 'List Item' },
-    { path: '/bookings', icon: Calendar, label: 'Bookings' },
-    { path: '/profile', icon: User, label: 'Profile' },
+    { path: '/home', icon: Home, label: 'HOME' },
+    { path: '/browse', icon: Search, label: 'BROWSE' },
+    { path: '/add-listing', icon: Plus, label: 'LIST' },
+    { path: '/bookings', icon: Calendar, label: 'BOOKINGS' },
+    { path: '/profile', icon: User, label: 'PROFILE' },
   ]
 
   const handleSignOut = async () => {
@@ -21,47 +21,47 @@ export const Navigation: React.FC = () => {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-nav">
-      <div className="container-max px-8 lg:px-12">
+    <nav className="fixed top-0 left-0 right-0 z-50 nav-brutal">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link 
             to="/home" 
-            className="flex items-center space-x-4"
+            className="flex items-center space-x-4 group"
             data-cursor-interactive="true"
           >
-            <div className="w-10 h-10 bg-accent-1 rounded-none flex items-center justify-center">
-              <span className="text-canvas font-black text-lg font-mono">U</span>
+            <div className="w-12 h-12 bg-electric flex items-center justify-center relative overflow-hidden">
+              <span className="text-pure-black font-black text-2xl font-mono">U</span>
+              <div className="absolute inset-0 bg-hot-pink opacity-0 group-hover:opacity-100 transition-opacity duration-100"></div>
             </div>
             <div>
-              <span className="text-2xl font-black text-ink font-primary">UseThis</span>
-              <div className="text-xs text-focus font-mono uppercase tracking-extra-wide">Platform</div>
+              <span className="text-2xl font-black text-pure-white font-display uppercase tracking-tight">UseThis</span>
+              <div className="text-xs text-electric font-mono uppercase tracking-widest">BETA</div>
             </div>
           </Link>
 
           {/* Navigation Items */}
           {user && (
-            <div className="hidden md:flex items-center space-x-12">
+            <div className="hidden md:flex items-center space-x-8">
               {navItems.map(({ path, icon: Icon, label }) => (
                 <Link
                   key={path}
                   to={path}
                   data-cursor-interactive="true"
-                  className={`flex items-center space-x-3 py-2 transition-all duration-300 font-body font-medium link-hover ${
-                    location.pathname === path
-                      ? 'text-accent-1'
-                      : 'text-ink hover:text-accent-1'
-                  }`}
+                  className={cn(
+                    'nav-item-brutal flex items-center space-x-2 py-2',
+                    location.pathname === path && 'text-electric neon-electric'
+                  )}
                 >
                   <Icon size={18} />
-                  <span>{label}</span>
+                  <span className="text-sm">{label}</span>
                 </Link>
               ))}
             </div>
           )}
 
           {/* User Actions */}
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-4">
             {user ? (
               <Button
                 variant="ghost"
@@ -71,11 +71,11 @@ export const Navigation: React.FC = () => {
                 data-cursor-interactive="true"
               >
                 <LogOut size={16} />
-                <span>Sign Out</span>
+                <span>EXIT</span>
               </Button>
             ) : (
               <Link to="/login" data-cursor-interactive="true">
-                <Button size="sm">Sign In</Button>
+                <Button size="sm">ENTER</Button>
               </Link>
             )}
           </div>
@@ -84,21 +84,22 @@ export const Navigation: React.FC = () => {
 
       {/* Mobile Navigation */}
       {user && (
-        <div className="md:hidden border-t border-muted">
-          <div className="flex justify-around py-4">
+        <div className="md:hidden border-t-2 border-steel bg-charcoal">
+          <div className="flex justify-around py-3">
             {navItems.slice(0, 4).map(({ path, icon: Icon, label }) => (
               <Link
                 key={path}
                 to={path}
                 data-cursor-interactive="true"
-                className={`flex flex-col items-center py-2 px-3 rounded-sm transition-colors font-body ${
+                className={cn(
+                  'flex flex-col items-center py-2 px-3 transition-colors font-display text-xs',
                   location.pathname === path
-                    ? 'text-accent-1'
-                    : 'text-focus hover:text-accent-1'
-                }`}
+                    ? 'text-electric'
+                    : 'text-steel hover:text-electric'
+                )}
               >
                 <Icon size={20} />
-                <span className="text-xs mt-1 caption">{label}</span>
+                <span className="mt-1 uppercase tracking-wide">{label}</span>
               </Link>
             ))}
           </div>

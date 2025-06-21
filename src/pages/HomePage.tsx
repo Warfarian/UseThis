@@ -44,71 +44,71 @@ export const HomePage: React.FC = () => {
   }
 
   const categories = [
-    { name: 'Electronics', icon: Zap, color: 'accent-1' },
-    { name: 'Gaming', icon: Gamepad2, color: 'accent-1' },
-    { name: 'Kitchen', icon: ChefHat, color: 'accent-1' },
+    { name: 'ELECTRONICS', icon: Zap, color: 'electric' },
+    { name: 'GAMING', icon: Gamepad2, color: 'hot-pink' },
+    { name: 'KITCHEN', icon: ChefHat, color: 'neon-blue' },
   ]
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-pure-black noise">
       {/* Hero Section */}
       <section className="relative py-32 px-6 overflow-hidden" ref={heroRef}>
         <div className="max-w-7xl mx-auto text-center">
-          <div className={`mb-12 animate-on-scroll ${heroInView ? 'in-view' : ''}`}>
-            <h1 className="text-7xl md:text-9xl font-black text-ink mb-8 font-primary leading-none">
-              Share.{' '}
-              <span className="text-gradient">Borrow.</span>{' '}
+          <div className={`mb-12 ${heroInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
+            <h1 className="text-giant font-black text-pure-white mb-8 font-display leading-none">
+              <span className="neon-electric">SHARE.</span>{' '}
+              <span className="neon-pink">BORROW.</span>{' '}
               <br />
-              <span className="text-accent-1">Thrive.</span>
+              <span className="neon-blue">THRIVE.</span>
             </h1>
-            <p className="text-xl md:text-2xl text-focus max-w-4xl mx-auto leading-relaxed font-body">
-              The peer-to-peer rental platform built for college students. 
-              Turn your unused items into income, or find exactly what you need.
+            <p className="text-xl md:text-2xl text-concrete max-w-4xl mx-auto leading-tight font-display font-bold uppercase tracking-wide">
+              THE PEER-TO-PEER RENTAL PLATFORM BUILT FOR COLLEGE STUDENTS. 
+              TURN YOUR UNUSED ITEMS INTO INCOME, OR FIND EXACTLY WHAT YOU NEED.
             </p>
           </div>
 
           {/* Mode Toggle */}
-          <div className={`mb-16 animate-on-scroll stagger-1 ${heroInView ? 'in-view' : ''}`}>
-            <div className="inline-flex glass rounded-full p-2 border border-focus">
+          <div className={`mb-16 ${heroInView ? 'animate-bounce-hard delay-200' : 'opacity-0'}`}>
+            <div className="inline-flex glass-brutal p-2 border-2 border-steel">
               <button
                 onClick={() => setMode('need')}
                 data-cursor-interactive="true"
-                className={`px-10 py-4 rounded-full font-medium font-body transition-all duration-300 ${
+                className={`px-8 py-4 font-bold font-display text-sm uppercase tracking-wide transition-all duration-100 ${
                   mode === 'need'
-                    ? 'bg-accent-1 text-canvas shadow-lg glow-accent'
-                    : 'text-ink hover:text-accent-1'
+                    ? 'bg-electric text-pure-black'
+                    : 'text-pure-white hover:text-electric'
                 }`}
               >
-                I Need Something
+                I NEED SOMETHING
               </button>
               <button
                 onClick={() => setMode('have')}
                 data-cursor-interactive="true"
-                className={`px-10 py-4 rounded-full font-medium font-body transition-all duration-300 ${
+                className={`px-8 py-4 font-bold font-display text-sm uppercase tracking-wide transition-all duration-100 ${
                   mode === 'have'
-                    ? 'bg-accent-1 text-canvas shadow-lg glow-accent'
-                    : 'text-ink hover:text-accent-1'
+                    ? 'bg-electric text-pure-black'
+                    : 'text-pure-white hover:text-electric'
                 }`}
               >
-                I Have Something
+                I HAVE SOMETHING
               </button>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center mb-20 animate-on-scroll stagger-2 ${heroInView ? 'in-view' : ''}`}>
+          <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center mb-20 ${heroInView ? 'animate-bounce-hard delay-400' : 'opacity-0'}`}>
             {mode === 'need' ? (
               <>
                 <Link to="/browse" data-cursor-interactive="true">
                   <Button size="lg" className="flex items-center space-x-3">
                     <Search size={20} />
-                    <span>Browse Items</span>
+                    <span>BROWSE ITEMS</span>
                     <ArrowRight size={16} />
                   </Button>
                 </Link>
                 <Link to="/login" data-cursor-interactive="true">
-                  <Button variant="secondary" size="lg">
-                    Join the Community
+                  <Button variant="outline" size="lg">
+                    JOIN THE COMMUNITY
                   </Button>
                 </Link>
               </>
@@ -117,13 +117,13 @@ export const HomePage: React.FC = () => {
                 <Link to="/add-listing" data-cursor-interactive="true">
                   <Button size="lg" className="flex items-center space-x-3">
                     <Plus size={20} />
-                    <span>List Your Item</span>
+                    <span>LIST YOUR ITEM</span>
                     <ArrowRight size={16} />
                   </Button>
                 </Link>
                 <Link to="/profile" data-cursor-interactive="true">
-                  <Button variant="secondary" size="lg">
-                    Manage Listings
+                  <Button variant="outline" size="lg">
+                    MANAGE LISTINGS
                   </Button>
                 </Link>
               </>
@@ -132,32 +132,32 @@ export const HomePage: React.FC = () => {
         </div>
 
         {/* Abstract Background Elements */}
-        <div className="absolute top-1/4 left-10 w-32 h-32 bg-accent-1/5 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-10 w-48 h-48 bg-accent-1/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-focus/10 rounded-full blur-2xl animate-float" style={{ animationDelay: '4s' }} />
+        <div className="absolute top-1/4 left-10 w-32 h-32 bg-electric opacity-10 blur-3xl" />
+        <div className="absolute bottom-1/4 right-10 w-48 h-48 bg-hot-pink opacity-10 blur-3xl" />
+        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-neon-blue opacity-10 blur-2xl" />
       </section>
 
       {/* Popular Categories */}
-      <section className="py-24 px-6" ref={categoriesRef}>
+      <section className="py-24 px-6 bg-charcoal" ref={categoriesRef}>
         <div className="max-w-7xl mx-auto">
-          <div className={`text-center mb-16 animate-on-scroll ${categoriesInView ? 'in-view' : ''}`}>
-            <h2 className="text-5xl md:text-6xl font-black text-ink mb-6 font-primary">
-              Popular Categories
+          <div className={`text-center mb-16 ${categoriesInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
+            <h2 className="text-huge font-black text-pure-white mb-6 font-display">
+              POPULAR CATEGORIES
             </h2>
-            <p className="text-xl text-focus font-body">
-              What students are sharing most
+            <p className="text-xl text-concrete font-display font-bold uppercase tracking-wide">
+              WHAT STUDENTS ARE SHARING MOST
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid-brutal">
             {categories.map(({ name, icon: Icon, color }, index) => (
               <Link key={name} to={`/browse?category=${encodeURIComponent(name)}`}>
-                <Card className={`text-center group animate-on-scroll stagger-${index + 1} ${categoriesInView ? 'in-view' : ''}`}>
-                  <div className="w-20 h-20 mx-auto mb-6 glass rounded-full flex items-center justify-center border border-accent-1/20 group-hover:border-accent-1/50 transition-all duration-300">
-                    <Icon size={36} className="text-accent-1 group-hover:scale-110 transition-transform duration-300" />
+                <Card className={`text-center group ${categoriesInView ? `animate-bounce-hard delay-${(index + 1) * 100}` : 'opacity-0'}`}>
+                  <div className="w-20 h-20 mx-auto mb-6 glass-brutal flex items-center justify-center border-2 border-steel group-hover:border-electric transition-all duration-100">
+                    <Icon size={36} className="text-steel group-hover:text-electric transition-colors duration-100" />
                   </div>
-                  <h3 className="text-2xl font-bold text-ink mb-3 font-primary group-hover:text-accent-1 transition-colors duration-300">{name}</h3>
-                  <p className="text-focus font-body">Discover available items</p>
+                  <h3 className="text-big font-black text-pure-white mb-3 font-display group-hover:text-electric transition-colors duration-100">{name}</h3>
+                  <p className="text-steel font-display font-bold uppercase tracking-wide text-sm">DISCOVER AVAILABLE ITEMS</p>
                 </Card>
               </Link>
             ))}
@@ -168,63 +168,59 @@ export const HomePage: React.FC = () => {
       {/* Featured Items */}
       <section className="py-24 px-6" ref={featuredRef}>
         <div className="max-w-7xl mx-auto">
-          <div className={`flex items-center justify-between mb-16 animate-on-scroll ${featuredInView ? 'in-view' : ''}`}>
+          <div className={`flex items-center justify-between mb-16 ${featuredInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
             <div>
-              <h2 className="text-5xl md:text-6xl font-black text-ink mb-6 font-primary flex items-center">
-                <TrendingUp className="mr-6 text-accent-1" size={48} />
-                Trending Now
+              <h2 className="text-huge font-black text-pure-white mb-6 font-display flex items-center">
+                <TrendingUp className="mr-6 text-electric" size={48} />
+                TRENDING NOW
               </h2>
-              <p className="text-xl text-focus font-body">
-                Items that are in high demand
+              <p className="text-xl text-concrete font-display font-bold uppercase tracking-wide">
+                ITEMS THAT ARE IN HIGH DEMAND
               </p>
             </div>
             <Link to="/browse" data-cursor-interactive="true">
-              <Button variant="secondary" className="flex items-center space-x-2">
-                <span>View All</span>
+              <Button variant="outline" className="flex items-center space-x-2">
+                <span>VIEW ALL</span>
                 <ArrowRight size={16} />
               </Button>
             </Link>
           </div>
 
           {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid-brutal">
               {[...Array(6)].map((_, i) => (
-                <Card key={i} className="animate-pulse">
-                  <div className="h-56 bg-focus/10 rounded-2xl mb-6" />
-                  <div className="h-6 bg-focus/10 rounded mb-3" />
-                  <div className="h-4 bg-focus/10 rounded w-2/3" />
-                </Card>
+                <Card key={i} className="loading-brutal h-80" />
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid-brutal">
               {featuredItems.map((item, index) => (
                 <Link key={item.id} to={`/item/${item.id}`}>
-                  <Card className={`group animate-on-scroll stagger-${(index % 3) + 1} ${featuredInView ? 'in-view' : ''}`}>
-                    <div className="aspect-video bg-focus/5 rounded-2xl mb-6 overflow-hidden">
+                  <Card className={`group ${featuredInView ? `animate-bounce-hard delay-${(index % 3 + 1) * 100}` : 'opacity-0'}`}>
+                    <div className="aspect-video bg-steel/20 mb-6 overflow-hidden">
                       {item.image_url ? (
                         <img
                           src={item.image_url}
                           alt={item.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <span className="text-focus font-body">No image</span>
+                          <span className="text-steel font-display font-bold uppercase tracking-wide text-sm">NO IMAGE</span>
                         </div>
                       )}
                     </div>
-                    <h3 className="text-xl font-bold text-ink mb-3 font-primary group-hover:text-accent-1 transition-colors duration-300">
+                    <h3 className="text-xl font-black text-pure-white mb-3 font-display group-hover:text-electric transition-colors duration-100 uppercase">
                       {item.title}
                     </h3>
-                    <p className="text-focus text-sm mb-4 line-clamp-2 font-body">
+                    <p className="text-steel text-sm mb-4 line-clamp-2 font-display font-bold uppercase tracking-wide">
                       {item.description}
                     </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-accent-1 font-bold text-lg font-body">
-                        {formatPrice(item.price_per_day)}/day
+                      <span className="text-electric font-black text-lg font-mono">
+                        {formatPrice(item.price_per_day)}/DAY
                       </span>
-                      <span className="text-focus text-sm font-body">
+                      <span className="text-steel text-sm font-display font-bold uppercase tracking-wide">
                         {item.location}
                       </span>
                     </div>
@@ -237,26 +233,26 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-32 px-6" ref={ctaRef}>
+      <section className="py-32 px-6 bg-charcoal" ref={ctaRef}>
         <div className="max-w-5xl mx-auto text-center">
-          <div className={`animate-on-scroll ${ctaInView ? 'in-view' : ''}`}>
-            <h2 className="text-6xl md:text-8xl font-black text-ink mb-8 font-primary leading-none">
-              Ready to{' '}
-              <span className="text-gradient">UseThis</span>?
+          <div className={`${ctaInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
+            <h2 className="text-giant font-black text-pure-white mb-8 font-display leading-none">
+              READY TO{' '}
+              <span className="neon-electric glitch" data-text="USETHIS">USETHIS</span>?
             </h2>
-            <p className="text-xl text-focus mb-12 max-w-3xl mx-auto font-body leading-relaxed">
-              Join thousands of students already sharing, saving, and building community through peer-to-peer rentals.
+            <p className="text-xl text-concrete mb-12 max-w-3xl mx-auto font-display font-bold uppercase tracking-wide leading-tight">
+              JOIN THOUSANDS OF STUDENTS ALREADY SHARING, SAVING, AND BUILDING COMMUNITY THROUGH PEER-TO-PEER RENTALS.
             </p>
-            <div className={`flex flex-col sm:flex-row gap-6 justify-center animate-on-scroll stagger-1 ${ctaInView ? 'in-view' : ''}`}>
+            <div className={`flex flex-col sm:flex-row gap-6 justify-center ${ctaInView ? 'animate-bounce-hard delay-200' : 'opacity-0'}`}>
               <Link to="/login" data-cursor-interactive="true">
                 <Button size="lg" className="flex items-center space-x-3">
-                  <span>Get Started</span>
+                  <span>GET STARTED</span>
                   <ArrowRight size={20} />
                 </Button>
               </Link>
               <Link to="/browse" data-cursor-interactive="true">
-                <Button variant="secondary" size="lg">
-                  Explore Items
+                <Button variant="outline" size="lg">
+                  EXPLORE ITEMS
                 </Button>
               </Link>
             </div>

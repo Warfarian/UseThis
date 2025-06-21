@@ -2,30 +2,30 @@ import React from 'react'
 import { cn } from '../../lib/utils'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'ghost'
+  variant?: 'electric' | 'outline' | 'ghost'
   size?: 'sm' | 'md' | 'lg'
   children: React.ReactNode
 }
 
 export const Button: React.FC<ButtonProps> = ({
-  variant = 'primary',
+  variant = 'electric',
   size = 'md',
   className,
   children,
   ...props
 }) => {
-  const baseClasses = 'font-body font-semibold transition-all duration-200 rounded-none inline-flex items-center justify-center focus-ring relative overflow-hidden'
+  const baseClasses = 'font-display font-bold transition-all duration-100 inline-flex items-center justify-center focus-brutal relative overflow-hidden'
   
   const variantClasses = {
-    primary: 'btn-primary',
-    secondary: 'btn-secondary',
+    electric: 'btn-electric',
+    outline: 'btn-outline',
     ghost: 'btn-ghost'
   }
   
   const sizeClasses = {
-    sm: 'px-8 py-3 text-sm',
-    md: 'px-10 py-4 text-base',
-    lg: 'px-12 py-5 text-lg'
+    sm: 'px-6 py-3 text-sm',
+    md: 'px-8 py-4 text-base',
+    lg: 'px-12 py-6 text-lg'
   }
 
   return (
