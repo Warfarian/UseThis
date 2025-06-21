@@ -40,7 +40,7 @@ html, body {
   background-color: var(--pure-black);
 }
 
-/* Brutal Custom Cursor */
+/* Faster, More Responsive Cursor */
 .custom-cursor {
   position: fixed;
   top: 0;
@@ -50,8 +50,9 @@ html, body {
   background: var(--primary);
   pointer-events: none;
   z-index: 9999;
-  transition: all 0.1s ease;
+  transition: all 0.05s ease-out;
   transform: translate(-50%, -50%);
+  will-change: transform;
 }
 
 .custom-cursor.interactive {
@@ -59,6 +60,7 @@ html, body {
   height: 40px;
   background: transparent;
   border: 2px solid var(--primary);
+  transition: all 0.1s ease-out;
 }
 
 /* Noise texture overlay */
@@ -454,16 +456,18 @@ html, body {
   background: var(--charcoal);
   border: 3px solid var(--steel);
   color: var(--pure-white);
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: all 0.1s ease;
+  width: 100%;
 }
 
 .input-brutal:focus {
   border-color: var(--primary);
   outline: none;
+  box-shadow: 0 0 0 2px var(--primary);
 }
 
 .input-brutal::placeholder {
