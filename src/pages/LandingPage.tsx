@@ -303,20 +303,21 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA Section with Zelda Reference */}
       <section className="py-16 sm:py-32 px-6 bg-charcoal" ref={ctaRef}>
         <div className="max-w-5xl mx-auto text-center">
           <div className={`${ctaInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
-            <div className="text-primary text-sm font-bold uppercase tracking-widest mb-8 font-mono">READY TO START?</div>
-            <h2 className="text-giant font-black text-pure-white mb-8 font-display leading-none">
-              JOIN{' '}
-              <span className="text-primary glitch" data-text="USETHIS">USETHIS</span>
-              <br />
-              <span className="text-accent">TODAY</span>
+            <div className="text-accent text-sm font-bold uppercase tracking-widest mb-8 font-mono">DON'T FACE STUDENT LIFE ALONE</div>
+            <h2 className="text-giant font-black text-pure-white mb-4 font-display leading-none">
+              IT'S DANGEROUS TO{' '}
+              <span className="text-crimson">GO ALONE!</span>
+            </h2>
+            <h2 className="text-giant font-black text-primary mb-8 font-display leading-none glitch" data-text="USETHIS">
+              <span className="text-primary">USETHIS</span>
             </h2>
             <div className="divider-brutal mb-12" />
             <p className="text-xl text-concrete mb-16 max-w-4xl mx-auto font-display font-bold uppercase tracking-wide leading-tight">
-              START SHARING. START SAVING. START BUILDING COMMUNITY. 
+              SHARE RESOURCES. SAVE MONEY. BUILD COMMUNITY. 
               JOIN THOUSANDS OF STUDENTS ALREADY USING USETHIS.
             </p>
             
