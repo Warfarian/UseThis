@@ -41,7 +41,7 @@ export const Navigation: React.FC = () => {
                   to={path}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-2xl transition-all duration-200 slot-machine ${
                     location.pathname === path
-                      ? 'text-accent-1 bg-accent-1/10'
+                      ? 'text-accent-1'
                       : 'text-ink hover:text-accent-1 hover:animate-jitter'
                   }`}
                 >

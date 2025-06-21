@@ -119,10 +119,10 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-accent-1/20 rounded-full animate-float" />
-        <div className="absolute bottom-20 right-10 w-32 h-32 bg-accent-2/20 rounded-full animate-float" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-focus/20 rounded-full animate-float" style={{ animationDelay: '4s' }} />
+        {/* Floating Elements - More Subtle */}
+        <div className="absolute top-20 left-10 w-20 h-20 bg-accent-1/5 rounded-full animate-float" />
+        <div className="absolute bottom-20 right-10 w-32 h-32 bg-accent-2/5 rounded-full animate-float" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-focus/5 rounded-full animate-float" style={{ animationDelay: '4s' }} />
       </section>
 
       {/* Popular Categories */}
@@ -141,7 +141,7 @@ export const HomePage: React.FC = () => {
             {categories.map(({ name, icon: Icon, color }) => (
               <Link key={name} to={`/browse?category=${encodeURIComponent(name)}`}>
                 <Card className="text-center group cursor-spark">
-                  <div className={`w-16 h-16 mx-auto mb-4 bg-${color}/20 rounded-full flex items-center justify-center group-hover:animate-jitter`}>
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center group-hover:animate-jitter">
                     <Icon size={32} className={`text-${color}`} />
                   </div>
                   <h3 className="text-xl font-semibold text-ink mb-2">{name}</h3>
