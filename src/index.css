@@ -300,6 +300,104 @@ html, body {
   color: var(--crimson);
 }
 
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.bg-secondary {
+  background-color: var(--secondary);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
+
+.border-primary {
+  border-color: var(--primary);
+}
+
+.border-secondary {
+  border-color: var(--secondary);
+}
+
+.border-accent {
+  border-color: var(--accent);
+}
+
+/* Hover color variants */
+.hover\:border-primary:hover {
+  border-color: var(--primary);
+}
+
+.hover\:border-secondary:hover {
+  border-color: var(--secondary);
+}
+
+.hover\:border-accent:hover {
+  border-color: var(--accent);
+}
+
+.hover\:text-primary:hover {
+  color: var(--primary);
+}
+
+.hover\:text-secondary:hover {
+  color: var(--secondary);
+}
+
+.hover\:text-accent:hover {
+  color: var(--accent);
+}
+
+.hover\:bg-primary:hover {
+  background-color: var(--primary);
+}
+
+.hover\:bg-secondary:hover {
+  background-color: var(--secondary);
+}
+
+.hover\:bg-accent:hover {
+  background-color: var(--accent);
+}
+
+/* Group hover variants */
+.group:hover .group-hover\:border-primary {
+  border-color: var(--primary);
+}
+
+.group:hover .group-hover\:border-secondary {
+  border-color: var(--secondary);
+}
+
+.group:hover .group-hover\:border-accent {
+  border-color: var(--accent);
+}
+
+.group:hover .group-hover\:text-primary {
+  color: var(--primary);
+}
+
+.group:hover .group-hover\:text-secondary {
+  color: var(--secondary);
+}
+
+.group:hover .group-hover\:text-accent {
+  color: var(--accent);
+}
+
+.group:hover .group-hover\:bg-primary {
+  background-color: var(--primary);
+}
+
+.group:hover .group-hover\:bg-secondary {
+  background-color: var(--secondary);
+}
+
+.group:hover .group-hover\:bg-accent {
+  background-color: var(--accent);
+}
+
 /* Brutal Animations */
 .animate-slide-brutal {
   animation: slide-brutal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;

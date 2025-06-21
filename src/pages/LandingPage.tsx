@@ -27,17 +27,20 @@ export const LandingPage: React.FC = () => {
     {
       icon: Users,
       title: "STUDENT NETWORK",
-      description: "Connect with verified students. Share resources. Build community."
+      description: "Connect with verified students across 200+ universities. Share resources. Build lasting community connections.",
+      accent: "primary"
     },
     {
       icon: Shield,
       title: "SECURE PLATFORM",
-      description: "Built-in verification. Ratings system. Safe transactions."
+      description: "Built-in verification system. Comprehensive ratings. Safe transactions. Your security is our priority.",
+      accent: "accent"
     },
     {
       icon: Zap,
       title: "INSTANT ACCESS",
-      description: "Find what you need fast. Book instantly. Get results."
+      description: "Find what you need in seconds. Book instantly. Get results fast. No waiting, no hassle.",
+      accent: "secondary"
     }
   ]
 
@@ -152,13 +155,6 @@ export const LandingPage: React.FC = () => {
             ))}
           </div>
         </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2">
-          <div className="w-8 h-16 border-4 border-primary flex justify-center">
-            <div className="w-2 h-6 bg-primary mt-3 animate-pulse" />
-          </div>
-        </div>
       </section>
 
       {/* Features Section */}
@@ -176,23 +172,39 @@ export const LandingPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid-brutal">
-            {features.map(({ icon: Icon, title, description }, index) => (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {features.map(({ icon: Icon, title, description, accent }, index) => (
               <div 
                 key={title}
-                className={`card-brutal text-center group ${featuresInView ? `animate-bounce-hard delay-${(index + 1) * 100}` : 'opacity-0'}`}
+                className={`relative bg-pure-black border-4 border-steel p-8 group transition-all duration-200 hover:border-${accent} hover:-translate-y-2 ${featuresInView ? `animate-bounce-hard delay-${(index + 1) * 100}` : 'opacity-0'}`}
                 data-cursor-interactive
               >
-                <div className="w-24 h-24 mx-auto mb-8 border-4 border-steel flex items-center justify-center group-hover:border-primary transition-all duration-100 bg-pure-black">
-                  <Icon size={40} className="text-steel group-hover:text-primary transition-colors duration-100" />
+                {/* Accent stripe */}
+                <div className={`absolute top-0 left-0 w-full h-2 bg-${accent} transition-all duration-200`} />
+                
+                {/* Icon section */}
+                <div className="flex items-center justify-between mb-8">
+                  <div className={`w-16 h-16 border-4 border-steel flex items-center justify-center group-hover:border-${accent} transition-all duration-200 bg-charcoal`}>
+                    <Icon size={32} className={`text-steel group-hover:text-${accent} transition-colors duration-200`} />
+                  </div>
+                  <div className={`text-6xl font-black text-steel/20 group-hover:text-${accent}/30 transition-colors duration-200 font-mono`}>
+                    {String(index + 1).padStart(2, '0')}
+                  </div>
                 </div>
-                <h3 className="text-big font-black text-pure-white mb-6 font-display group-hover:text-primary transition-colors duration-100">
+                
+                {/* Content */}
+                <h3 className={`text-2xl font-black text-pure-white mb-4 font-display group-hover:text-${accent} transition-colors duration-200`}>
                   {title}
                 </h3>
-                <div className="divider-brutal mb-6" />
-                <p className="text-concrete font-display font-bold uppercase tracking-wide text-sm leading-relaxed">
+                
+                <div className={`w-16 h-1 bg-steel mb-6 group-hover:bg-${accent} group-hover:w-24 transition-all duration-200`} />
+                
+                <p className="text-concrete font-display font-medium text-sm leading-relaxed tracking-wide">
                   {description}
                 </p>
+                
+                {/* Bottom accent */}
+                <div className={`absolute bottom-0 right-0 w-8 h-8 bg-${accent} opacity-0 group-hover:opacity-100 transition-opacity duration-200`} />
               </div>
             ))}
           </div>
