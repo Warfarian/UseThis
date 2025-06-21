@@ -30,7 +30,7 @@ export const InteractiveCursor: React.FC = () => {
     }
 
     // Add mouse move listener
-    document.addEventListener('mousemove', updatePosition)
+    document.addEventListener('mousemove', updatePosition, { passive: true })
     document.addEventListener('mouseout', handleMouseOut)
 
     // Use event delegation for interactive elements

@@ -40,7 +40,7 @@ html, body {
   background-color: var(--pure-black);
 }
 
-/* Faster, More Responsive Cursor */
+/* Ultra-Fast, Responsive Cursor */
 .custom-cursor {
   position: fixed;
   top: 0;
@@ -50,7 +50,7 @@ html, body {
   background: var(--primary);
   pointer-events: none;
   z-index: 9999;
-  transition: all 0.05s ease-out;
+  transition: none;
   transform: translate(-50%, -50%);
   will-change: transform;
 }
@@ -60,7 +60,7 @@ html, body {
   height: 40px;
   background: transparent;
   border: 2px solid var(--primary);
-  transition: all 0.1s ease-out;
+  transition: width 0.05s ease-out, height 0.05s ease-out, background 0.05s ease-out, border 0.05s ease-out;
 }
 
 /* Noise texture overlay */
@@ -535,4 +535,25 @@ html, body {
 
 .text-stretch {
   transform: scaleY(1.3) scaleX(0.9);
+}
+
+/* Keyframes */
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+@keyframes slide-brutal {
+  0% { transform: translateX(-100px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes bounce-hard {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
 }
