@@ -1,10 +1,278 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { supabase, Booking } from '../lib/supabase'
+import { useAuth } from '../hooks/useAuth'
+import { Button } from '../components/ui/Button'
+import { Card } from '../components/ui/Card'
+import { formatPrice, formatDate } from '../lib/utils'
+import { Calendar, Clock, User, Package, CheckCircle, XCircle, AlertCircle } from 'lucide-react'
 
 export const BookingsPage: React.FC = () => {
+  const { user } = useAuth()
+  const [bookings, setBookings] = useState<Booking[]>([])
+  const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState<'renter' | 'owner'>('renter')
+
+  useEffect(() => {
+    if (user) {
+      fetchBookings()
+    }
+  }, [user, activeTab])
+
+  const fetchBookings = async () => {
+    if (!user) return
+
+    try {
+      let query = supabase
+        .from('bookings')
+        .select(`
+          *,
+          item:items(title, image_url, price_per_day),
+          renter:users!bookings_renter_id_fkey(name, email),
+          owner:users!bookings_owner_id_fkey(name, email)
+        `)
+
+      if (activeTab === 'renter') {
+        query = query.eq('renter_id', user.id)
+      } else {
+        query = query.eq('owner_id', user.id)
+      }
+
+      const { data, error } = await query.order('created_at', { ascending: false })
+
+      if (error) throw error
+      setBookings(data || [])
+    } catch (error) {
+      console.error('Error fetching bookings:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const updateBookingStatus = async (bookingId: string, status: string) => {
+    try {
+      const { error } = await supabase
+        .from('bookings')
+        .update({ status })
+        .eq('id', bookingId)
+
+      if (error) throw error
+      
+      fetchBookings()
+      alert(`Booking ${status} successfully!`)
+    } catch (error) {
+      console.error('Error updating booking:', error)
+      alert('Failed to update booking. Please try again.')
+    }
+  }
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'confirmed':
+        return <CheckCircle size={20} className="text-primary" />
+      case 'cancelled':
+        return <XCircle size={20} className="text-crimson" />
+      case 'active':
+        return <Clock size={20} className="text-accent" />
+      case 'returned':
+        return <CheckCircle size={20} className="text-secondary" />
+      default:
+        return <AlertCircle size={20} className="text-steel" />
+    }
+  }
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'confirmed':
+        return 'text-primary'
+      case 'cancelled':
+        return 'text-crimson'
+      case 'active':
+        return 'text-accent'
+      case 'returned':
+        return 'text-secondary'
+      default:
+        return 'text-steel'
+    }
+  }
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-ink mb-8">My Bookings</h1>
-      <p className="text-focus">Bookings page coming soon...</p>
+    <div className="min-h-screen bg-pure-black noise py-8 px-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="mb-12">
+          <h1 className="text-huge font-black text-pure-white mb-4 font-display">
+            MY <span className="text-primary">BOOKINGS</span>
+          </h1>
+          <p className="text-xl text-concrete font-display font-bold uppercase tracking-wide">
+            MANAGE YOUR RENTAL ACTIVITY
+          </p>
+          <div className="divider-brutal mt-6" />
+        </div>
+
+        {/* Tabs */}
+        <div className="mb-8">
+          <div className="inline-flex glass-brutal border-2 border-steel">
+            <button
+              onClick={() => setActiveTab('renter')}
+              className={`px-8 py-4 font-bold font-display text-sm uppercase tracking-wide transition-all duration-100 ${
+                activeTab === 'renter'
+                  ? 'bg-primary text-pure-white'
+                  : 'text-pure-white hover:text-primary'
+              }`}
+            >
+              MY RENTALS
+            </button>
+            <button
+              onClick={() => setActiveTab('owner')}
+              className={`px-8 py-4 font-bold font-display text-sm uppercase tracking-wide transition-all duration-100 ${
+                activeTab === 'owner'
+                  ? 'bg-primary text-pure-white'
+                  : 'text-pure-white hover:text-primary'
+              }`}
+            >
+              MY LISTINGS
+            </button>
+          </div>
+        </div>
+
+        {/* Bookings List */}
+        {loading ? (
+          <div className="space-y-6">
+            {[...Array(3)].map((_, i) => (
+              <Card key={i} className="loading-brutal h-32" />
+            ))}
+          </div>
+        ) : bookings.length === 0 ? (
+          <div className="text-center py-20">
+            <div className="w-24 h-24 mx-auto mb-6 border-4 border-steel flex items-center justify-center">
+              <Calendar size={32} className="text-steel" />
+            </div>
+            <h3 className="text-2xl font-black text-pure-white mb-4 font-display">
+              NO BOOKINGS YET
+            </h3>
+            <p className="text-steel font-display font-bold uppercase tracking-wide mb-6">
+              {activeTab === 'renter' 
+                ? 'START BROWSING TO FIND ITEMS TO RENT'
+                : 'CREATE LISTINGS TO START EARNING'
+              }
+            </p>
+            <Button onClick={() => window.location.href = activeTab === 'renter' ? '/browse' : '/add-listing'}>
+              {activeTab === 'renter' ? 'BROWSE ITEMS' : 'CREATE LISTING'}
+            </Button>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {bookings.map((booking) => (
+              <Card key={booking.id} className="p-6">
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                  {/* Left Side - Item Info */}
+                  <div className="flex items-start space-x-4 flex-1">
+                    <div className="w-20 h-20 bg-steel/20 flex-shrink-0 overflow-hidden">
+                      {booking.item?.image_url ? (
+                        <img
+                          src={booking.item.image_url}
+                          alt={booking.item.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Package size={24} className="text-steel" />
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex-1">
+                      <h3 className="text-xl font-black text-pure-white mb-2 font-display uppercase">
+                        {booking.item?.title}
+                      </h3>
+                      
+                      <div className="flex items-center space-x-4 mb-3">
+                        <div className="flex items-center text-steel text-sm">
+                          <Calendar size={14} className="mr-2" />
+                          <span className="font-display font-bold uppercase tracking-wide">
+                            {formatDate(booking.start_date)} - {formatDate(booking.end_date)}
+                          </span>
+                        </div>
+                        
+                        <div className="flex items-center text-steel text-sm">
+                          <User size={14} className="mr-2" />
+                          <span className="font-display font-bold uppercase tracking-wide">
+                            {activeTab === 'renter' ? booking.owner?.name : booking.renter?.name}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center">
+                          {getStatusIcon(booking.status)}
+                          <span className={`ml-2 font-display font-bold uppercase tracking-wide text-sm ${getStatusColor(booking.status)}`}>
+                            {booking.status}
+                          </span>
+                        </div>
+                        
+                        <div className="text-primary font-black font-mono">
+                          {formatPrice(booking.total_price)} TOTAL
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Side - Actions */}
+                  <div className="flex flex-col sm:flex-row gap-3 lg:flex-col lg:w-48">
+                    {activeTab === 'owner' && booking.status === 'pending' && (
+                      <>
+                        <Button
+                          size="sm"
+                          onClick={() => updateBookingStatus(booking.id, 'confirmed')}
+                          className="w-full"
+                        >
+                          APPROVE
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => updateBookingStatus(booking.id, 'cancelled')}
+                          className="w-full"
+                        >
+                          DECLINE
+                        </Button>
+                      </>
+                    )}
+
+                    {booking.status === 'confirmed' && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => updateBookingStatus(booking.id, 'active')}
+                        className="w-full"
+                      >
+                        MARK ACTIVE
+                      </Button>
+                    )}
+
+                    {booking.status === 'active' && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => updateBookingStatus(booking.id, 'returned')}
+                        className="w-full"
+                      >
+                        MARK RETURNED
+                      </Button>
+                    )}
+
+                    <div className="text-center">
+                      <p className="text-steel font-display font-bold uppercase tracking-wide text-xs">
+                        BOOKED {formatDate(booking.created_at)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
