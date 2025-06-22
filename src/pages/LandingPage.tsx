@@ -137,7 +137,7 @@ export const LandingPage: React.FC = () => {
           <div className={`flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center items-center mb-16 sm:mb-20 ${heroInView ? 'animate-bounce-hard delay-400' : 'opacity-0'}`}>
             <Link to="/login" data-cursor-interactive>
               <Button size="lg" className="flex items-center space-x-3 sm:space-x-4 text-lg sm:text-xl px-12 sm:px-16 py-6 sm:py-8 w-full sm:w-auto">
-                <span>LAUNCH PLATFORM</span>
+                <span>LAUNCH USETHIS</span>
                 <ArrowRight size={20} />
               </Button>
             </Link>
