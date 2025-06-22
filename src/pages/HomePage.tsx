@@ -44,9 +44,9 @@ export const HomePage: React.FC = () => {
   }
 
   const categories = [
-    { name: 'ELECTRONICS', icon: Zap, color: 'primary' },
-    { name: 'GAMING', icon: Gamepad2, color: 'accent' },
-    { name: 'KITCHEN', icon: ChefHat, color: 'secondary' },
+    { name: 'ELECTRONICS', icon: Zap },
+    { name: 'GAMING', icon: Gamepad2 },
+    { name: 'KITCHEN', icon: ChefHat },
   ]
 
   return (
