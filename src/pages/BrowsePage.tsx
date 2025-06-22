@@ -254,13 +254,13 @@ export const BrowsePage: React.FC = () => {
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {[...Array(12)].map((_, i) => (
-              <Card key={i} className="loading-brutal h-80 sm:h-96">{}</Card>
+              <Card key={i} className="loading-brutal h-80 sm:h-96"></Card>
             ))}
           </div>
         ) : items.length === 0 ? (
           <div className="text-center py-16 sm:py-20">
             <div className="w-16 h-16 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 border-4 border-steel flex items-center justify-center">
-              <Search size={24} sm:size={32} className="text-steel" />
+              <Search size={32} className="text-steel" />
             </div>
             <h3 className="text-xl sm:text-2xl font-black text-pure-white mb-3 sm:mb-4 font-display">
               NO ITEMS FOUND
@@ -311,14 +311,14 @@ export const BrowsePage: React.FC = () => {
 
                     <div className="mt-auto space-y-2 sm:space-y-3">
                       <div className="flex items-center text-steel text-xs sm:text-sm">
-                        <MapPin size={12} sm:size={14} className="mr-1 sm:mr-2" />
+                        <MapPin size={14} className="mr-1 sm:mr-2" />
                         <span className="font-display font-bold uppercase tracking-wide truncate">
                           {item.location}
                         </span>
                       </div>
 
                       <div className="flex items-center text-steel text-xs sm:text-sm">
-                        <Calendar size={12} sm:size={14} className="mr-1 sm:mr-2" />
+                        <Calendar size={14} className="mr-1 sm:mr-2" />
                         <span className="font-display font-bold uppercase tracking-wide">
                           AVAILABLE NOW
                         </span>
@@ -337,7 +337,7 @@ export const BrowsePage: React.FC = () => {
                             </span>
                           </div>
                           <div className="flex items-center ml-2">
-                            <Star size={12} sm:size={14} className="text-accent mr-1" />
+                            <Star size={14} className="text-accent mr-1" />
                             <span className="text-accent font-mono font-bold text-xs sm:text-sm">
                               {item.owner.rating?.toFixed(1) || '5.0'}
                             </span>
