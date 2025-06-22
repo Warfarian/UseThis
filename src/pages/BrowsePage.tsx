@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom'
 import { supabase, Item, Category } from '../lib/supabase'
 import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
-import { Input } from '../components/ui/Input'
 import { formatPrice } from '../lib/utils'
 import { Search, Filter, MapPin, Calendar, Star } from 'lucide-react'
 import { Link } from 'react-router-dom'
@@ -255,7 +254,7 @@ export const BrowsePage: React.FC = () => {
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {[...Array(12)].map((_, i) => (
-              <Card key={i} className="loading-brutal h-80 sm:h-96" />
+              <Card key={i} className="loading-brutal h-80 sm:h-96"></Card>
             ))}
           </div>
         ) : items.length === 0 ? (
