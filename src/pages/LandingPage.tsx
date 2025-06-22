@@ -145,7 +145,7 @@ export const LandingPage: React.FC = () => {
               data-cursor-interactive
               className="btn-outline px-12 sm:px-16 py-6 sm:py-8 text-lg sm:text-xl w-full sm:w-auto"
             >
-              WATCH DEMO
+              SEE HOW TO USETHIS
             </button>
           </div>
 
