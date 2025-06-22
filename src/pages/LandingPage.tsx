@@ -179,7 +179,7 @@ export const LandingPage: React.FC = () => {
             </h2>
             <div className="divider-brutal mb-6 sm:mb-8" />
             <p className="text-lg sm:text-xl text-concrete font-display font-bold uppercase tracking-wide max-w-3xl mx-auto">
-              EVERYTHING YOU NEED TO SHARE RESOURCES AND BUILD COMMUNITY.
+              DON'T HAVE IT? USETHIS.
             </p>
           </div>
 
