@@ -117,23 +117,11 @@ export const LandingPage: React.FC = () => {
               </div>
             </div>
             
-            <h1 className="text-mega font-black text-pure-white mb-6 sm:mb-8 font-display relative">
+            <h1 className="text-mega font-black text-pure-white mb-6 sm:mb-8 font-display">
               <span className="text-primary glitch" data-text="SHARE.">SHARE.</span>{' '}
               <span className="text-accent glitch" data-text="BORROW.">BORROW.</span>{' '}
               <br />
               <span className="text-secondary glitch" data-text="THRIVE.">THRIVE.</span>
-              
-              {/* USETHIS text with custom font and styling */}
-              <span 
-                className="absolute bottom-[-3rem] sm:bottom-[-4rem] md:bottom-[-5rem] right-[10%] sm:right-[15%] md:right-[20%] transform rotate-45 italic font-many-years-higher text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-accent glitch opacity-80" 
-                data-text="USETHIS"
-                style={{
-                  textShadow: '0 0 10px rgba(247, 147, 30, 0.5)',
-                  filter: 'drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5))'
-                }}
-              >
-                USETHIS
-              </span>
             </h1>
             
             <div className="divider-brutal mb-8 sm:mb-12" />
