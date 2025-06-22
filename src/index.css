@@ -124,9 +124,9 @@ html, body {
   background: var(--accent);
 }
 
-/* Responsive Typography System */
+/* Typography System */
 .text-mega {
-  font-size: clamp(4rem, 12vw, 20rem);
+  font-size: clamp(6rem, 15vw, 20rem);
   font-weight: 900;
   line-height: 0.8;
   letter-spacing: -0.05em;
@@ -134,7 +134,7 @@ html, body {
 }
 
 .text-giant {
-  font-size: clamp(3rem, 8vw, 12rem);
+  font-size: clamp(4rem, 10vw, 12rem);
   font-weight: 800;
   line-height: 0.85;
   letter-spacing: -0.03em;
@@ -142,7 +142,7 @@ html, body {
 }
 
 .text-huge {
-  font-size: clamp(2.5rem, 6vw, 8rem);
+  font-size: clamp(3rem, 8vw, 8rem);
   font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.02em;
@@ -150,13 +150,13 @@ html, body {
 }
 
 .text-big {
-  font-size: clamp(1.5rem, 4vw, 5rem);
+  font-size: clamp(2rem, 5vw, 5rem);
   font-weight: 600;
   line-height: 1;
   text-transform: uppercase;
 }
 
-/* Responsive Brutal Button System */
+/* Brutal Button System */
 .btn-primary {
   background: var(--primary);
   color: var(--pure-white);
@@ -167,15 +167,7 @@ html, body {
   transition: all 0.1s ease;
   position: relative;
   overflow: hidden;
-  box-shadow: 2px 2px 0 var(--charcoal);
-  cursor: pointer !important;
-  pointer-events: auto !important;
-}
-
-@media (min-width: 640px) {
-  .btn-primary {
-    box-shadow: 4px 4px 0 var(--charcoal);
-  }
+  box-shadow: 4px 4px 0 var(--charcoal);
 }
 
 .btn-primary::before {
@@ -194,76 +186,37 @@ html, body {
 }
 
 .btn-primary:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0 var(--charcoal);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--charcoal);
   background: var(--accent);
-  cursor: pointer !important;
-  pointer-events: auto !important;
-}
-
-@media (min-width: 640px) {
-  .btn-primary:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0 var(--charcoal);
-  }
 }
 
 .btn-primary:active {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0 var(--charcoal);
-}
-
-@media (min-width: 640px) {
-  .btn-primary:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 var(--charcoal);
-  }
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--charcoal);
 }
 
 .btn-outline {
   background: transparent;
   color: var(--primary);
-  border: 2px solid var(--primary);
+  border: 3px solid var(--primary);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   transition: all 0.1s ease;
-  box-shadow: 2px 2px 0 var(--primary);
-  cursor: pointer !important;
-  pointer-events: auto !important;
-}
-
-@media (min-width: 640px) {
-  .btn-outline {
-    border: 3px solid var(--primary);
-    box-shadow: 4px 4px 0 var(--primary);
-  }
+  box-shadow: 4px 4px 0 var(--primary);
 }
 
 .btn-outline:hover {
   background: var(--primary);
   color: var(--pure-white);
-  transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0 var(--primary);
-}
-
-@media (min-width: 640px) {
-  .btn-outline:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0 var(--primary);
-  }
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--primary);
 }
 
 .btn-outline:active {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0 var(--primary);
-}
-
-@media (min-width: 640px) {
-  .btn-outline:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 var(--primary);
-  }
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--primary);
 }
 
 .btn-ghost {
@@ -274,8 +227,6 @@ html, body {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: all 0.1s ease;
-  cursor: pointer !important;
-  pointer-events: auto !important;
 }
 
 .btn-ghost:hover {
@@ -283,20 +234,13 @@ html, body {
   color: var(--primary);
 }
 
-/* Responsive Brutal Cards */
+/* Brutal Cards */
 .card-brutal {
   background: var(--charcoal);
-  border: 2px solid var(--steel);
-  padding: 1rem;
+  border: 3px solid var(--steel);
+  padding: 2rem;
   transition: all 0.2s ease;
   position: relative;
-}
-
-@media (min-width: 640px) {
-  .card-brutal {
-    border: 3px solid var(--steel);
-    padding: 2rem;
-  }
 }
 
 .card-brutal::before {
@@ -317,21 +261,13 @@ html, body {
 
 .card-brutal:hover {
   border-color: var(--primary);
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--primary);
+  transform: translate(-4px, -4px);
+  box-shadow: 8px 8px 0 var(--primary);
 }
 
-@media (min-width: 640px) {
-  .card-brutal:hover {
-    transform: translate(-4px, -4px);
-    box-shadow: 8px 8px 0 var(--primary);
-  }
-}
-
-/* Fixed Glitch Effects */
+/* Glitch Effects */
 .glitch {
   position: relative;
-  display: inline-block;
 }
 
 .glitch::before,
@@ -342,21 +278,18 @@ html, body {
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
 }
 
 .glitch::before {
-  animation: glitch-1 0.3s infinite;
+  animation: glitch 0.3s infinite;
   color: var(--accent);
   z-index: -1;
-  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
 }
 
 .glitch::after {
-  animation: glitch-2 0.3s infinite;
+  animation: glitch 0.3s infinite reverse;
   color: var(--secondary);
   z-index: -2;
-  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
 }
 
 /* Bold Color Classes */
@@ -490,57 +423,30 @@ html, body {
 .delay-400 { animation-delay: 0.4s; }
 .delay-500 { animation-delay: 0.5s; }
 
-/* Responsive Brutal Grid System */
+/* Brutal Grid System */
 .grid-brutal {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-@media (min-width: 640px) {
-  .grid-brutal {
-    gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  }
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 /* Hover states */
 .hover-brutal:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0 var(--primary);
-}
-
-@media (min-width: 640px) {
-  .hover-brutal:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 4px 4px 0 var(--primary);
-  }
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--primary);
 }
 
 /* Focus states */
 .focus-brutal:focus {
   outline: none;
-  box-shadow: 0 0 0 2px var(--primary);
-}
-
-@media (min-width: 640px) {
-  .focus-brutal:focus {
-    box-shadow: 0 0 0 3px var(--primary);
-  }
+  box-shadow: 0 0 0 3px var(--primary);
 }
 
 /* Brutal Dividers */
 .divider-brutal {
-  height: 3px;
+  height: 4px;
   background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
-  margin: 1rem 0;
-}
-
-@media (min-width: 640px) {
-  .divider-brutal {
-    height: 4px;
-    margin: 2rem 0;
-  }
+  margin: 2rem 0;
 }
 
 /* Loading states */
@@ -555,12 +461,12 @@ html, body {
   100% { background-position: -200% 0; }
 }
 
-/* Responsive Brutal Input System */
+/* Brutal Input System - FIXED FOR CLICKABILITY */
 .input-brutal {
   background: var(--charcoal);
-  border: 2px solid var(--steel);
+  border: 3px solid var(--steel);
   color: var(--pure-white);
-  padding: 0.75rem 1rem;
+  padding: 1rem 1.5rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -568,15 +474,7 @@ html, body {
   width: 100%;
   position: relative;
   z-index: 100;
-  cursor: text !important;
-  pointer-events: auto !important;
-}
-
-@media (min-width: 640px) {
-  .input-brutal {
-    border: 3px solid var(--steel);
-    padding: 1rem 1.5rem;
-  }
+  pointer-events: auto;
 }
 
 .input-brutal:focus {
@@ -591,54 +489,17 @@ html, body {
   text-transform: uppercase;
 }
 
-/* CRITICAL: Ensure ALL form elements are clickable */
-input, button, textarea, select, label {
-  cursor: pointer !important;
+/* Ensure form elements are always clickable */
+input, button, textarea, select {
   pointer-events: auto !important;
   position: relative;
   z-index: 50;
 }
 
-input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], input[type="url"], input[type="file"], textarea {
-  cursor: text !important;
-}
-
-/* File input specific fixes */
-input[type="file"] {
-  cursor: pointer !important;
-  pointer-events: auto !important;
-  z-index: 200 !important;
-}
-
-/* Upload area specific fixes */
-.upload-area {
-  cursor: pointer !important;
-  pointer-events: auto !important;
-  position: relative;
-}
-
-.upload-area input[type="file"] {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  opacity: 0 !important;
-  cursor: pointer !important;
-  pointer-events: auto !important;
-  z-index: 999 !important;
-}
-
-/* Responsive Brutal Navigation */
+/* Brutal Navigation */
 .nav-brutal {
   background: var(--pure-black);
-  border-bottom: 3px solid var(--primary);
-}
-
-@media (min-width: 640px) {
-  .nav-brutal {
-    border-bottom: 4px solid var(--primary);
-  }
+  border-bottom: 4px solid var(--primary);
 }
 
 .nav-item-brutal {
@@ -648,26 +509,17 @@ input[type="file"] {
   letter-spacing: 0.1em;
   transition: all 0.1s ease;
   position: relative;
-  cursor: pointer !important;
-  pointer-events: auto !important;
 }
 
 .nav-item-brutal::after {
   content: '';
   position: absolute;
-  bottom: -3px;
+  bottom: -4px;
   left: 0;
   width: 0;
-  height: 3px;
+  height: 4px;
   background: var(--primary);
   transition: width 0.2s ease;
-}
-
-@media (min-width: 640px) {
-  .nav-item-brutal::after {
-    bottom: -4px;
-    height: 4px;
-  }
 }
 
 .nav-item-brutal:hover::after {
@@ -678,46 +530,19 @@ input[type="file"] {
   color: var(--primary);
 }
 
-/* Responsive design utilities */
-@media (max-width: 640px) {
+/* Responsive brutal design */
+@media (max-width: 768px) {
   .text-mega {
-    font-size: clamp(2.5rem, 10vw, 6rem);
+    font-size: clamp(3rem, 12vw, 8rem);
   }
   
   .text-giant {
-    font-size: clamp(2rem, 8vw, 4rem);
+    font-size: clamp(2.5rem, 10vw, 6rem);
   }
   
   .card-brutal {
     padding: 1rem;
   }
-  
-  .btn-primary, .btn-outline {
-    padding: 0.75rem 1.5rem;
-    font-size: 0.875rem;
-  }
-}
-
-/* Line clamp utilities */
-.line-clamp-1 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-}
-
-.line-clamp-2 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.line-clamp-3 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
 }
 
 /* Experimental typography effects */
@@ -733,41 +558,13 @@ input[type="file"] {
   transform: scaleY(1.3) scaleX(0.9);
 }
 
-/* Fixed Keyframes */
-@keyframes glitch-1 {
-  0%, 100% { 
-    transform: translate(0); 
-  }
-  20% { 
-    transform: translate(-1px, 1px); 
-  }
-  40% { 
-    transform: translate(-1px, -1px); 
-  }
-  60% { 
-    transform: translate(1px, 1px); 
-  }
-  80% { 
-    transform: translate(1px, -1px); 
-  }
-}
-
-@keyframes glitch-2 {
-  0%, 100% { 
-    transform: translate(0); 
-  }
-  20% { 
-    transform: translate(1px, -1px); 
-  }
-  40% { 
-    transform: translate(1px, 1px); 
-  }
-  60% { 
-    transform: translate(-1px, -1px); 
-  }
-  80% { 
-    transform: translate(-1px, 1px); 
-  }
+/* Keyframes */
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
 }
 
 @keyframes slide-brutal {
