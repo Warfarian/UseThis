@@ -21,7 +21,8 @@ export default {
       fontFamily: {
         'display': ['Inter', 'system-ui', 'sans-serif'],
         'body': ['Inter', 'system-ui', 'sans-serif'],
-        'mono': ['JetBrains Mono', 'monospace']
+        'mono': ['JetBrains Mono', 'monospace'],
+        'many-years-higher': ['Many Years Higher', 'cursive', 'serif']
       },
       fontSize: {
         'mega': 'clamp(4rem, 12vw, 20rem)',
