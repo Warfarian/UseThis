@@ -80,14 +80,13 @@ export const BookingsPage: React.FC = () => {
     if (!reviewModal || !user) return
 
     try {
-      const { booking, type } = reviewModal
+      const { booking } = reviewModal
       
       const reviewData_final = {
         item_id: booking.item?.id || booking.item_id,
         reviewer_id: user.id,
-        reviewee_id: type === 'item' 
-          ? booking.owner_id 
-          : (activeTab === 'renter' ? booking.owner_id : booking.renter_id),
+        // Fixed logic: review the other party in the transaction
+        reviewee_id: activeTab === 'renter' ? booking.owner_id : booking.renter_id,
         booking_id: booking.id,
         rating: reviewData.rating,
         comment: reviewData.comment
