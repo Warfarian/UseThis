@@ -156,6 +156,45 @@ html, body {
   text-transform: uppercase;
 }
 
+/* Glitch Effects - Exact match to reference */
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.glitch::before {
+  animation: glitch 0.3s infinite;
+  color: var(--accent);
+  z-index: -1;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.glitch::after {
+  animation: glitch 0.3s infinite reverse;
+  color: var(--secondary);
+  z-index: -2;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
 /* Brutal Button System */
 .btn-primary {
   background: var(--primary);
@@ -263,37 +302,6 @@ html, body {
   border-color: var(--primary);
   transform: translate(-4px, -4px);
   box-shadow: 8px 8px 0 var(--primary);
-}
-
-/* Glitch Effects - Fixed for proper alignment */
-.glitch {
-  position: relative;
-  display: inline-block;
-}
-
-.glitch::before,
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.glitch::before {
-  animation: glitch 0.3s infinite;
-  color: var(--accent);
-  z-index: -1;
-  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-}
-
-.glitch::after {
-  animation: glitch 0.3s infinite reverse;
-  color: var(--secondary);
-  z-index: -2;
-  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
 }
 
 /* Bold Color Classes */
@@ -563,14 +571,6 @@ input, button, textarea, select {
 }
 
 /* Keyframes */
-@keyframes glitch {
-  0%, 100% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
-}
-
 @keyframes slide-brutal {
   0% { transform: translateX(-100px); opacity: 0; }
   100% { transform: translateX(0); opacity: 1; }
