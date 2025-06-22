@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -156,7 +156,7 @@ html, body {
   text-transform: uppercase;
 }
 
-/* Glitch Effects - Exact match to reference */
+/* Glitch Effects - Full coverage */
 .glitch {
   position: relative;
   display: inline-block;
@@ -177,14 +177,14 @@ html, body {
   animation: glitch 0.3s infinite;
   color: var(--accent);
   z-index: -1;
-  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
 
 .glitch::after {
   animation: glitch 0.3s infinite reverse;
   color: var(--secondary);
   z-index: -2;
-  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
 
 @keyframes glitch {
