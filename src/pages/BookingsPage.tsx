@@ -226,7 +226,9 @@ export const BookingsPage: React.FC = () => {
         {loading ? (
           <div className="space-y-6">
             {[...Array(3)].map((_, i) => (
-              <Card key={i} className="loading-brutal h-32"></Card>
+              <Card key={i} className="loading-brutal h-32">
+                <></>
+              </Card>
             ))}
           </div>
         ) : bookings.length === 0 ? (

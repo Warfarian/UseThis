@@ -143,7 +143,7 @@ export const FAQPage: React.FC = () => {
 
         {/* FAQ Categories */}
         <div className="space-y-8">
-          {faqs.map((category, categoryIndex) => (
+          {faqs.map((category, _) => (
             <Card key={category.category} className="p-6">
               {/* Category Header */}
               <div className="flex items-center space-x-4 mb-6">

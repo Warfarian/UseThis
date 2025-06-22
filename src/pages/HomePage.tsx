@@ -106,9 +106,9 @@ export const HomePage: React.FC = () => {
               <>
                 <Link to="/browse" data-cursor-interactive="true" className="w-full sm:w-auto">
                   <Button size="lg" className="flex items-center justify-center space-x-3 w-full text-sm sm:text-base px-8 sm:px-12 lg:px-16">
-                    <Search size={18} sm:size={20} />
+                    <Search size={18} />
                     <span>BROWSE ITEMS</span>
-                    <ArrowRight size={14} sm:size={16} />
+                    <ArrowRight size={14} />
                   </Button>
                 </Link>
                 <Link to="/login" data-cursor-interactive="true" className="w-full sm:w-auto">
@@ -121,9 +121,9 @@ export const HomePage: React.FC = () => {
               <>
                 <Link to="/add-listing" data-cursor-interactive="true" className="w-full sm:w-auto">
                   <Button size="lg" className="flex items-center justify-center space-x-3 w-full text-sm sm:text-base px-8 sm:px-12 lg:px-16">
-                    <Plus size={18} sm:size={20} />
+                    <Plus size={18} />
                     <span>LIST YOUR ITEM</span>
-                    <ArrowRight size={14} sm:size={16} />
+                    <ArrowRight size={14} />
                   </Button>
                 </Link>
                 <Link to="/profile" data-cursor-interactive="true" className="w-full sm:w-auto">
@@ -159,7 +159,7 @@ export const HomePage: React.FC = () => {
               <Link key={name} to={`/browse?category=${encodeURIComponent(name)}`}>
                 <Card className={`text-center group p-6 sm:p-8 ${categoriesInView ? `animate-bounce-hard delay-${(index + 1) * 100}` : 'opacity-0'}`}>
                   <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 glass-brutal flex items-center justify-center border-2 border-steel group-hover:border-primary transition-all duration-100">
-                    <Icon size={28} sm:size={36} className="text-steel group-hover:text-primary transition-colors duration-100" />
+                    <Icon size={28} className="text-steel group-hover:text-primary transition-colors duration-100" />
                   </div>
                   <h3 className="text-xl sm:text-2xl lg:text-big font-black text-pure-white mb-2 sm:mb-3 font-display group-hover:text-primary transition-colors duration-100">{name}</h3>
                   <p className="text-steel font-display font-bold uppercase tracking-wide text-xs sm:text-sm">DISCOVER AVAILABLE ITEMS</p>
@@ -176,7 +176,7 @@ export const HomePage: React.FC = () => {
           <div className={`flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 sm:mb-16 ${featuredInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
             <div className="mb-6 lg:mb-0">
               <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-huge font-black text-pure-white mb-4 sm:mb-6 font-display flex flex-col lg:flex-row lg:items-center">
-                <TrendingUp className="mb-2 lg:mb-0 lg:mr-6 text-primary" size={32} sm:size={48} />
+                <TrendingUp className="mb-2 lg:mb-0 lg:mr-6 text-primary" size={32} />
                 TRENDING NOW
               </h2>
               <p className="text-base sm:text-lg lg:text-xl text-concrete font-display font-bold uppercase tracking-wide">
@@ -194,7 +194,9 @@ export const HomePage: React.FC = () => {
           {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {[...Array(6)].map((_, i) => (
-                <Card key={i} className="loading-brutal h-64 sm:h-80" />
+                <Card key={i} className="loading-brutal h-64 sm:h-80">
+                  <></>
+                </Card>
               ))}
             </div>
           ) : (
@@ -252,7 +254,7 @@ export const HomePage: React.FC = () => {
               <Link to="/login" data-cursor-interactive="true" className="w-full sm:w-auto">
                 <Button size="lg" className="flex items-center justify-center space-x-3 w-full text-sm sm:text-base px-8 sm:px-12 lg:px-16">
                   <span>GET STARTED</span>
-                  <ArrowRight size={18} sm:size={20} />
+                  <ArrowRight size={18} />
                 </Button>
               </Link>
               <Link to="/browse" data-cursor-interactive="true" className="w-full sm:w-auto">
