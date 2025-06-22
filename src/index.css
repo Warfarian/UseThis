@@ -5,7 +5,7 @@
 
 @font-face {
   font-family: 'Many Years Higher';
-  src: url('/Many Years Higher.ttf') format('truetype');
+  src: url('/fonts/ManyYearsHigher.ttf') format('truetype'); /* Adjust filename and format if necessary */
   font-weight: normal;
   font-style: normal;
 }
