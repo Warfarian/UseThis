@@ -56,10 +56,10 @@ export const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto text-center">
           <div className={`mb-8 sm:mb-12 ${heroInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
             <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-giant font-black text-pure-white mb-6 sm:mb-8 font-display leading-none">
-              <span className="text-primary">SHARE.</span>{' '}
-              <span className="text-accent">BORROW.</span>{' '}
+              <span className="text-primary glitch" data-text="SHARE.">SHARE.</span>{' '}
+              <span className="text-accent glitch" data-text="BORROW.">BORROW.</span>{' '}
               <br />
-              <span className="text-secondary">THRIVE.</span>
+              <span className="text-secondary glitch" data-text="THRIVE.">THRIVE.</span>
             </h1>
             
             <div className="divider-brutal mb-8 sm:mb-12" />
