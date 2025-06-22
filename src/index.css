@@ -3,6 +3,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Many Years Higher';
+  src: url('/fonts/ManyYearsHigher.ttf') format('truetype'); /* Adjust filename and format if necessary */
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* Bold Brutalist Design System */
 :root {
   --primary: #FF6B35;
