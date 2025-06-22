@@ -180,6 +180,7 @@ export const LandingPage: React.FC = () => {
             <div className="divider-brutal mb-6 sm:mb-8" />
             <p className="text-lg sm:text-xl text-concrete font-display font-bold uppercase tracking-wide max-w-3xl mx-auto">
               DON'T HAVE IT? USETHIS.
+              MISSING SOMETHING? USETHIS.
             </p>
           </div>
 
