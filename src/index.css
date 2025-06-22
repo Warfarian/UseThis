@@ -168,6 +168,8 @@ html, body {
   position: relative;
   overflow: hidden;
   box-shadow: 4px 4px 0 var(--charcoal);
+  cursor: pointer !important;
+  pointer-events: auto !important;
 }
 
 .btn-primary::before {
@@ -189,6 +191,8 @@ html, body {
   transform: translate(-2px, -2px);
   box-shadow: 6px 6px 0 var(--charcoal);
   background: var(--accent);
+  cursor: pointer !important;
+  pointer-events: auto !important;
 }
 
 .btn-primary:active {
@@ -205,6 +209,8 @@ html, body {
   letter-spacing: 0.1em;
   transition: all 0.1s ease;
   box-shadow: 4px 4px 0 var(--primary);
+  cursor: pointer !important;
+  pointer-events: auto !important;
 }
 
 .btn-outline:hover {
@@ -227,6 +233,8 @@ html, body {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: all 0.1s ease;
+  cursor: pointer !important;
+  pointer-events: auto !important;
 }
 
 .btn-ghost:hover {
@@ -461,7 +469,7 @@ html, body {
   100% { background-position: -200% 0; }
 }
 
-/* Brutal Input System - FIXED FOR CLICKABILITY */
+/* Brutal Input System */
 .input-brutal {
   background: var(--charcoal);
   border: 3px solid var(--steel);
@@ -474,7 +482,8 @@ html, body {
   width: 100%;
   position: relative;
   z-index: 100;
-  pointer-events: auto;
+  cursor: text !important;
+  pointer-events: auto !important;
 }
 
 .input-brutal:focus {
@@ -489,11 +498,42 @@ html, body {
   text-transform: uppercase;
 }
 
-/* Ensure form elements are always clickable */
-input, button, textarea, select {
+/* CRITICAL: Ensure ALL form elements are clickable */
+input, button, textarea, select, label {
+  cursor: pointer !important;
   pointer-events: auto !important;
   position: relative;
   z-index: 50;
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], input[type="url"], input[type="file"], textarea {
+  cursor: text !important;
+}
+
+/* File input specific fixes */
+input[type="file"] {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  z-index: 200 !important;
+}
+
+/* Upload area specific fixes */
+.upload-area {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  position: relative;
+}
+
+.upload-area input[type="file"] {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0 !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  z-index: 999 !important;
 }
 
 /* Brutal Navigation */
@@ -509,6 +549,8 @@ input, button, textarea, select {
   letter-spacing: 0.1em;
   transition: all 0.1s ease;
   position: relative;
+  cursor: pointer !important;
+  pointer-events: auto !important;
 }
 
 .nav-item-brutal::after {
@@ -543,6 +585,28 @@ input, button, textarea, select {
   .card-brutal {
     padding: 1rem;
   }
+}
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 /* Experimental typography effects */
