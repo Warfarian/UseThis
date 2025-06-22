@@ -265,9 +265,10 @@ html, body {
   box-shadow: 8px 8px 0 var(--primary);
 }
 
-/* Glitch Effects */
+/* Glitch Effects - Fixed for proper alignment */
 .glitch {
   position: relative;
+  display: inline-block;
 }
 
 .glitch::before,
@@ -278,18 +279,21 @@ html, body {
   left: 0;
   width: 100%;
   height: 100%;
+  pointer-events: none;
 }
 
 .glitch::before {
   animation: glitch 0.3s infinite;
   color: var(--accent);
   z-index: -1;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
 }
 
 .glitch::after {
   animation: glitch 0.3s infinite reverse;
   color: var(--secondary);
   z-index: -2;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
 }
 
 /* Bold Color Classes */
