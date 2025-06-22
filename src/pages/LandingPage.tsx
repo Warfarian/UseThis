@@ -379,6 +379,14 @@ export const LandingPage: React.FC = () => {
           </div>
         </div>
       </footer>
+
+      {/* Bolt Logo - Bottom Right */}
+      <img 
+        src="/black_circle_360x360.png" 
+        alt="Powered by Bolt" 
+        className="fixed bottom-4 right-4 w-16 h-16 z-50 opacity-80 hover:opacity-100 transition-opacity duration-300"
+        data-cursor-interactive
+      />
     </div>
   )
 }
