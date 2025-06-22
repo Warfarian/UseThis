@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { formatDate } from '../lib/utils'
-import { MessageSquare, Send, User, Package, ArrowLeft } from 'lucide-react'
+import { MessageSquare, Send, Package, ArrowLeft } from 'lucide-react'
 
 export const MessagesPage: React.FC = () => {
   const { user } = useAuth()
@@ -201,7 +201,7 @@ export const MessagesPage: React.FC = () => {
                   </div>
                 ) : conversations.length === 0 ? (
                   <div className="p-4 sm:p-6 text-center">
-                    <MessageSquare size={24} sm:size={32} className="mx-auto mb-3 sm:mb-4 text-steel" />
+                    <MessageSquare size={32} className="mx-auto mb-3 sm:mb-4 text-steel" />
                     <p className="text-steel font-display font-bold uppercase tracking-wide text-xs sm:text-sm">
                       NO CONVERSATIONS YET
                     </p>
@@ -251,7 +251,7 @@ export const MessagesPage: React.FC = () => {
                             
                             {conversation.item && (
                               <div className="flex items-center text-steel text-xs mb-1">
-                                <Package size={10} sm:size={12} className="mr-1" />
+                                <Package size={12} className="mr-1" />
                                 <span className="truncate">{conversation.item.title}</span>
                               </div>
                             )}
@@ -281,7 +281,7 @@ export const MessagesPage: React.FC = () => {
                       className="lg:hidden text-steel hover:text-primary transition-colors"
                       style={{ cursor: 'pointer', pointerEvents: 'auto' }}
                     >
-                      <ArrowLeft size={18} sm:size={20} />
+                      <ArrowLeft size={20} />
                     </button>
                     
                     <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-primary flex items-center justify-center">
@@ -296,7 +296,7 @@ export const MessagesPage: React.FC = () => {
                       </h2>
                       {selectedConversation.item && (
                         <div className="flex items-center text-steel text-xs sm:text-sm">
-                          <Package size={12} sm:size={14} className="mr-1 sm:mr-2" />
+                          <Package size={14} className="mr-1 sm:mr-2" />
                           <span className="font-display font-bold uppercase tracking-wide truncate">
                             {selectedConversation.item.title}
                           </span>
@@ -309,7 +309,7 @@ export const MessagesPage: React.FC = () => {
                   <div className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6 space-y-3 sm:space-y-4">
                     {messages.length === 0 ? (
                       <div className="text-center py-6 sm:py-8">
-                        <MessageSquare size={24} sm:size={32} className="mx-auto mb-3 sm:mb-4 text-steel" />
+                        <MessageSquare size={32} className="mx-auto mb-3 sm:mb-4 text-steel" />
                         <p className="text-steel font-display font-bold uppercase tracking-wide text-xs sm:text-sm">
                           NO MESSAGES YET
                         </p>
@@ -367,7 +367,7 @@ export const MessagesPage: React.FC = () => {
                         className="flex items-center space-x-1 sm:space-x-2 px-4 sm:px-6"
                         style={{ cursor: 'pointer', pointerEvents: 'auto' }}
                       >
-                        <Send size={14} sm:size={16} />
+                        <Send size={16} />
                         <span className="hidden sm:inline text-xs sm:text-sm">SEND</span>
                       </Button>
                     </div>
@@ -379,7 +379,7 @@ export const MessagesPage: React.FC = () => {
               ) : (
                 <div className="flex-1 flex items-center justify-center p-4 sm:p-6">
                   <div className="text-center">
-                    <MessageSquare size={32} sm:size={48} className="mx-auto mb-3 sm:mb-4 text-steel" />
+                    <MessageSquare size={48} className="mx-auto mb-3 sm:mb-4 text-steel" />
                     <h3 className="text-lg sm:text-xl font-black text-pure-white mb-2 font-display">
                       SELECT A CONVERSATION
                     </h3>

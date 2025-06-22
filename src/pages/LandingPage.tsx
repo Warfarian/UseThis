@@ -12,7 +12,6 @@ export const LandingPage: React.FC = () => {
   const [heroRef, heroInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [featuresRef, featuresInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [visionRef, visionInView] = useInView({ threshold: 0.1, triggerOnce: true })
-  const [statsRef, statsInView] = useInView({ threshold: 0.1, triggerOnce: true })
   const [ctaRef, ctaInView] = useInView({ threshold: 0.1, triggerOnce: true })
 
   useEffect(() => {
@@ -111,7 +110,7 @@ export const LandingPage: React.FC = () => {
           <div className={`mb-12 sm:mb-16 ${heroInView ? 'animate-slide-brutal' : 'opacity-0'}`}>
             <div className="flex items-center justify-center mb-8 sm:mb-12">
               <div className="flex items-center space-x-3 sm:space-x-4 px-4 sm:px-6 py-2 sm:py-3 border-2 border-primary bg-charcoal">
-                <Zap className="text-primary" size={16} sm:size={20} />
+                <Zap className="text-primary" size={16} />
                 <span className="text-primary font-mono text-xs sm:text-sm uppercase tracking-widest font-bold">
                   STUDENT ECONOMY PLATFORM
                 </span>
@@ -139,7 +138,7 @@ export const LandingPage: React.FC = () => {
             <Link to="/login" data-cursor-interactive>
               <Button size="lg" className="flex items-center space-x-3 sm:space-x-4 text-lg sm:text-xl px-12 sm:px-16 py-6 sm:py-8 w-full sm:w-auto">
                 <span>LAUNCH PLATFORM</span>
-                <ArrowRight size={20} sm:size={24} />
+                <ArrowRight size={20} />
               </Button>
             </Link>
             <button 
@@ -152,7 +151,7 @@ export const LandingPage: React.FC = () => {
 
           {/* Metrics bar */}
           <div className={`flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-12 lg:space-x-16 ${heroInView ? 'animate-slide-brutal delay-500' : 'opacity-0'}`}>
-            {stats.map(({ number, label }, index) => (
+            {stats.map(({ number, label }) => (
               <div key={label} className="text-center">
                 <div className="text-4xl sm:text-5xl lg:text-6xl font-black text-primary font-mono mb-2">{number}</div>
                 <div className="text-steel text-xs sm:text-sm font-bold uppercase tracking-widest">{label}</div>
@@ -197,7 +196,7 @@ export const LandingPage: React.FC = () => {
                 {/* Icon section */}
                 <div className="flex items-center justify-between mb-6 sm:mb-8">
                   <div className={`w-12 h-12 sm:w-16 sm:h-16 border-4 border-steel flex items-center justify-center group-hover:border-${accent} transition-all duration-200 bg-charcoal`}>
-                    <Icon size={24} sm:size={32} className={`text-steel group-hover:text-${accent} transition-colors duration-200`} />
+                    <Icon size={24} className={`text-steel group-hover:text-${accent} transition-colors duration-200`} />
                   </div>
                   <div className={`text-4xl sm:text-6xl font-black text-steel/20 group-hover:text-${accent}/30 transition-colors duration-200 font-mono`}>
                     {String(index + 1).padStart(2, '0')}
@@ -242,7 +241,7 @@ export const LandingPage: React.FC = () => {
             <div className="bg-charcoal border-4 border-steel p-6 sm:p-8">
               <div className="flex items-center mb-4 sm:mb-6">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent flex items-center justify-center mr-3 sm:mr-4">
-                  <Zap size={20} sm:size={24} className="text-pure-white" />
+                  <Zap size={20} className="text-pure-white" />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-black text-pure-white font-display uppercase">
                   CURRENT: DEMO MODE
@@ -263,7 +262,7 @@ export const LandingPage: React.FC = () => {
             <div className="bg-charcoal border-4 border-primary p-6 sm:p-8">
               <div className="flex items-center mb-4 sm:mb-6">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary flex items-center justify-center mr-3 sm:mr-4">
-                  <GraduationCap size={20} sm:size={24} className="text-pure-white" />
+                  <GraduationCap size={20} className="text-pure-white" />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-black text-pure-white font-display uppercase">
                   FUTURE: CAMPUS-SPECIFIC
@@ -278,7 +277,7 @@ export const LandingPage: React.FC = () => {
                   Each university will have its own dedicated UseThis platform, ensuring all transactions happen within verified student networks for maximum safety and relevance.
                 </p>
                 <div className="flex items-center mt-4 sm:mt-6 p-3 sm:p-4 bg-primary/20 border-l-4 border-primary">
-                  <Globe size={16} sm:size={20} className="text-primary mr-2 sm:mr-3 flex-shrink-0" />
+                  <Globe size={16} className="text-primary mr-2 sm:mr-3 flex-shrink-0" />
                   <span className="text-primary font-display font-bold uppercase text-xs sm:text-sm">
                     INTER-UNIVERSITY TRADING UNDER CONSIDERATION
                   </span>
@@ -329,7 +328,7 @@ export const LandingPage: React.FC = () => {
               <Link to="/login" data-cursor-interactive>
                 <Button size="lg" className="flex items-center space-x-3 sm:space-x-4 text-lg sm:text-xl px-12 sm:px-16 py-6 sm:py-8 w-full sm:w-auto">
                   <span>GET STARTED FREE</span>
-                  <ArrowRight size={20} sm:size={24} />
+                  <ArrowRight size={20} />
                 </Button>
               </Link>
               <button 

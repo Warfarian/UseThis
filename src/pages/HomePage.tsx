@@ -44,9 +44,9 @@ export const HomePage: React.FC = () => {
   }
 
   const categories = [
-    { name: 'ELECTRONICS', icon: Zap, color: 'primary' },
-    { name: 'GAMING', icon: Gamepad2, color: 'accent' },
-    { name: 'KITCHEN', icon: ChefHat, color: 'secondary' },
+    { name: 'ELECTRONICS', icon: Zap },
+    { name: 'GAMING', icon: Gamepad2 },
+    { name: 'KITCHEN', icon: ChefHat },
   ]
 
   return (
@@ -155,7 +155,7 @@ export const HomePage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {categories.map(({ name, icon: Icon, color }, index) => (
+            {categories.map(({ name, icon: Icon }, index) => (
               <Link key={name} to={`/browse?category=${encodeURIComponent(name)}`}>
                 <Card className={`text-center group p-6 sm:p-8 ${categoriesInView ? `animate-bounce-hard delay-${(index + 1) * 100}` : 'opacity-0'}`}>
                   <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 glass-brutal flex items-center justify-center border-2 border-steel group-hover:border-primary transition-all duration-100">

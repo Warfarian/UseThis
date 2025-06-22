@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { supabase, Item, Booking, Review } from '../lib/supabase'
+import { supabase, Item, Review } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuth'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { formatPrice, formatDate, calculateDays } from '../lib/utils'
-import { ArrowLeft, MapPin, Calendar, Star, User, Shield, Clock, MessageSquare, CreditCard, Check, AlertCircle } from 'lucide-react'
+import { ArrowLeft, MapPin, Calendar, Star, User, Shield, Clock, MessageSquare, CreditCard, AlertCircle } from 'lucide-react'
 
 export const ItemDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -195,7 +195,9 @@ export const ItemDetailsPage: React.FC = () => {
     return (
       <div className="min-h-screen bg-pure-black noise py-8 px-6 pt-28">
         <div className="max-w-4xl mx-auto">
-          <Card className="loading-brutal h-96" />
+          <Card className="loading-brutal h-96">
+            <></>
+          </Card>
         </div>
       </div>
     )
