@@ -102,7 +102,9 @@ export const ReviewsPage: React.FC = () => {
         {loading ? (
           <div className="space-y-6">
             {[...Array(3)].map((_, i) => (
-              <Card key={i} className="loading-brutal h-32" />
+              <Card key={i} className="loading-brutal h-32">
+                <></>
+              </Card>
             ))}
           </div>
         ) : reviews.length === 0 ? (
@@ -198,4 +200,5 @@ export const ReviewsPage: React.FC = () => {
         )}
       </div>
     </div>
-  )}
+  )
+}

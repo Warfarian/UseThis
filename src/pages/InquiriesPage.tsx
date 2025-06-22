@@ -3,7 +3,6 @@ import { supabase, Inquiry } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuth'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
-import { Input } from '../components/ui/Input'
 import { formatDate } from '../lib/utils'
 import { MessageSquare, Package, User, Send, CheckCircle, Clock, XCircle } from 'lucide-react'
 
@@ -186,7 +185,9 @@ export const InquiriesPage: React.FC = () => {
         {loading ? (
           <div className="space-y-6">
             {[...Array(3)].map((_, i) => (
-              <Card key={i} className="loading-brutal h-32" />
+              <Card key={i} className="loading-brutal h-32">
+                <></>
+              </Card>
             ))}
           </div>
         ) : inquiries.length === 0 ? (
