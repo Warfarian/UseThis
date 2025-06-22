@@ -254,7 +254,7 @@ export const BrowsePage: React.FC = () => {
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {[...Array(12)].map((_, i) => (
-              <Card key={i} className="loading-brutal h-80 sm:h-96"></Card>
+              <Card key={i} className="loading-brutal h-80 sm:h-96">{}</Card>
             ))}
           </div>
         ) : items.length === 0 ? (
