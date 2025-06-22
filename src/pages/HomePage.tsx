@@ -161,7 +161,7 @@ export const HomePage: React.FC = () => {
                   <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 glass-brutal flex items-center justify-center border-2 border-steel group-hover:border-primary transition-all duration-100">
                     <Icon size={28} className="text-steel group-hover:text-primary transition-colors duration-100" />
                   </div>
-                  <h3 className="text-xl sm:text-2xl lg:text-big font-black text-pure-white mb-2 sm:mb-3 font-display group-hover:text-primary transition-colors duration-100">{name}</h3>
+                  <h3 className="text-xl sm:text-2xl lg:text-big font-black text-pure-white mb-2 sm:mb-3 font-display group-hover:text-primary transition-colors duration-100 max-w-full truncate">{name}</h3>
                   <p className="text-steel font-display font-bold uppercase tracking-wide text-xs sm:text-sm">DISCOVER AVAILABLE ITEMS</p>
                 </Card>
               </Link>
