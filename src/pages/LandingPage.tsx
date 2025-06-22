@@ -125,7 +125,7 @@ export const LandingPage: React.FC = () => {
               
               {/* USETHIS text with custom font and styling - positioned to the right of THRIVE with diagonal angle */}
               <span 
-                className="absolute bottom-0 right-0 transform -rotate-45 italic font-many-years-higher text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-crimson opacity-90" 
+                className="absolute bottom-0 right-0 transform -rotate-45 italic font-many-years-higher text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white opacity-90" 
                 style={{
                   textShadow: '0 0 20px rgba(220, 20, 60, 0.8)',
                   filter: 'drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.7))',
