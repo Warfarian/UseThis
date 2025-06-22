@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/useAuth'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Input } from '../components/ui/Input'
-import { ArrowLeft, Upload, DollarSign, MapPin, Calendar, Image, Link } from 'lucide-react'
+import { ArrowLeft, Upload, DollarSign, MapPin, Calendar, Link } from 'lucide-react'
 
 export const AddListingPage: React.FC = () => {
   const navigate = useNavigate()
