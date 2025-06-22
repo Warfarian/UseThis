@@ -117,19 +117,19 @@ export const LandingPage: React.FC = () => {
               </div>
             </div>
             
-            <h1 className="text-mega font-black text-pure-white mb-6 sm:mb-8 font-display relative">
+            <h1 className="text-mega font-black text-pure-white mb-12 sm:mb-16 md:mb-20 lg:mb-24 font-display relative">
               <span className="text-primary glitch" data-text="SHARE.">SHARE.</span>{' '}
               <span className="text-accent glitch" data-text="BORROW.">BORROW.</span>{' '}
               <br />
               <span className="text-secondary glitch" data-text="THRIVE.">THRIVE.</span>
               
-              {/* USETHIS text with custom font and styling */}
+              {/* USETHIS text with custom font and styling - moved left, bigger, rotated 180 degrees */}
               <span 
-                className="absolute bottom-[-3rem] sm:bottom-[-4rem] md:bottom-[-5rem] right-[10%] sm:right-[15%] md:right-[20%] transform rotate-45 italic font-many-years-higher text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-accent glitch opacity-80" 
+                className="absolute bottom-[-4rem] sm:bottom-[-6rem] md:bottom-[-8rem] lg:bottom-[-10rem] left-[5%] sm:left-[10%] md:left-[15%] transform rotate-180 italic font-many-years-higher text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl text-accent glitch opacity-90" 
                 data-text="USETHIS"
                 style={{
-                  textShadow: '0 0 10px rgba(247, 147, 30, 0.5)',
-                  filter: 'drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5))'
+                  textShadow: '0 0 15px rgba(247, 147, 30, 0.7)',
+                  filter: 'drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.7))'
                 }}
               >
                 USETHIS
