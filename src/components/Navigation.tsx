@@ -2,33 +2,53 @@ import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { Button } from './ui/Button'
-import { Home, Search, Plus, Calendar, User, LogOut, MessageSquare, HelpCircle, Menu, X, Star, Info } from 'lucide-react'
+import { Home, Search, Plus, Calendar, User, LogOut, MessageSquare, HelpCircle, Menu, X, Star, Info, ChevronDown } from 'lucide-react'
 import { cn } from '../lib/utils'
 
 export const Navigation: React.FC = () => {
   const { user, signOut } = useAuth()
   const location = useLocation()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
 
-  const navItems = [
+  const primaryNavItems = [
     { path: '/home', icon: Home, label: 'HOME' },
     { path: '/browse', icon: Search, label: 'BROWSE' },
     { path: '/add-listing', icon: Plus, label: 'LIST' },
     { path: '/bookings', icon: Calendar, label: 'BOOKINGS' },
+  ]
+
+  const communicationItems = [
     { path: '/messages', icon: MessageSquare, label: 'MESSAGES' },
     { path: '/inquiries', icon: HelpCircle, label: 'INQUIRIES' },
+  ]
+
+  const accountItems = [
     { path: '/reviews', icon: Star, label: 'REVIEWS' },
-    { path: '/faq', icon: Info, label: 'FAQ' },
     { path: '/profile', icon: User, label: 'PROFILE' },
+  ]
+
+  const helpItems = [
+    { path: '/faq', icon: Info, label: 'FAQ' },
   ]
 
   const handleSignOut = async () => {
     await signOut()
     setMobileMenuOpen(false)
+    setActiveDropdown(null)
   }
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false)
+    setActiveDropdown(null)
+  }
+
+  const toggleDropdown = (dropdown: string) => {
+    setActiveDropdown(activeDropdown === dropdown ? null : dropdown)
+  }
+
+  const isActiveInGroup = (items: any[]) => {
+    return items.some(item => location.pathname === item.path)
   }
 
   return (
@@ -58,21 +78,124 @@ export const Navigation: React.FC = () => {
             {/* Desktop Navigation Items - Hidden on mobile/tablet */}
             {user && (
               <div className="hidden xl:flex items-center justify-center flex-1 max-w-4xl mx-8">
-                <div className="flex items-center space-x-2 xl:space-x-4">
-                  {navItems.map(({ path, icon: Icon, label }) => (
+                <div className="flex items-center space-x-1">
+                  {/* Primary Navigation */}
+                  {primaryNavItems.map(({ path, icon: Icon, label }) => (
                     <Link
                       key={path}
                       to={path}
                       data-cursor-interactive="true"
                       className={cn(
-                        'nav-item-brutal flex items-center space-x-1 py-2 px-2 xl:px-3 whitespace-nowrap transition-all duration-100',
+                        'nav-item-brutal flex items-center space-x-1 py-2 px-3 whitespace-nowrap transition-all duration-100',
                         location.pathname === path 
                           ? 'text-primary border-b-2 border-primary' 
                           : 'text-pure-white hover:text-primary'
                       )}
                     >
                       <Icon size={14} />
-                      <span className="text-xs font-bold hidden xl:inline">{label}</span>
+                      <span className="text-xs font-bold">{label}</span>
+                    </Link>
+                  ))}
+
+                  {/* Communication Dropdown */}
+                  <div className="relative">
+                    <button
+                      onClick={() => toggleDropdown('communication')}
+                      data-cursor-interactive="true"
+                      className={cn(
+                        'nav-item-brutal flex items-center space-x-1 py-2 px-3 whitespace-nowrap transition-all duration-100',
+                        isActiveInGroup(communicationItems) || activeDropdown === 'communication'
+                          ? 'text-primary border-b-2 border-primary' 
+                          : 'text-pure-white hover:text-primary'
+                      )}
+                    >
+                      <MessageSquare size={14} />
+                      <span className="text-xs font-bold">CHAT</span>
+                      <ChevronDown size={12} className={cn(
+                        'transition-transform duration-200',
+                        activeDropdown === 'communication' ? 'rotate-180' : ''
+                      )} />
+                    </button>
+                    
+                    {activeDropdown === 'communication' && (
+                      <div className="absolute top-full left-0 mt-2 w-48 bg-charcoal border-2 border-primary shadow-lg z-50">
+                        {communicationItems.map(({ path, icon: Icon, label }) => (
+                          <Link
+                            key={path}
+                            to={path}
+                            onClick={() => setActiveDropdown(null)}
+                            className={cn(
+                              'flex items-center space-x-2 px-4 py-3 text-xs font-bold uppercase tracking-wide transition-colors',
+                              location.pathname === path
+                                ? 'text-primary bg-primary/10 border-l-4 border-primary'
+                                : 'text-pure-white hover:text-primary hover:bg-primary/5'
+                            )}
+                          >
+                            <Icon size={14} />
+                            <span>{label}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Account Dropdown */}
+                  <div className="relative">
+                    <button
+                      onClick={() => toggleDropdown('account')}
+                      data-cursor-interactive="true"
+                      className={cn(
+                        'nav-item-brutal flex items-center space-x-1 py-2 px-3 whitespace-nowrap transition-all duration-100',
+                        isActiveInGroup(accountItems) || activeDropdown === 'account'
+                          ? 'text-primary border-b-2 border-primary' 
+                          : 'text-pure-white hover:text-primary'
+                      )}
+                    >
+                      <User size={14} />
+                      <span className="text-xs font-bold">ACCOUNT</span>
+                      <ChevronDown size={12} className={cn(
+                        'transition-transform duration-200',
+                        activeDropdown === 'account' ? 'rotate-180' : ''
+                      )} />
+                    </button>
+                    
+                    {activeDropdown === 'account' && (
+                      <div className="absolute top-full left-0 mt-2 w-48 bg-charcoal border-2 border-primary shadow-lg z-50">
+                        {accountItems.map(({ path, icon: Icon, label }) => (
+                          <Link
+                            key={path}
+                            to={path}
+                            onClick={() => setActiveDropdown(null)}
+                            className={cn(
+                              'flex items-center space-x-2 px-4 py-3 text-xs font-bold uppercase tracking-wide transition-colors',
+                              location.pathname === path
+                                ? 'text-primary bg-primary/10 border-l-4 border-primary'
+                                : 'text-pure-white hover:text-primary hover:bg-primary/5'
+                            )}
+                          >
+                            <Icon size={14} />
+                            <span>{label}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Help Items */}
+                  {helpItems.map(({ path, icon: Icon, label }) => (
+                    <Link
+                      key={path}
+                      to={path}
+                      data-cursor-interactive="true"
+                      className={cn(
+                        'nav-item-brutal flex items-center space-x-1 py-2 px-3 whitespace-nowrap transition-all duration-100',
+                        location.pathname === path 
+                          ? 'text-primary border-b-2 border-primary' 
+                          : 'text-pure-white hover:text-primary'
+                      )}
+                    >
+                      <Icon size={14} />
+                      <span className="text-xs font-bold">{label}</span>
                     </Link>
                   ))}
                 </div>
@@ -131,6 +254,14 @@ export const Navigation: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Dropdown Overlay - Close dropdowns when clicking outside */}
+        {activeDropdown && (
+          <div 
+            className="fixed inset-0 z-40"
+            onClick={() => setActiveDropdown(null)}
+          />
+        )}
       </nav>
 
       {/* Mobile/Tablet Dropdown Menu */}
@@ -157,9 +288,84 @@ export const Navigation: React.FC = () => {
                 </div>
               </div>
 
-              {/* Navigation Items */}
+              {/* Primary Navigation Items */}
               <div className="py-2">
-                {navItems.map(({ path, icon: Icon, label }) => (
+                <div className="text-primary font-display font-bold uppercase text-xs tracking-wider px-2 py-2">
+                  MAIN MENU
+                </div>
+                {primaryNavItems.map(({ path, icon: Icon, label }) => (
+                  <Link
+                    key={path}
+                    to={path}
+                    onClick={closeMobileMenu}
+                    data-cursor-interactive="true"
+                    className={cn(
+                      'flex items-center space-x-3 py-3 px-2 transition-colors font-display text-sm border-l-4',
+                      location.pathname === path
+                        ? 'text-primary border-primary bg-primary/10'
+                        : 'text-pure-white hover:text-primary border-transparent hover:border-primary/50 hover:bg-primary/5'
+                    )}
+                  >
+                    <Icon size={18} />
+                    <span className="font-bold uppercase tracking-wide">{label}</span>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Communication Section */}
+              <div className="py-2 border-t border-steel/30">
+                <div className="text-accent font-display font-bold uppercase text-xs tracking-wider px-2 py-2">
+                  COMMUNICATION
+                </div>
+                {communicationItems.map(({ path, icon: Icon, label }) => (
+                  <Link
+                    key={path}
+                    to={path}
+                    onClick={closeMobileMenu}
+                    data-cursor-interactive="true"
+                    className={cn(
+                      'flex items-center space-x-3 py-3 px-2 transition-colors font-display text-sm border-l-4',
+                      location.pathname === path
+                        ? 'text-primary border-primary bg-primary/10'
+                        : 'text-pure-white hover:text-primary border-transparent hover:border-primary/50 hover:bg-primary/5'
+                    )}
+                  >
+                    <Icon size={18} />
+                    <span className="font-bold uppercase tracking-wide">{label}</span>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Account Section */}
+              <div className="py-2 border-t border-steel/30">
+                <div className="text-secondary font-display font-bold uppercase text-xs tracking-wider px-2 py-2">
+                  ACCOUNT
+                </div>
+                {accountItems.map(({ path, icon: Icon, label }) => (
+                  <Link
+                    key={path}
+                    to={path}
+                    onClick={closeMobileMenu}
+                    data-cursor-interactive="true"
+                    className={cn(
+                      'flex items-center space-x-3 py-3 px-2 transition-colors font-display text-sm border-l-4',
+                      location.pathname === path
+                        ? 'text-primary border-primary bg-primary/10'
+                        : 'text-pure-white hover:text-primary border-transparent hover:border-primary/50 hover:bg-primary/5'
+                    )}
+                  >
+                    <Icon size={18} />
+                    <span className="font-bold uppercase tracking-wide">{label}</span>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Help Section */}
+              <div className="py-2 border-t border-steel/30">
+                <div className="text-steel font-display font-bold uppercase text-xs tracking-wider px-2 py-2">
+                  HELP
+                </div>
+                {helpItems.map(({ path, icon: Icon, label }) => (
                   <Link
                     key={path}
                     to={path}
