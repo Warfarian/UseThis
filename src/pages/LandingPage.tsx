@@ -118,11 +118,11 @@ export const LandingPage: React.FC = () => {
               </div>
             </div>
             
-            <h1 className="text-mega font-black text-pure-white mb-6 sm:mb-8 font-display glitch" data-text="SHARE. BORROW. THRIVE.">
-              <span className="text-primary">SHARE.</span>{' '}
-              <span className="text-accent">BORROW.</span>{' '}
+            <h1 className="text-mega font-black text-pure-white mb-6 sm:mb-8 font-display">
+              <span className="text-primary glitch" data-text="SHARE.">SHARE.</span>{' '}
+              <span className="text-accent glitch" data-text="BORROW.">BORROW.</span>{' '}
               <br />
-              <span className="text-secondary">THRIVE.</span>
+              <span className="text-secondary glitch" data-text="THRIVE.">THRIVE.</span>
             </h1>
             
             <div className="divider-brutal mb-8 sm:mb-12" />

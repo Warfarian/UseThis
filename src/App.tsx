@@ -13,6 +13,7 @@ import { ProfilePage } from './pages/ProfilePage'
 import { ReviewsPage } from './pages/ReviewsPage'
 import { MessagesPage } from './pages/MessagesPage'
 import { InquiriesPage } from './pages/InquiriesPage'
+import { FAQPage } from './pages/FAQPage'
 
 function App() {
   const { user, loading } = useAuth()
@@ -46,6 +47,7 @@ function App() {
             <Route path="reviews" element={<ReviewsPage />} />
             <Route path="messages" element={<MessagesPage />} />
             <Route path="inquiries" element={<InquiriesPage />} />
+            <Route path="faq" element={<FAQPage />} />
           </Route>
         ) : (
           <Route path="*" element={<Navigate to="/" />} />

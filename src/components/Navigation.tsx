@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { Button } from './ui/Button'
-import { Home, Search, Plus, Calendar, User, LogOut, MessageSquare, HelpCircle, Menu, X } from 'lucide-react'
+import { Home, Search, Plus, Calendar, User, LogOut, MessageSquare, HelpCircle, Menu, X, Star, Info } from 'lucide-react'
 import { cn } from '../lib/utils'
 
 export const Navigation: React.FC = () => {
@@ -17,6 +17,8 @@ export const Navigation: React.FC = () => {
     { path: '/bookings', icon: Calendar, label: 'BOOKINGS' },
     { path: '/messages', icon: MessageSquare, label: 'MESSAGES' },
     { path: '/inquiries', icon: HelpCircle, label: 'INQUIRIES' },
+    { path: '/reviews', icon: Star, label: 'REVIEWS' },
+    { path: '/faq', icon: Info, label: 'FAQ' },
     { path: '/profile', icon: User, label: 'PROFILE' },
   ]
 
