@@ -328,7 +328,7 @@ html, body {
   }
 }
 
-/* Fixed Glitch Effects */
+/* PROPER Glitch Effects with colored pseudo-elements */
 .glitch {
   position: relative;
   display: inline-block;
@@ -346,15 +346,15 @@ html, body {
 }
 
 .glitch::before {
-  animation: glitch-1 0.3s infinite;
-  color: var(--accent);
+  animation: glitch-1 0.5s infinite;
+  color: #ffff00;
   z-index: -1;
   clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
 }
 
 .glitch::after {
-  animation: glitch-2 0.3s infinite;
-  color: var(--secondary);
+  animation: glitch-2 0.5s infinite;
+  color: #ff00ff;
   z-index: -2;
   clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
 }
@@ -733,22 +733,22 @@ input[type="file"] {
   transform: scaleY(1.3) scaleX(0.9);
 }
 
-/* Fixed Keyframes */
+/* PROPER Keyframes for glitch effect */
 @keyframes glitch-1 {
   0%, 100% { 
     transform: translate(0); 
   }
   20% { 
-    transform: translate(-1px, 1px); 
+    transform: translate(-2px, 2px); 
   }
   40% { 
-    transform: translate(-1px, -1px); 
+    transform: translate(-2px, -2px); 
   }
   60% { 
-    transform: translate(1px, 1px); 
+    transform: translate(2px, 2px); 
   }
   80% { 
-    transform: translate(1px, -1px); 
+    transform: translate(2px, -2px); 
   }
 }
 
@@ -757,16 +757,16 @@ input[type="file"] {
     transform: translate(0); 
   }
   20% { 
-    transform: translate(1px, -1px); 
+    transform: translate(2px, -2px); 
   }
   40% { 
-    transform: translate(1px, 1px); 
+    transform: translate(2px, 2px); 
   }
   60% { 
-    transform: translate(-1px, -1px); 
+    transform: translate(-2px, -2px); 
   }
   80% { 
-    transform: translate(-1px, 1px); 
+    transform: translate(-2px, 2px); 
   }
 }
 
