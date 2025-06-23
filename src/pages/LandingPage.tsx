@@ -141,12 +141,15 @@ export const LandingPage: React.FC = () => {
                 <ArrowRight size={20} />
               </Button>
             </Link>
-            <button 
+            <a 
+              href="https://youtu.be/3gq5gikF7mI"
+              target="_blank"
+              rel="noopener noreferrer"
               data-cursor-interactive
               className="btn-outline px-12 sm:px-16 py-6 sm:py-8 text-lg sm:text-xl w-full sm:w-auto"
             >
               WATCH HOW TO USETHIS
-            </button>
+            </a>
           </div>
 
           {/* Metrics bar */}
