@@ -435,7 +435,8 @@ export const AddListingPage: React.FC = () => {
                   {/* Clickable upload area */}
                   <div 
                     onClick={triggerFileInput}
-                    className="border-2 border-dashed border-steel hover:border-primary transition-colors p-8 text-center cursor-pointer bg-charcoal hover:bg-charcoal/80"
+                    className="border-2 border-dashed border-steel hover:border-primary transition-colors p-8 text-center cursor-pointer bg-charcoal hover:bg-charcoal/80 z-10 pointer-events-auto"
+                    data-cursor-interactive="true"
                   >
                     <div className="flex flex-col items-center space-y-4">
                       <div className="w-16 h-16 border-2 border-steel flex items-center justify-center hover:border-primary transition-colors">
